@@ -1,0 +1,40 @@
+<template>
+    <!-- overlay dark menu -->
+    <div class="overlay-menu d-flex align-items-start flex-column">
+        <!-- logo, close icon, social icons -->
+        <nav class="navbar navbar-light">
+            <div class="container">
+
+                <!-- logo light -->
+                <router-link :to="'/'"><img src="images/logo-light.png" alt="logo"/></router-link>
+
+                <!-- close icon -->
+                <div class="close-icon">
+                    <i class="ion-md-close"></i>
+                </div>
+
+                <social-links class="light"></social-links>
+
+            </div>
+        </nav>
+
+        <overlay-menu></overlay-menu>
+
+        <copyright></copyright>
+    </div>
+
+</template>
+
+<script>
+import SocialLinks from "./divided/SocialLinks";
+import OverlayMenu from "./divided/OverlayMenu";
+import Copyright from "./divided/Copyright";
+export default {
+    name: "header-overlay-component",
+    components: {Copyright, OverlayMenu, SocialLinks}
+}
+</script>
+
+<style scoped>
+
+</style>

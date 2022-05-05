@@ -25,7 +25,6 @@ import PhotosList from "../components/PhotosList";
 
 export default {
     components: {PhotosList},
-
 }
 </script>
 

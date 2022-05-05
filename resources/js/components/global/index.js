@@ -1,9 +1,9 @@
 import Header from './Header';
 import Footer from './Footer';
-import HeaderOverlayMenu from "./HeaderOverlayMenu";
+import HeaderOverlay from "./HeaderOverlay";
 
 export default [
     Header,
     Footer,
-    HeaderOverlayMenu
+    HeaderOverlay
 ];

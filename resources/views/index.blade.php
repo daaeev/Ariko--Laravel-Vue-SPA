@@ -23,23 +23,7 @@
 </head>
 
 <body>
-    <!-- custom cursor -->
-    <div id="cursor"></div>
-
-    <!-- Preloader -->
-    <div id="preloader">
-        <div class="loading-area">
-            <h3>ariko.</h3>
-            <span>loading...</span>
-        </div>
-        <div class="left-side"></div>
-        <div class="right-side"></div>
-    </div>
-
     <div id="app"></div>
-
-    <!-- Go to top button -->
-    <a href="javascript:" id="return-to-top"><i class="ion-md-arrow-up"></i></a>
 
     <!-- SCRIPTS -->
     <script src="{{asset('js/jquery-1.12.3.min.js')}}"></script>
