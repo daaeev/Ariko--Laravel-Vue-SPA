@@ -19,58 +19,6 @@ $(window).on('load', function() {
     var curPage = 1;
     var pagesNum = $("#pagination-selector").find("li a:last").text();   // Number of pages
 
-    $container.infinitescroll({
-        itemSelector: '.grid-item',
-        nextSelector: '.portfolio-pagination li a',
-        navSelector: '#pagination-selector',
-        extraScrollPx: 0,
-        bufferPx: 0,
-        maxPage: 6,
-        loading: {
-            finishedMsg: "No more works",
-            msgText: '<div class="loader"><span></span></div>',
-            speed: 'slow',
-            selector: '.load-more',
-        },
-    },
-    // trigger Masonry as a callback
-    function( newElements ) {
-
-      var $newElems = $( newElements );
-      $newElems.imagesLoaded(function(){  
-        // Append masonry
-        $newElems.animate({ opacity: 1 });
-        $container.masonry( 'appended', $newElems, true ); 
-      });
-
-      // Check last page
-      curPage++;
-      if(curPage == pagesNum) {
-        $( '.load-more button' ).remove();
-      }
-
-      // Favorite button in retrieved posts
-      $($newElems).on('click', ".favorite", function(){
-          if ($(this).hasClass('ion-md-heart-empty')) {
-              $(this).addClass('ion-md-heart');
-              $(this).removeClass('ion-md-heart-empty');
-              $(this).toggleClass('pulse');
-          } else {
-              $(this).addClass('ion-md-heart-empty');
-              $(this).removeClass('ion-md-heart');
-          }
-      });
-      $('.load-more').find('button').css('visibility', 'visible');
-    });
-
-    $container.infinitescroll( 'unbind' );
-
-    $( '.load-more button' ).on('click', function() {
-      $container.infinitescroll( 'retrieve' );
-      $('.load-more').find('button').css('visibility', 'hidden');
-      return false;
-    });
-
     // Favorite posts
     favorite_post();
 
@@ -85,7 +33,7 @@ $(window).on('load', function() {
               $(this).addClass('ion-md-heart-empty');
               $(this).removeClass('ion-md-heart');
           }
-      }); 
+      });
     }
 
 });

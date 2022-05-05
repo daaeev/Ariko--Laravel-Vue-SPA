@@ -14,7 +14,7 @@ class PhotoController extends Controller
 
         return response()
             ->json(
-                PhotoWork::with('images')->paginate($perPage),
+                PhotoWork::with('preview')->paginate($perPage),
                 200
             );
     }

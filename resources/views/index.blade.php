@@ -31,7 +31,6 @@
     <script src="{{asset('js/masonry.pkgd.min.js')}}"></script>
     <script src="{{asset('js/imagesloaded.pkgd.min.js')}}"></script>
     <script src="{{asset('js/jquery.stellar.js')}}"></script>
-    <script src="{{asset('js/infinite-scroll.min.js')}}"></script>
     <script src="{{asset('js/slick.min.js')}}"></script>
     <script src="{{asset('js/custom.js')}}"></script>
 

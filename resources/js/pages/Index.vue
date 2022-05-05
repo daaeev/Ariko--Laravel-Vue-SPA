@@ -8,7 +8,14 @@
 	</div>
 </section>
 
-<PhotosList></PhotosList>
+    <!-- portfolio section -->
+    <section class="home-portfolio">
+        <div class="container">
+            <photos-list :works="works"></photos-list>
+
+            <pagination></pagination>
+        </div>
+    </section>
 
 <!-- email section -->
 <section class="cta text-center clearfix">
@@ -21,10 +28,20 @@
 </template>
 
 <script>
-import PhotosList from "../components/PhotosList";
+import PhotosList from "../components/index/PhotosList";
+import Pagination from "../components/UI/Pagination";
+import {mapGetters} from "vuex";
 
 export default {
-    components: {PhotosList},
+    components: {Pagination, PhotosList},
+
+    created() {
+        this.$store.dispatch('photos/fetchWorks');
+    },
+
+    computed: {
+        ...mapGetters('photos', ['works']),
+    }
 }
 </script>
 
