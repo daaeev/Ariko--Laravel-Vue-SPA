@@ -17,6 +17,8 @@
         </div>
     </section>
 
+    <hr>
+
 <!-- email section -->
 <section class="cta text-center clearfix">
 	<div class="container">
@@ -29,14 +31,16 @@
 
 <script>
 import PhotosList from "../components/index/PhotosList";
-import Pagination from "../components/UI/Pagination";
+import Pagination from "../components/index/Pagination";
 import {mapGetters} from "vuex";
 
 export default {
     components: {Pagination, PhotosList},
 
     created() {
-        this.$store.dispatch('photos/fetchWorks');
+        if (this.works.length == 0) {
+            this.$store.dispatch('photos/fetchWorks');
+        }
     },
 
     computed: {

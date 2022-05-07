@@ -1,7 +1,4 @@
 <template>
-    <!-- custom cursor -->
-    <div id="cursor"></div>
-
     <!-- Preloader -->
     <div id="preloader">
         <div class="loading-area">
@@ -33,7 +30,11 @@
 
 <script>
 
-export default {}
+export default {
+    created() {
+        this.$store.commit('app/setRouter', this.$router);
+    }
+}
 </script>
 
 <style>

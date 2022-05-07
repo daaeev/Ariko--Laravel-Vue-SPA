@@ -1,28 +1,9 @@
 export default {
     state: {
-        social_links: [
-            {
-                url: '#',
-                icon_class: 'fab fa-dribbble',
-            },
-            {
-                url: '#',
-                icon_class: 'fab fa-twitter',
-            },
-            {
-                url: '#',
-                icon_class: 'fab fa-instagram',
-            },
-            {
-                url: '#',
-                icon_class: 'fab fa-linkedin-in',
-            },
-        ],
-
         overlay_menu: [
             {
                 title: 'Works',
-                url: '#',
+                url: '/',
                 submenu: [
                     {
                         title: 'Videos',
@@ -30,7 +11,7 @@ export default {
                     },
                     {
                         title: 'Photos',
-                        url: '#',
+                        url: '/',
                     },
                 ],
             },
@@ -51,7 +32,27 @@ export default {
             },
         ],
 
+        social_links: [
+            {
+                url: '#',
+                icon_class: 'fab fa-dribbble',
+            },
+            {
+                url: '#',
+                icon_class: 'fab fa-twitter',
+            },
+            {
+                url: '#',
+                icon_class: 'fab fa-instagram',
+            },
+            {
+                url: '#',
+                icon_class: 'fab fa-linkedin-in',
+            },
+        ],
+
         copyright: '© 2018 PxlSolutions Media, Inc',
+        router: null,
     },
 
     getters: {
@@ -66,6 +67,30 @@ export default {
         copyright(state) {
             return state.copyright;
         },
+
+        router(state) {
+            return state.router;
+        }
+    },
+
+    mutations: {
+        setRouter(state, value) {
+            if (!state.router) {
+                state.router = value;
+            }
+        }
+    },
+
+    actions: {
+        /**
+         * Редирект на страницу с ошибкой
+         *
+         * @param getters
+         */
+        errorPage({getters})
+        {
+            getters.router.push('/error');
+        }
     },
 
     namespaced: true,
