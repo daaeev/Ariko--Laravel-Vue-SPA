@@ -19819,7 +19819,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
-  computed: _objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_0__.mapGetters)('photos', ['isWorksLoading', 'pagPage', 'totalPagesCount']))
+  computed: _objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_0__.mapGetters)('photos', ['isWorksLoading', 'fetch']))
 });
 
 /***/ }),
@@ -19984,16 +19984,17 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
-  props: {
-    work_id: {
-      type: Number,
-      required: true
+  computed: _objectSpread(_objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_0__.mapGetters)('photos', ['fetch'])), {}, {
+    next: function next() {
+      return this.fetch.pagination.next_id;
+    },
+    prev: function prev() {
+      return this.fetch.pagination.prev_id;
     }
-  },
-  computed: _objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_0__.mapGetters)('photos', ['nextSingle', "prevSingle"])),
+  }),
   methods: {
     dispatchFetchSingle: function dispatchFetchSingle(work_id) {
-      this.$store.dispatch('photos/facadeFetchWorkById', work_id); // Scroll to top of body
+      this.fetch.facadeFetchWorkById(work_id); // Scroll to top of body
 
       $('body,html').animate({
         scrollTop: 0
@@ -20049,10 +20050,10 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   },
   created: function created() {
     if (this.works.length == 0) {
-      this.$store.dispatch('photos/fetchWorks');
+      this.fetch.fetchWorks();
     }
   },
-  computed: _objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_2__.mapGetters)('photos', ['works']))
+  computed: _objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_2__.mapGetters)('photos', ['works', 'fetch']))
 });
 
 /***/ }),
@@ -20089,9 +20090,9 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     ImageSlider: _components_singleP_ImageSlider__WEBPACK_IMPORTED_MODULE_0__["default"]
   },
   created: function created() {
-    this.$store.dispatch('photos/facadeFetchWorkById', this.$route.params.id);
+    this.fetch.facadeFetchWorkById(this.$route.params.id);
   },
-  computed: _objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_3__.mapGetters)('photos', ['single']))
+  computed: _objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_3__.mapGetters)('photos', ['single', 'fetch']))
 });
 
 /***/ }),
@@ -20503,10 +20504,10 @@ var _hoisted_6 = {
   key: 1
 };
 function render(_ctx, _cache, $props, $setup, $data, $options) {
-  return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" pagination "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_1, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" load more button "), _ctx.pagPage !== _ctx.totalPagesCount ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_2, [!_ctx.isWorksLoading ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("button", {
+  return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" pagination "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_1, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" load more button "), _ctx.fetch.pagPage !== _ctx.fetch.totalPagesCount ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_2, [!_ctx.isWorksLoading ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("button", {
     key: 0,
     onClick: _cache[0] || (_cache[0] = function ($event) {
-      return _ctx.$store.dispatch('photos/fetchWorks');
+      return _ctx.fetch.fetchWorks();
     })
   }, _hoisted_4)) : ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("img", _hoisted_5))])) : ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("span", _hoisted_6, "No more works..."))])], 2112
   /* STABLE_FRAGMENT, DEV_ROOT_FRAGMENT */
@@ -20838,11 +20839,11 @@ var _hoisted_6 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementV
 function render(_ctx, _cache, $props, $setup, $data, $options) {
   var _component_router_link = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("router-link");
 
-  return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_1, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_2, [_ctx.prevSingle ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_router_link, {
+  return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_1, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_2, [$options.prev ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_router_link, {
     key: 0,
-    to: '/works/photos/' + _ctx.prevSingle,
+    to: '/works/photos/' + $options.prev,
     onClick: _cache[0] || (_cache[0] = function ($event) {
-      return $options.dispatchFetchSingle(_ctx.prevSingle);
+      return $options.dispatchFetchSingle($options.prev);
     }),
     "class": "prev float-left"
   }, {
@@ -20854,11 +20855,11 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
 
   }, 8
   /* PROPS */
-  , ["to"])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), _ctx.nextSingle ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_router_link, {
+  , ["to"])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), $options.next ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_router_link, {
     key: 1,
-    to: '/works/photos/' + _ctx.nextSingle,
+    to: '/works/photos/' + $options.next,
     onClick: _cache[1] || (_cache[1] = function ($event) {
-      return $options.dispatchFetchSingle(_ctx.nextSingle);
+      return $options.dispatchFetchSingle($options.next);
     }),
     "class": "next float-right"
   }, {
@@ -21034,11 +21035,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
   /* TEXT */
   ), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("p", null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(_ctx.single.description), 1
   /* TEXT */
-  )]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_projects_pagination, {
-    work_id: _ctx.single.id
-  }, null, 8
-  /* PROPS */
-  , ["work_id"])]);
+  )]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_projects_pagination)]);
 }
 
 /***/ }),
@@ -21141,6 +21138,283 @@ __webpack_require__.r(__webpack_exports__);
 
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ([_Header__WEBPACK_IMPORTED_MODULE_0__["default"], _Footer__WEBPACK_IMPORTED_MODULE_1__["default"], _HeaderOverlay__WEBPACK_IMPORTED_MODULE_2__["default"]]);
+
+/***/ }),
+
+/***/ "./resources/js/logic/FetchPhotosWorks.js":
+/*!************************************************!*\
+  !*** ./resources/js/logic/FetchPhotosWorks.js ***!
+  \************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _store__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../store */ "./resources/js/store/index.js");
+
+
+function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+
+function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+
+
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  pageSize: 2,
+  pagPage: null,
+  totalPagesCount: null,
+  pagination: {
+    next_id: null,
+    prev_id: null
+  },
+
+  /**
+   * Загрузить работы при помощи АПИ
+   *
+   * @returns {Promise<void>}
+   */
+  fetchWorks: function fetchWorks() {
+    var _this = this;
+
+    return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee() {
+      var _this$pagPage;
+
+      var res;
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee$(_context) {
+        while (1) {
+          switch (_context.prev = _context.next) {
+            case 0:
+              _store__WEBPACK_IMPORTED_MODULE_2__["default"].commit('photos/setIsWorksLoading', true);
+              _context.next = 3;
+              return axios__WEBPACK_IMPORTED_MODULE_1___default().get(_store__WEBPACK_IMPORTED_MODULE_2__["default"].getters["app/api_domain"] + "/api/works/photos", {
+                params: {
+                  _limit: _this.pageSize,
+                  page: (_this$pagPage = _this.pagPage) !== null && _this$pagPage !== void 0 ? _this$pagPage : 1
+                }
+              });
+
+            case 3:
+              res = _context.sent;
+
+              if (_this.totalPagesCount === null) {
+                _this.totalPagesCount = res.data.last_page;
+              }
+
+              _store__WEBPACK_IMPORTED_MODULE_2__["default"].commit('photos/addWorks', res.data.data);
+
+              if (_this.pagPage === null) {
+                _this.pagPage = 1;
+              } else {
+                _this.pagPage++;
+              }
+
+              _store__WEBPACK_IMPORTED_MODULE_2__["default"].commit('photos/setIsWorksLoading', false);
+
+            case 8:
+            case "end":
+              return _context.stop();
+          }
+        }
+      }, _callee);
+    }))();
+  },
+
+  /**
+   * Несколько операций для получения работы с идентификатором work_id
+   * 1) Загружена ли раннее запрашиваемая работа (state.single)
+   *
+   * 2) Проверяется наличие работы в массиве загруженных работ (state.works)
+   *
+   * 3) Работа запрашивается у АПИ (actions.fetchWorkById)
+   * Если работа не найдена -> редирект на страницу с ошибкой (actions.${app/errorPage})
+   *
+   * @param work_id
+   */
+  facadeFetchWorkById: function facadeFetchWorkById(work_id) {
+    var _this2 = this;
+
+    return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee2() {
+      var work;
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee2$(_context2) {
+        while (1) {
+          switch (_context2.prev = _context2.next) {
+            case 0:
+              if (!(work_id == _store__WEBPACK_IMPORTED_MODULE_2__["default"].getters["photos/single"].id)) {
+                _context2.next = 2;
+                break;
+              }
+
+              return _context2.abrupt("return");
+
+            case 2:
+              work = _store__WEBPACK_IMPORTED_MODULE_2__["default"].getters["photos/singleFromWorksState"](work_id);
+
+              if (!work) {
+                _context2.next = 11;
+                break;
+              }
+
+              if (work.images) {
+                _context2.next = 7;
+                break;
+              }
+
+              _context2.next = 7;
+              return _this2.fetchImagesByWorkId(work_id).then(function (data) {
+                work.images = data;
+              });
+
+            case 7:
+              _context2.next = 9;
+              return _this2.fetchNextPrevIds(work.id).then(function (data) {
+                _this2.pagination.next_id = data.next ? data.next.id : null;
+                _this2.pagination.prev_id = data.prev ? data.prev.id : null;
+              });
+
+            case 9:
+              _store__WEBPACK_IMPORTED_MODULE_2__["default"].commit('photos/setSingle', work);
+              return _context2.abrupt("return");
+
+            case 11:
+              _this2.fetchWorkById(work_id);
+
+            case 12:
+            case "end":
+              return _context2.stop();
+          }
+        }
+      }, _callee2);
+    }))();
+  },
+
+  /**
+   * Получить работу с идентификатором work_id
+   * Если работа не найдена -> редирект на страницу с ошибкой (actions.${app/errorPage})
+   *
+   * @param work_id
+   * @returns {Promise<void>}
+   */
+  fetchWorkById: function fetchWorkById(work_id) {
+    var _this3 = this;
+
+    return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee3() {
+      var res, work;
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee3$(_context3) {
+        while (1) {
+          switch (_context3.prev = _context3.next) {
+            case 0:
+              _context3.next = 2;
+              return axios__WEBPACK_IMPORTED_MODULE_1___default().get(_store__WEBPACK_IMPORTED_MODULE_2__["default"].getters["app/api_domain"] + "/api/works/photos/".concat(work_id));
+
+            case 2:
+              res = _context3.sent;
+              work = res.data;
+
+              if (!(Object.keys(work) == 0)) {
+                _context3.next = 7;
+                break;
+              }
+
+              _store__WEBPACK_IMPORTED_MODULE_2__["default"].dispatch('app/errorPage', null, {
+                root: true
+              });
+              return _context3.abrupt("return");
+
+            case 7:
+              _context3.next = 9;
+              return _this3.fetchNextPrevIds(work.id).then(function (data) {
+                _this3.pagination.next_id = data.next ? data.next.id : null;
+                _this3.pagination.prev_id = data.prev ? data.prev.id : null;
+              });
+
+            case 9:
+              _store__WEBPACK_IMPORTED_MODULE_2__["default"].commit('photos/setSingle', work);
+
+            case 10:
+            case "end":
+              return _context3.stop();
+          }
+        }
+      }, _callee3);
+    }))();
+  },
+
+  /**
+   * Получение всех фотографий работы с идентификатором work_id
+   * Если фотографии не найдены -> редирект на страницу с ошибкой (actions.${app/errorPage})
+   *
+   * @param work_id
+   * @returns {Promise<void>}
+   */
+  fetchImagesByWorkId: function fetchImagesByWorkId(work_id) {
+    return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee4() {
+      var res;
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee4$(_context4) {
+        while (1) {
+          switch (_context4.prev = _context4.next) {
+            case 0:
+              _context4.next = 2;
+              return axios__WEBPACK_IMPORTED_MODULE_1___default().get(_store__WEBPACK_IMPORTED_MODULE_2__["default"].getters["app/api_domain"] + "/api/works/photos/images/".concat(work_id));
+
+            case 2:
+              res = _context4.sent;
+
+              if (!(res.data.length == 0)) {
+                _context4.next = 6;
+                break;
+              }
+
+              _store__WEBPACK_IMPORTED_MODULE_2__["default"].dispatch('app/errorPage', null, {
+                root: true
+              });
+              return _context4.abrupt("return");
+
+            case 6:
+              return _context4.abrupt("return", res.data);
+
+            case 7:
+            case "end":
+              return _context4.stop();
+          }
+        }
+      }, _callee4);
+    }))();
+  },
+
+  /**
+   * Получить идентификаторы 'следующей' и 'предыдущей' работы
+   * @param work_id
+   * @returns {Promise<void>}
+   */
+  fetchNextPrevIds: function fetchNextPrevIds(work_id) {
+    return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee5() {
+      var res;
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee5$(_context5) {
+        while (1) {
+          switch (_context5.prev = _context5.next) {
+            case 0:
+              _context5.next = 2;
+              return axios__WEBPACK_IMPORTED_MODULE_1___default().get(_store__WEBPACK_IMPORTED_MODULE_2__["default"].getters["app/api_domain"] + "/api/works/photos/next/prev/".concat(work_id));
+
+            case 2:
+              res = _context5.sent;
+              return _context5.abrupt("return", res.data);
+
+            case 4:
+            case "end":
+              return _context5.stop();
+          }
+        }
+      }, _callee5);
+    }))();
+  }
+});
 
 /***/ }),
 
@@ -21256,7 +21530,8 @@ __webpack_require__.r(__webpack_exports__);
       icon_class: 'fab fa-linkedin-in'
     }],
     copyright: '© 2018 PxlSolutions Media, Inc',
-    router: null
+    router: null,
+    api_domain: 'http://ariko.vue'
   },
   getters: {
     social_links: function social_links(state) {
@@ -21270,6 +21545,9 @@ __webpack_require__.r(__webpack_exports__);
     },
     router: function router(state) {
       return state.router;
+    },
+    api_domain: function api_domain(state) {
+      return state.api_domain;
     }
   },
   mutations: {
@@ -21306,16 +21584,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
-/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
-/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_1__);
-
-
-function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
-
-function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
-
+/* harmony import */ var _logic_FetchPhotosWorks__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../logic/FetchPhotosWorks */ "./resources/js/logic/FetchPhotosWorks.js");
 function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _unsupportedIterableToArray(arr) || _nonIterableSpread(); }
 
 function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
@@ -21333,25 +21602,12 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
   state: {
     works: [],
     single: {},
-    pageSize: 6,
-    totalPagesCount: null,
-    pagPage: null,
     isWorksLoading: false,
-    nextSingle: null,
-    prevSingle: null
+    fetch: _logic_FetchPhotosWorks__WEBPACK_IMPORTED_MODULE_0__["default"]
   },
   getters: {
     isWorksLoading: function isWorksLoading(state) {
       return state.isWorksLoading;
-    },
-    pagPage: function pagPage(state) {
-      return state.pagPage;
-    },
-    pageSize: function pageSize(state) {
-      return state.pagPage;
-    },
-    totalPagesCount: function totalPagesCount(state) {
-      return state.totalPagesCount;
     },
     works: function works(state) {
       return state.works;
@@ -21366,11 +21622,8 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
         });
       };
     },
-    nextSingle: function nextSingle(state) {
-      return state.nextSingle;
-    },
-    prevSingle: function prevSingle(state) {
-      return state.prevSingle;
+    fetch: function fetch(state) {
+      return state.fetch;
     }
   },
   mutations: {
@@ -21380,246 +21633,11 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
     addWorks: function addWorks(state, newWorks) {
       state.works = [].concat(_toConsumableArray(state.works), _toConsumableArray(newWorks));
     },
-    setTotalPagesCount: function setTotalPagesCount(state, value) {
-      state.totalPagesCount = value;
-    },
-    incrementPagPage: function incrementPagPage(state) {
-      if (state.pagPage === null) {
-        state.pagPage = 1;
-      } else {
-        state.pagPage++;
-      }
-    },
     setSingle: function setSingle(state, work) {
       state.single = work;
     },
     setImagesToSingle: function setImagesToSingle(state, images) {
       state.single.images = images;
-    },
-    setNextSingle: function setNextSingle(state, value) {
-      state.nextSingle = value;
-    },
-    setPrevSingle: function setPrevSingle(state, value) {
-      state.prevSingle = value;
-    }
-  },
-  actions: {
-    /**
-     * Загрузить работы при помощи АПИ
-     *
-     * @param commit
-     * @param getters
-     * @returns {Promise<void>}
-     */
-    fetchWorks: function fetchWorks(_ref) {
-      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee() {
-        var _getters$pagPage;
-
-        var commit, getters, res;
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee$(_context) {
-          while (1) {
-            switch (_context.prev = _context.next) {
-              case 0:
-                commit = _ref.commit, getters = _ref.getters;
-                commit('setIsWorksLoading', true);
-                _context.next = 4;
-                return axios__WEBPACK_IMPORTED_MODULE_1___default().get("http://ariko.lrvl/api/works/photos", {
-                  params: {
-                    _limit: getters.pageSize,
-                    page: (_getters$pagPage = getters.pagPage) !== null && _getters$pagPage !== void 0 ? _getters$pagPage : 1
-                  }
-                });
-
-              case 4:
-                res = _context.sent;
-
-                if (getters.totalPagesCount === null) {
-                  commit('setTotalPagesCount', res.data.last_page);
-                }
-
-                commit('addWorks', res.data.data);
-                commit('incrementPagPage');
-                commit('setIsWorksLoading', false);
-
-              case 9:
-              case "end":
-                return _context.stop();
-            }
-          }
-        }, _callee);
-      }))();
-    },
-
-    /**
-     * Несколько операций для получения работы с идентификатором work_id
-     * 1) Загружена ли раннее запрашиваемая работа (state.single)
-     *
-     * 2) Проверяется наличие работы в массиве загруженных работ (state.works)
-     *
-     * 3) Работа запрашивается у АПИ (actions.fetchWorkById)
-     * Если работа не найдена -> редирект на страницу с ошибкой (actions.${app/errorPage})
-     *
-     * @param commit
-     * @param getters
-     * @param dispatch
-     * @param work_id
-     */
-    facadeFetchWorkById: function facadeFetchWorkById(_ref2, work_id) {
-      var commit = _ref2.commit,
-          getters = _ref2.getters,
-          dispatch = _ref2.dispatch;
-
-      if (work_id == getters.single.id) {
-        return;
-      }
-
-      var work = getters.singleFromWorksState(work_id);
-
-      if (work) {
-        commit('setSingle', work);
-
-        if (!work.images) {
-          dispatch('fetchImagesByWorkId', work_id);
-        }
-
-        dispatch('fetchNextPrevIds', work_id);
-        return;
-      }
-
-      dispatch('fetchWorkById', work_id);
-    },
-
-    /**
-     * Получить работу с идентификатором work_id
-     * Если работа не найдена -> редирект на страницу с ошибкой (actions.${app/errorPage})
-     *
-     * @param commit
-     * @param dispatch
-     * @param work_id
-     * @returns {Promise<void>}
-     */
-    fetchWorkById: function fetchWorkById(_ref3, work_id) {
-      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee2() {
-        var commit, dispatch, res;
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee2$(_context2) {
-          while (1) {
-            switch (_context2.prev = _context2.next) {
-              case 0:
-                commit = _ref3.commit, dispatch = _ref3.dispatch;
-                commit('setSingle', {});
-                _context2.next = 4;
-                return axios__WEBPACK_IMPORTED_MODULE_1___default().get("http://ariko.lrvl/api/works/photos/".concat(work_id));
-
-              case 4:
-                res = _context2.sent;
-
-                if (!(Object.keys(res.data) == 0)) {
-                  _context2.next = 8;
-                  break;
-                }
-
-                dispatch('app/errorPage', null, {
-                  root: true
-                });
-                return _context2.abrupt("return");
-
-              case 8:
-                commit('setSingle', res.data);
-                dispatch('fetchNextPrevIds', work_id);
-
-              case 10:
-              case "end":
-                return _context2.stop();
-            }
-          }
-        }, _callee2);
-      }))();
-    },
-
-    /**
-     * Получение всех фотографий работы с идентификатором work_id
-     * Если фотографии не найдены -> редирект на страницу с ошибкой (actions.${app/errorPage})
-     *
-     * @param commit
-     * @param dispatch
-     * @param work_id
-     * @returns {Promise<void>}
-     */
-    fetchImagesByWorkId: function fetchImagesByWorkId(_ref4, work_id) {
-      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee3() {
-        var commit, dispatch, res;
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee3$(_context3) {
-          while (1) {
-            switch (_context3.prev = _context3.next) {
-              case 0:
-                commit = _ref4.commit, dispatch = _ref4.dispatch;
-                _context3.next = 3;
-                return axios__WEBPACK_IMPORTED_MODULE_1___default().get("http://ariko.lrvl/api/works/photos/images/".concat(work_id));
-
-              case 3:
-                res = _context3.sent;
-
-                if (!(res.data.length == 0)) {
-                  _context3.next = 7;
-                  break;
-                }
-
-                dispatch('app/errorPage', null, {
-                  root: true
-                });
-                return _context3.abrupt("return");
-
-              case 7:
-                commit('setImagesToSingle', res.data);
-
-              case 8:
-              case "end":
-                return _context3.stop();
-            }
-          }
-        }, _callee3);
-      }))();
-    },
-
-    /**
-     * Получить идентификаторы 'следующей' и 'предыдущей' работы
-     * @param commit
-     * @param work_id
-     * @returns {Promise<void>}
-     */
-    fetchNextPrevIds: function fetchNextPrevIds(_ref5, work_id) {
-      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee4() {
-        var commit, res;
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee4$(_context4) {
-          while (1) {
-            switch (_context4.prev = _context4.next) {
-              case 0:
-                commit = _ref5.commit;
-                _context4.next = 3;
-                return axios__WEBPACK_IMPORTED_MODULE_1___default().get("http://ariko.lrvl/api/works/photos/next/prev/".concat(work_id));
-
-              case 3:
-                res = _context4.sent;
-
-                if (res.data.next) {
-                  commit("setNextSingle", res.data.next.id);
-                } else {
-                  commit("setNextSingle", null);
-                }
-
-                if (res.data.prev) {
-                  commit("setPrevSingle", res.data.prev.id);
-                } else {
-                  commit("setPrevSingle", null);
-                }
-
-              case 6:
-              case "end":
-                return _context4.stop();
-            }
-          }
-        }, _callee4);
-      }))();
     }
   },
   namespaced: true

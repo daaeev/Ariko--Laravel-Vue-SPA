@@ -39,12 +39,12 @@ export default {
 
     created() {
         if (this.works.length == 0) {
-            this.$store.dispatch('photos/fetchWorks');
+            this.fetch.fetchWorks();
         }
     },
 
     computed: {
-        ...mapGetters('photos', ['works']),
+        ...mapGetters('photos', ['works', 'fetch']),
     }
 }
 </script>

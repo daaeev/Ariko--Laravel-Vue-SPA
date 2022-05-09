@@ -18,7 +18,7 @@
             <p>{{single.description}}</p>
         </div>
 
-        <projects-pagination :work_id="single.id"></projects-pagination>
+        <projects-pagination></projects-pagination>
 
     </section>
 </template>
@@ -37,11 +37,11 @@ export default {
     },
 
     created() {
-        this.$store.dispatch('photos/facadeFetchWorkById', this.$route.params.id);
+        this.fetch.facadeFetchWorkById(this.$route.params.id);
     },
 
     computed: {
-        ...mapGetters('photos', ['single']),
+        ...mapGetters('photos', ['single', 'fetch']),
     }
 }
 </script>

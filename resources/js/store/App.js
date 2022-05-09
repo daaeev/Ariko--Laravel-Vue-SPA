@@ -53,6 +53,7 @@ export default {
 
         copyright: '© 2018 PxlSolutions Media, Inc',
         router: null,
+        api_domain: 'http://ariko.vue',
     },
 
     getters: {
@@ -70,6 +71,10 @@ export default {
 
         router(state) {
             return state.router;
+        },
+
+        api_domain(state) {
+            return state.api_domain;
         }
     },
 
