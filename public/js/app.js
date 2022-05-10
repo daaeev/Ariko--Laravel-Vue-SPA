@@ -21566,16 +21566,17 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
      *
      * @param commit
      * @param getters
+     * @param dispatch
      * @returns {Promise<void>}
      */
     fetchWorks: function fetchWorks(_ref) {
       return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee() {
-        var commit, getters;
+        var commit, getters, dispatch;
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee$(_context) {
           while (1) {
             switch (_context.prev = _context.next) {
               case 0:
-                commit = _ref.commit, getters = _ref.getters;
+                commit = _ref.commit, getters = _ref.getters, dispatch = _ref.dispatch;
                 commit('setIsWorksLoading', true);
                 _context.next = 4;
                 return _logic_FetchPhotosWorks__WEBPACK_IMPORTED_MODULE_1__["default"].fetchWorks(getters.pageSize, getters.pagPage, function (axiosRes) {
@@ -21585,7 +21586,10 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
                     commit('setTotalPagesCount', axiosRes.data.last_page);
                   }
                 }, function (axiosError) {
-                  return console.log('Fetch works error:' + axiosError);
+                  console.log('Fetch works error: ' + axiosError);
+                  dispatch('app/errorPage', null, {
+                    root: true
+                  });
                 });
 
               case 4:
@@ -21648,7 +21652,7 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
                 return _logic_FetchPhotosWorks__WEBPACK_IMPORTED_MODULE_1__["default"].fetchImagesByWorkId(work_id, function (axiosRes) {
                   return commit('setImagesToSingle', axiosRes.data);
                 }, function (axiosError) {
-                  console.log('Fetch work images error:' + axiosError);
+                  console.log('Fetch work images error: ' + axiosError);
                   dispatch('app/errorPage', null, {
                     root: true
                   });
@@ -21660,7 +21664,7 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
                   commit('setSinglePagNext', axiosRes.data.next ? axiosRes.data.next.id : null);
                   commit('setSinglePagPrev', axiosRes.data.prev ? axiosRes.data.prev.id : null);
                 }, function (axiosError) {
-                  console.log('Fetch next/prev works error:' + axiosError);
+                  console.log('Fetch next/prev works error: ' + axiosError);
                   dispatch('app/errorPage', null, {
                     root: true
                   });
@@ -21696,7 +21700,7 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
                               commit('setSinglePagNext', axiosRes.data.next ? axiosRes.data.next.id : null);
                               commit('setSinglePagPrev', axiosRes.data.prev ? axiosRes.data.prev.id : null);
                             }, function (axiosError) {
-                              console.log('Fetch next/prev works error:' + axiosError);
+                              console.log('Fetch next/prev works error: ' + axiosError);
                               dispatch('app/errorPage', null, {
                                 root: true
                               });
@@ -21717,7 +21721,7 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
                     return _ref3.apply(this, arguments);
                   };
                 }(), function (axiosError) {
-                  console.log('Fetch work by id error:' + axiosError);
+                  console.log('Fetch work by id error: ' + axiosError);
                   dispatch('app/errorPage', null, {
                     root: true
                   });
