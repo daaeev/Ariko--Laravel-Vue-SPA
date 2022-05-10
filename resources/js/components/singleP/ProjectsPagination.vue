@@ -1,38 +1,24 @@
 <template>
     <div class="container clearfix">
         <div class="navigation">
-            <router-link :to="'/works/photos/' + prev" v-if="prev" @click.native="dispatchFetchSingle(prev)" class="prev float-left"><i class="ion-md-arrow-back"></i>Previous Project</router-link>
-            <router-link :to="'/works/photos/' + next" v-if="next" @click.native="dispatchFetchSingle(next)" class="next float-right">Next Project<i class="ion-md-arrow-forward"></i></router-link>
+            <router-link :to="'/works/photos/' + prev_id" v-if="prev_id" @click.native="this.$emit('loadsingle', prev_id)" class="prev float-left"><i class="ion-md-arrow-back"></i>Previous Project</router-link>
+            <router-link :to="'/works/photos/' + next_id" v-if="next_id" @click.native="this.$emit('loadsingle', next_id)" class="next float-right">Next Project<i class="ion-md-arrow-forward"></i></router-link>
         </div>
     </div>
 </template>
 
 <script>
-import {mapGetters} from "vuex";
-
 export default {
-    computed: {
-        ...mapGetters('photos', ['fetch']),
-
-        next() {
-            return this.fetch.pagination.next_id;
+    props: {
+        next_id: {
+            required: true,
         },
-
-        prev() {
-            return this.fetch.pagination.prev_id;
-        },
+        prev_id: {
+            required: true,
+        }
     },
 
-    methods: {
-        dispatchFetchSingle(work_id) {
-            this.fetch.facadeFetchWorkById(work_id);
-
-            // Scroll to top of body
-            $('body,html').animate({
-                scrollTop : 0
-            }, 500);
-        }
-    }
+    emits: ['loadsingle'],
 }
 </script>
 

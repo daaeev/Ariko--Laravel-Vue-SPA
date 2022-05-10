@@ -1,3 +1,5 @@
+import router from '../router/Router.js';
+
 export default {
     state: {
         overlay_menu: [
@@ -52,7 +54,6 @@ export default {
         ],
 
         copyright: '© 2018 PxlSolutions Media, Inc',
-        router: null,
         api_domain: 'http://ariko.vue',
     },
 
@@ -89,12 +90,10 @@ export default {
     actions: {
         /**
          * Редирект на страницу с ошибкой
-         *
-         * @param getters
          */
-        errorPage({getters})
+        errorPage()
         {
-            getters.router.push('/error');
+            router.push('/error');
         }
     },
 

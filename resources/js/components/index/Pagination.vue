@@ -2,8 +2,8 @@
     <!-- pagination -->
     <div class="text-center load-more">
         <!-- load more button -->
-        <div class="load-more-block" v-if="(fetch.pagPage !== fetch.totalPagesCount)">
-            <button @click="fetch.fetchWorks()" v-if="!isWorksLoading">
+        <div class="load-more-block" v-if="(pagPage != totalPagesCount)">
+            <button @click="this.$emit('loadmore')" v-if="!isWorksLoading">
                 <i class="icon ion-md-arrow-down"></i>
             </button>
 
@@ -16,12 +16,20 @@
 </template>
 
 <script>
-import {mapGetters} from "vuex";
-
 export default {
-    computed: {
-        ...mapGetters('photos', ['isWorksLoading', 'fetch']),
+    props: {
+        pagPage: {
+            required: true,
+        },
+        totalPagesCount: {
+            required: true,
+        },
+        isWorksLoading: {
+            required: true,
+        }
     },
+
+    emits: ['loadmore'],
 }
 </script>
 

@@ -13,7 +13,7 @@
         <div class="container">
             <photos-list :works="works"></photos-list>
 
-            <pagination></pagination>
+            <pagination :pag-page="pagPage" :total-pages-count="totalPagesCount" :is-works-loading="isWorksLoading" @loadmore="fetchWorks"></pagination>
         </div>
     </section>
 
@@ -32,19 +32,23 @@
 <script>
 import PhotosList from "../components/index/PhotosList";
 import Pagination from "../components/index/Pagination";
-import {mapGetters} from "vuex";
+import {mapGetters, mapActions} from "vuex";
 
 export default {
     components: {Pagination, PhotosList},
 
     created() {
         if (this.works.length == 0) {
-            this.fetch.fetchWorks();
+            this.fetchWorks();
         }
     },
 
     computed: {
-        ...mapGetters('photos', ['works', 'fetch']),
+        ...mapGetters('photos', ['works', 'pagPage', 'totalPagesCount', 'isWorksLoading']),
+    },
+
+    methods: {
+        ...mapActions('photos', ['fetchWorks']),
     }
 }
 </script>

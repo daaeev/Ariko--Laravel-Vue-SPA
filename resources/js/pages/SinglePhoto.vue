@@ -18,13 +18,13 @@
             <p>{{single.description}}</p>
         </div>
 
-        <projects-pagination></projects-pagination>
+        <projects-pagination :next_id="singlePagination.next_id" :prev_id="singlePagination.prev_id" @loadsingle="fetchSingleByPagination"></projects-pagination>
 
     </section>
 </template>
 
 <script>
-import {mapGetters} from "vuex";
+import {mapActions, mapGetters} from "vuex";
 import ImageSlider from "../components/singleP/ImageSlider";
 import PortfolioInfo from "../components/singleP/PortfolioInfo";
 import ProjectsPagination from "../components/singleP/ProjectsPagination";
@@ -37,11 +37,24 @@ export default {
     },
 
     created() {
-        this.fetch.facadeFetchWorkById(this.$route.params.id);
+        this.fetchWorkById(this.$route.params.id);
     },
 
     computed: {
-        ...mapGetters('photos', ['single', 'fetch']),
+        ...mapGetters('photos', ['single', 'singlePagination']),
+    },
+
+    methods: {
+        ...mapActions('photos', ['fetchWorkById']),
+
+        fetchSingleByPagination(work_id) {
+            this.fetchWorkById(work_id);
+
+            // Scroll to top of body
+            $('body,html').animate({
+                scrollTop : 0
+            }, 500);
+        }
     }
 }
 </script>

@@ -19641,11 +19641,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
-  created: function created() {
-    this.$store.commit('app/setRouter', this.$router);
-  }
-});
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({});
 
 /***/ }),
 
@@ -19810,16 +19806,19 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm-bundler.js");
-function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); enumerableOnly && (symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
-
-function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? ownKeys(Object(source), !0).forEach(function (key) { _defineProperty(target, key, source[key]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)) : ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } return target; }
-
-function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-
-
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
-  computed: _objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_0__.mapGetters)('photos', ['isWorksLoading', 'fetch']))
+  props: {
+    pagPage: {
+      required: true
+    },
+    totalPagesCount: {
+      required: true
+    },
+    isWorksLoading: {
+      required: true
+    }
+  },
+  emits: ['loadmore']
 });
 
 /***/ }),
@@ -19975,32 +19974,16 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm-bundler.js");
-function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); enumerableOnly && (symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
-
-function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? ownKeys(Object(source), !0).forEach(function (key) { _defineProperty(target, key, source[key]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)) : ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } return target; }
-
-function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-
-
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
-  computed: _objectSpread(_objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_0__.mapGetters)('photos', ['fetch'])), {}, {
-    next: function next() {
-      return this.fetch.pagination.next_id;
+  props: {
+    next_id: {
+      required: true
     },
-    prev: function prev() {
-      return this.fetch.pagination.prev_id;
+    prev_id: {
+      required: true
     }
-  }),
-  methods: {
-    dispatchFetchSingle: function dispatchFetchSingle(work_id) {
-      this.fetch.facadeFetchWorkById(work_id); // Scroll to top of body
-
-      $('body,html').animate({
-        scrollTop: 0
-      }, 500);
-    }
-  }
+  },
+  emits: ['loadsingle']
 });
 
 /***/ }),
@@ -20050,10 +20033,11 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   },
   created: function created() {
     if (this.works.length == 0) {
-      this.fetch.fetchWorks();
+      this.fetchWorks();
     }
   },
-  computed: _objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_2__.mapGetters)('photos', ['works', 'fetch']))
+  computed: _objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_2__.mapGetters)('photos', ['works', 'pagPage', 'totalPagesCount', 'isWorksLoading'])),
+  methods: _objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_2__.mapActions)('photos', ['fetchWorks']))
 });
 
 /***/ }),
@@ -20090,9 +20074,18 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     ImageSlider: _components_singleP_ImageSlider__WEBPACK_IMPORTED_MODULE_0__["default"]
   },
   created: function created() {
-    this.fetch.facadeFetchWorkById(this.$route.params.id);
+    this.fetchWorkById(this.$route.params.id);
   },
-  computed: _objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_3__.mapGetters)('photos', ['single', 'fetch']))
+  computed: _objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_3__.mapGetters)('photos', ['single', 'singlePagination'])),
+  methods: _objectSpread(_objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_3__.mapActions)('photos', ['fetchWorkById'])), {}, {
+    fetchSingleByPagination: function fetchSingleByPagination(work_id) {
+      this.fetchWorkById(work_id); // Scroll to top of body
+
+      $('body,html').animate({
+        scrollTop: 0
+      }, 500);
+    }
+  })
 });
 
 /***/ }),
@@ -20504,10 +20497,12 @@ var _hoisted_6 = {
   key: 1
 };
 function render(_ctx, _cache, $props, $setup, $data, $options) {
-  return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" pagination "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_1, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" load more button "), _ctx.fetch.pagPage !== _ctx.fetch.totalPagesCount ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_2, [!_ctx.isWorksLoading ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("button", {
+  var _this = this;
+
+  return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" pagination "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_1, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" load more button "), $props.pagPage != $props.totalPagesCount ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_2, [!$props.isWorksLoading ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("button", {
     key: 0,
     onClick: _cache[0] || (_cache[0] = function ($event) {
-      return _ctx.fetch.fetchWorks();
+      return _this.$emit('loadmore');
     })
   }, _hoisted_4)) : ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("img", _hoisted_5))])) : ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("span", _hoisted_6, "No more works..."))])], 2112
   /* STABLE_FRAGMENT, DEV_ROOT_FRAGMENT */
@@ -20837,13 +20832,15 @@ var _hoisted_6 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementV
 );
 
 function render(_ctx, _cache, $props, $setup, $data, $options) {
+  var _this = this;
+
   var _component_router_link = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("router-link");
 
-  return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_1, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_2, [$options.prev ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_router_link, {
+  return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_1, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_2, [$props.prev_id ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_router_link, {
     key: 0,
-    to: '/works/photos/' + $options.prev,
+    to: '/works/photos/' + $props.prev_id,
     onClick: _cache[0] || (_cache[0] = function ($event) {
-      return $options.dispatchFetchSingle($options.prev);
+      return _this.$emit('loadsingle', $props.prev_id);
     }),
     "class": "prev float-left"
   }, {
@@ -20855,11 +20852,11 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
 
   }, 8
   /* PROPS */
-  , ["to"])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), $options.next ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_router_link, {
+  , ["to"])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), $props.next_id ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_router_link, {
     key: 1,
-    to: '/works/photos/' + $options.next,
+    to: '/works/photos/' + $props.next_id,
     onClick: _cache[1] || (_cache[1] = function ($event) {
-      return $options.dispatchFetchSingle($options.next);
+      return _this.$emit('loadsingle', $props.next_id);
     }),
     "class": "next float-right"
   }, {
@@ -20975,7 +20972,14 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     works: _ctx.works
   }, null, 8
   /* PROPS */
-  , ["works"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_pagination)])]), _hoisted_4, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" email section "), _hoisted_5], 64
+  , ["works"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_pagination, {
+    "pag-page": _ctx.pagPage,
+    "total-pages-count": _ctx.totalPagesCount,
+    "is-works-loading": _ctx.isWorksLoading,
+    onLoadmore: _ctx.fetchWorks
+  }, null, 8
+  /* PROPS */
+  , ["pag-page", "total-pages-count", "is-works-loading", "onLoadmore"])])]), _hoisted_4, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" email section "), _hoisted_5], 64
   /* STABLE_FRAGMENT */
   );
 }
@@ -21035,7 +21039,13 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
   /* TEXT */
   ), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("p", null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(_ctx.single.description), 1
   /* TEXT */
-  )]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_projects_pagination)]);
+  )]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_projects_pagination, {
+    next_id: _ctx.singlePagination.next_id,
+    prev_id: _ctx.singlePagination.prev_id,
+    onLoadsingle: $options.fetchSingleByPagination
+  }, null, 8
+  /* PROPS */
+  , ["next_id", "prev_id", "onLoadsingle"])]);
 }
 
 /***/ }),
@@ -21166,57 +21176,33 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
-  pageSize: 2,
-  pagPage: null,
-  totalPagesCount: null,
-  pagination: {
-    next_id: null,
-    prev_id: null
-  },
-
   /**
-   * Загрузить работы при помощи АПИ
+   * Получение работ (фотографий)
    *
+   * @param limit
+   * @param page
+   * @param thenHandler
+   * @param catchHandler
    * @returns {Promise<void>}
    */
-  fetchWorks: function fetchWorks() {
-    var _this = this;
-
+  fetchWorks: function fetchWorks(limit, page, thenHandler) {
+    var _arguments = arguments;
     return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee() {
-      var _this$pagPage;
-
-      var res;
+      var catchHandler;
       return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee$(_context) {
         while (1) {
           switch (_context.prev = _context.next) {
             case 0:
-              _store__WEBPACK_IMPORTED_MODULE_2__["default"].commit('photos/setIsWorksLoading', true);
+              catchHandler = _arguments.length > 3 && _arguments[3] !== undefined ? _arguments[3] : null;
               _context.next = 3;
               return axios__WEBPACK_IMPORTED_MODULE_1___default().get(_store__WEBPACK_IMPORTED_MODULE_2__["default"].getters["app/api_domain"] + "/api/works/photos", {
                 params: {
-                  _limit: _this.pageSize,
-                  page: (_this$pagPage = _this.pagPage) !== null && _this$pagPage !== void 0 ? _this$pagPage : 1
+                  _limit: limit,
+                  page: page !== null && page !== void 0 ? page : 1
                 }
-              });
+              }).then(thenHandler)["catch"](catchHandler);
 
             case 3:
-              res = _context.sent;
-
-              if (_this.totalPagesCount === null) {
-                _this.totalPagesCount = res.data.last_page;
-              }
-
-              _store__WEBPACK_IMPORTED_MODULE_2__["default"].commit('photos/addWorks', res.data.data);
-
-              if (_this.pagPage === null) {
-                _this.pagPage = 1;
-              } else {
-                _this.pagPage++;
-              }
-
-              _store__WEBPACK_IMPORTED_MODULE_2__["default"].commit('photos/setIsWorksLoading', false);
-
-            case 8:
             case "end":
               return _context.stop();
           }
@@ -21226,65 +21212,26 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
   },
 
   /**
-   * Несколько операций для получения работы с идентификатором work_id
-   * 1) Загружена ли раннее запрашиваемая работа (state.single)
-   *
-   * 2) Проверяется наличие работы в массиве загруженных работ (state.works)
-   *
-   * 3) Работа запрашивается у АПИ (actions.fetchWorkById)
-   * Если работа не найдена -> редирект на страницу с ошибкой (actions.${app/errorPage})
+   * Получить работу с идентификатором work_id
    *
    * @param work_id
+   * @param thenHandler
+   * @param catchHandler
+   * @returns {Promise<void>}
    */
-  facadeFetchWorkById: function facadeFetchWorkById(work_id) {
-    var _this2 = this;
-
+  fetchWorkById: function fetchWorkById(work_id, thenHandler) {
+    var _arguments2 = arguments;
     return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee2() {
-      var work;
+      var catchHandler;
       return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee2$(_context2) {
         while (1) {
           switch (_context2.prev = _context2.next) {
             case 0:
-              if (!(work_id == _store__WEBPACK_IMPORTED_MODULE_2__["default"].getters["photos/single"].id)) {
-                _context2.next = 2;
-                break;
-              }
+              catchHandler = _arguments2.length > 2 && _arguments2[2] !== undefined ? _arguments2[2] : null;
+              _context2.next = 3;
+              return axios__WEBPACK_IMPORTED_MODULE_1___default().get(_store__WEBPACK_IMPORTED_MODULE_2__["default"].getters["app/api_domain"] + "/api/works/photos/".concat(work_id)).then(thenHandler)["catch"](catchHandler);
 
-              return _context2.abrupt("return");
-
-            case 2:
-              work = _store__WEBPACK_IMPORTED_MODULE_2__["default"].getters["photos/singleFromWorksState"](work_id);
-
-              if (!work) {
-                _context2.next = 11;
-                break;
-              }
-
-              if (work.images) {
-                _context2.next = 7;
-                break;
-              }
-
-              _context2.next = 7;
-              return _this2.fetchImagesByWorkId(work_id).then(function (data) {
-                work.images = data;
-              });
-
-            case 7:
-              _context2.next = 9;
-              return _this2.fetchNextPrevIds(work.id).then(function (data) {
-                _this2.pagination.next_id = data.next ? data.next.id : null;
-                _this2.pagination.prev_id = data.prev ? data.prev.id : null;
-              });
-
-            case 9:
-              _store__WEBPACK_IMPORTED_MODULE_2__["default"].commit('photos/setSingle', work);
-              return _context2.abrupt("return");
-
-            case 11:
-              _this2.fetchWorkById(work_id);
-
-            case 12:
+            case 3:
             case "end":
               return _context2.stop();
           }
@@ -21294,49 +21241,26 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
   },
 
   /**
-   * Получить работу с идентификатором work_id
-   * Если работа не найдена -> редирект на страницу с ошибкой (actions.${app/errorPage})
+   * Получение всех фотографий работы с идентификатором work_id
    *
    * @param work_id
+   * @param thenHandler
+   * @param catchHandler
    * @returns {Promise<void>}
    */
-  fetchWorkById: function fetchWorkById(work_id) {
-    var _this3 = this;
-
+  fetchImagesByWorkId: function fetchImagesByWorkId(work_id, thenHandler) {
+    var _arguments3 = arguments;
     return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee3() {
-      var res, work;
+      var catchHandler;
       return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee3$(_context3) {
         while (1) {
           switch (_context3.prev = _context3.next) {
             case 0:
-              _context3.next = 2;
-              return axios__WEBPACK_IMPORTED_MODULE_1___default().get(_store__WEBPACK_IMPORTED_MODULE_2__["default"].getters["app/api_domain"] + "/api/works/photos/".concat(work_id));
+              catchHandler = _arguments3.length > 2 && _arguments3[2] !== undefined ? _arguments3[2] : null;
+              _context3.next = 3;
+              return axios__WEBPACK_IMPORTED_MODULE_1___default().get(_store__WEBPACK_IMPORTED_MODULE_2__["default"].getters["app/api_domain"] + "/api/works/photos/images/".concat(work_id)).then(thenHandler)["catch"](catchHandler);
 
-            case 2:
-              res = _context3.sent;
-              work = res.data;
-
-              if (!(Object.keys(work) == 0)) {
-                _context3.next = 7;
-                break;
-              }
-
-              _store__WEBPACK_IMPORTED_MODULE_2__["default"].dispatch('app/errorPage', null, {
-                root: true
-              });
-              return _context3.abrupt("return");
-
-            case 7:
-              _context3.next = 9;
-              return _this3.fetchNextPrevIds(work.id).then(function (data) {
-                _this3.pagination.next_id = data.next ? data.next.id : null;
-                _this3.pagination.prev_id = data.prev ? data.prev.id : null;
-              });
-
-            case 9:
-              _store__WEBPACK_IMPORTED_MODULE_2__["default"].commit('photos/setSingle', work);
-
-            case 10:
+            case 3:
             case "end":
               return _context3.stop();
           }
@@ -21346,72 +21270,31 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
   },
 
   /**
-   * Получение всех фотографий работы с идентификатором work_id
-   * Если фотографии не найдены -> редирект на страницу с ошибкой (actions.${app/errorPage})
+   * Получить идентификаторы 'следующей' и 'предыдущей' работы
    *
    * @param work_id
+   * @param thenHandler
+   * @param catchHandler
    * @returns {Promise<void>}
    */
-  fetchImagesByWorkId: function fetchImagesByWorkId(work_id) {
+  fetchNextPrevIds: function fetchNextPrevIds(work_id, thenHandler) {
+    var _arguments4 = arguments;
     return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee4() {
-      var res;
+      var catchHandler;
       return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee4$(_context4) {
         while (1) {
           switch (_context4.prev = _context4.next) {
             case 0:
-              _context4.next = 2;
-              return axios__WEBPACK_IMPORTED_MODULE_1___default().get(_store__WEBPACK_IMPORTED_MODULE_2__["default"].getters["app/api_domain"] + "/api/works/photos/images/".concat(work_id));
+              catchHandler = _arguments4.length > 2 && _arguments4[2] !== undefined ? _arguments4[2] : null;
+              _context4.next = 3;
+              return axios__WEBPACK_IMPORTED_MODULE_1___default().get(_store__WEBPACK_IMPORTED_MODULE_2__["default"].getters["app/api_domain"] + "/api/works/photos/next/prev/".concat(work_id)).then(thenHandler)["catch"](catchHandler);
 
-            case 2:
-              res = _context4.sent;
-
-              if (!(res.data.length == 0)) {
-                _context4.next = 6;
-                break;
-              }
-
-              _store__WEBPACK_IMPORTED_MODULE_2__["default"].dispatch('app/errorPage', null, {
-                root: true
-              });
-              return _context4.abrupt("return");
-
-            case 6:
-              return _context4.abrupt("return", res.data);
-
-            case 7:
+            case 3:
             case "end":
               return _context4.stop();
           }
         }
       }, _callee4);
-    }))();
-  },
-
-  /**
-   * Получить идентификаторы 'следующей' и 'предыдущей' работы
-   * @param work_id
-   * @returns {Promise<void>}
-   */
-  fetchNextPrevIds: function fetchNextPrevIds(work_id) {
-    return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee5() {
-      var res;
-      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee5$(_context5) {
-        while (1) {
-          switch (_context5.prev = _context5.next) {
-            case 0:
-              _context5.next = 2;
-              return axios__WEBPACK_IMPORTED_MODULE_1___default().get(_store__WEBPACK_IMPORTED_MODULE_2__["default"].getters["app/api_domain"] + "/api/works/photos/next/prev/".concat(work_id));
-
-            case 2:
-              res = _context5.sent;
-              return _context5.abrupt("return", res.data);
-
-            case 4:
-            case "end":
-              return _context5.stop();
-          }
-        }
-      }, _callee5);
     }))();
   }
 });
@@ -21491,6 +21374,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
+/* harmony import */ var _router_Router_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../router/Router.js */ "./resources/js/router/Router.js");
+
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   state: {
     overlay_menu: [{
@@ -21530,7 +21415,6 @@ __webpack_require__.r(__webpack_exports__);
       icon_class: 'fab fa-linkedin-in'
     }],
     copyright: '© 2018 PxlSolutions Media, Inc',
-    router: null,
     api_domain: 'http://ariko.vue'
   },
   getters: {
@@ -21560,12 +21444,9 @@ __webpack_require__.r(__webpack_exports__);
   actions: {
     /**
      * Редирект на страницу с ошибкой
-     *
-     * @param getters
      */
-    errorPage: function errorPage(_ref) {
-      var getters = _ref.getters;
-      getters.router.push('/error');
+    errorPage: function errorPage() {
+      _router_Router_js__WEBPACK_IMPORTED_MODULE_0__["default"].push('/error');
     }
   },
   namespaced: true
@@ -21584,7 +21465,15 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var _logic_FetchPhotosWorks__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../logic/FetchPhotosWorks */ "./resources/js/logic/FetchPhotosWorks.js");
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _logic_FetchPhotosWorks__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../logic/FetchPhotosWorks */ "./resources/js/logic/FetchPhotosWorks.js");
+
+
+function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+
+function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+
 function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _unsupportedIterableToArray(arr) || _nonIterableSpread(); }
 
 function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
@@ -21603,7 +21492,13 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
     works: [],
     single: {},
     isWorksLoading: false,
-    fetch: _logic_FetchPhotosWorks__WEBPACK_IMPORTED_MODULE_0__["default"]
+    pageSize: 6,
+    pagPage: null,
+    totalPagesCount: null,
+    single_pagination: {
+      next_id: null,
+      prev_id: null
+    }
   },
   getters: {
     isWorksLoading: function isWorksLoading(state) {
@@ -21622,8 +21517,17 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
         });
       };
     },
-    fetch: function fetch(state) {
-      return state.fetch;
+    pageSize: function pageSize(state) {
+      return state.pageSize;
+    },
+    pagPage: function pagPage(state) {
+      return state.pagPage;
+    },
+    totalPagesCount: function totalPagesCount(state) {
+      return state.totalPagesCount;
+    },
+    singlePagination: function singlePagination(state) {
+      return state.single_pagination;
     }
   },
   mutations: {
@@ -21638,6 +21542,194 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
     },
     setImagesToSingle: function setImagesToSingle(state, images) {
       state.single.images = images;
+    },
+    incrementPagPage: function incrementPagPage(state) {
+      if (state.pagPage === null) {
+        state.pagPage = 1;
+      } else {
+        state.pagPage++;
+      }
+    },
+    setTotalPagesCount: function setTotalPagesCount(state, value) {
+      state.totalPagesCount = value;
+    },
+    setSinglePagNext: function setSinglePagNext(state, value) {
+      state.single_pagination.next_id = value;
+    },
+    setSinglePagPrev: function setSinglePagPrev(state, value) {
+      state.single_pagination.prev_id = value;
+    }
+  },
+  actions: {
+    /**
+     * Загрузить работы при помощи АПИ
+     *
+     * @param commit
+     * @param getters
+     * @returns {Promise<void>}
+     */
+    fetchWorks: function fetchWorks(_ref) {
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee() {
+        var commit, getters;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee$(_context) {
+          while (1) {
+            switch (_context.prev = _context.next) {
+              case 0:
+                commit = _ref.commit, getters = _ref.getters;
+                commit('setIsWorksLoading', true);
+                _context.next = 4;
+                return _logic_FetchPhotosWorks__WEBPACK_IMPORTED_MODULE_1__["default"].fetchWorks(getters.pageSize, getters.pagPage, function (axiosRes) {
+                  commit('addWorks', axiosRes.data.data);
+
+                  if (getters.totalPagesCount === null) {
+                    commit('setTotalPagesCount', axiosRes.data.last_page);
+                  }
+                }, function (axiosError) {
+                  return console.log('Fetch works error:' + axiosError);
+                });
+
+              case 4:
+                commit('incrementPagPage');
+                commit('setIsWorksLoading', false);
+
+              case 6:
+              case "end":
+                return _context.stop();
+            }
+          }
+        }, _callee);
+      }))();
+    },
+
+    /**
+     * Несколько операций для получения работы с идентификатором work_id
+     * 1) Загружена ли раннее запрашиваемая работа (getters.single)
+     *
+     * 2) Проверяется наличие работы в массиве загруженных работ (getters.works)
+     *
+     * 3) Работа запрашивается у АПИ (FetchPhotosWorks.fetchWorkById)
+     *
+     * @param getters
+     * @param commit
+     * @param dispatch
+     * @param work_id
+     */
+    fetchWorkById: function fetchWorkById(_ref2, work_id) {
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee3() {
+        var getters, commit, dispatch, work;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee3$(_context3) {
+          while (1) {
+            switch (_context3.prev = _context3.next) {
+              case 0:
+                getters = _ref2.getters, commit = _ref2.commit, dispatch = _ref2.dispatch;
+
+                if (!(work_id == getters['single'].id)) {
+                  _context3.next = 3;
+                  break;
+                }
+
+                return _context3.abrupt("return");
+
+              case 3:
+                // Проверяется наличие работы в массиве загруженных работ (getters.works)
+                work = getters['singleFromWorksState'](work_id);
+
+                if (!work) {
+                  _context3.next = 11;
+                  break;
+                }
+
+                if (work.images) {
+                  _context3.next = 8;
+                  break;
+                }
+
+                _context3.next = 8;
+                return _logic_FetchPhotosWorks__WEBPACK_IMPORTED_MODULE_1__["default"].fetchImagesByWorkId(work_id, function (axiosRes) {
+                  return commit('setImagesToSingle', axiosRes.data);
+                }, function (axiosError) {
+                  console.log('Fetch work images error:' + axiosError);
+                  dispatch('app/errorPage', null, {
+                    root: true
+                  });
+                });
+
+              case 8:
+                _context3.next = 10;
+                return _logic_FetchPhotosWorks__WEBPACK_IMPORTED_MODULE_1__["default"].fetchNextPrevIds(work.id, function (axiosRes) {
+                  commit('setSinglePagNext', axiosRes.data.next ? axiosRes.data.next.id : null);
+                  commit('setSinglePagPrev', axiosRes.data.prev ? axiosRes.data.prev.id : null);
+                }, function (axiosError) {
+                  console.log('Fetch next/prev works error:' + axiosError);
+                  dispatch('app/errorPage', null, {
+                    root: true
+                  });
+                });
+
+              case 10:
+                return _context3.abrupt("return");
+
+              case 11:
+                _context3.next = 13;
+                return _logic_FetchPhotosWorks__WEBPACK_IMPORTED_MODULE_1__["default"].fetchWorkById(work_id, /*#__PURE__*/function () {
+                  var _ref3 = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee2(axiosRes) {
+                    var work;
+                    return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee2$(_context2) {
+                      while (1) {
+                        switch (_context2.prev = _context2.next) {
+                          case 0:
+                            work = axiosRes.data;
+
+                            if (!(Object.keys(work) == 0)) {
+                              _context2.next = 4;
+                              break;
+                            }
+
+                            dispatch('app/errorPage', null, {
+                              root: true
+                            });
+                            return _context2.abrupt("return");
+
+                          case 4:
+                            _context2.next = 6;
+                            return _logic_FetchPhotosWorks__WEBPACK_IMPORTED_MODULE_1__["default"].fetchNextPrevIds(work.id, function (axiosRes) {
+                              commit('setSinglePagNext', axiosRes.data.next ? axiosRes.data.next.id : null);
+                              commit('setSinglePagPrev', axiosRes.data.prev ? axiosRes.data.prev.id : null);
+                            }, function (axiosError) {
+                              console.log('Fetch next/prev works error:' + axiosError);
+                              dispatch('app/errorPage', null, {
+                                root: true
+                              });
+                            });
+
+                          case 6:
+                            commit('setSingle', work);
+
+                          case 7:
+                          case "end":
+                            return _context2.stop();
+                        }
+                      }
+                    }, _callee2);
+                  }));
+
+                  return function (_x) {
+                    return _ref3.apply(this, arguments);
+                  };
+                }(), function (axiosError) {
+                  console.log('Fetch work by id error:' + axiosError);
+                  dispatch('app/errorPage', null, {
+                    root: true
+                  });
+                });
+
+              case 13:
+              case "end":
+                return _context3.stop();
+            }
+          }
+        }, _callee3);
+      }))();
     }
   },
   namespaced: true

@@ -31,9 +31,7 @@
 <script>
 
 export default {
-    created() {
-        this.$store.commit('app/setRouter', this.$router);
-    }
+
 }
 </script>
 
