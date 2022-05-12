@@ -22,15 +22,6 @@ return new class extends Migration
             $table->string('website')->nullable();
             $table->string('title')->nullable();
             $table->text('description')->nullable();
-            $table->unsignedBigInteger('preview_image_id')->unique();
-
-            $table->foreign(
-                'preview_image_id',
-                'fk-photos_works-preview_image_id'
-            )
-                ->cascadeOnDelete()
-                ->references('id')
-                ->on('images');
         });
     }
 
@@ -41,10 +32,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::table('photos_works', function (Blueprint $table) {
-            $table->dropForeign('fk-photos_works-preview_image_id');
-        });
-
         Schema::dropIfExists('photos');
     }
 };

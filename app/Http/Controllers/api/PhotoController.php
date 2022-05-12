@@ -4,7 +4,6 @@ namespace App\Http\Controllers\api;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\PaginationData;
-use App\Models\Image;
 use App\Models\PhotoWork;
 
 class PhotoController extends Controller
@@ -21,7 +20,7 @@ class PhotoController extends Controller
 
         return response()
             ->json(
-                PhotoWork::with('preview')->paginate($perPage),
+                PhotoWork::with('images')->paginate($perPage),
                 200
             );
     }
@@ -36,20 +35,6 @@ class PhotoController extends Controller
     {
         return response()->json(
             PhotoWork::with('images')->find($work_id),
-            200
-        );
-    }
-
-    /**
-     * Получение фотографий работы с идентификатором $work_id
-     *
-     * @param $work_id
-     * @return \Illuminate\Http\JsonResponse
-     */
-    public function singleImages($work_id)
-    {
-        return response()->json(
-            Image::where('photo_work_id', $work_id)->get(),
             200
         );
     }
