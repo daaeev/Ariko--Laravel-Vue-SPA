@@ -14,12 +14,13 @@
 </template>
 
 <script>
-import {mapGetters} from "vuex";
-
 export default {
-    computed: {
-        ...mapGetters('app', ['overlay_menu']),
-    },
+    props: {
+        overlay_menu: {
+            type: Array,
+            required: true,
+        },
+    }
 }
 </script>
 

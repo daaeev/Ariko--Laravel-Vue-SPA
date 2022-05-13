@@ -13,7 +13,7 @@
 				<span></span>
 			</div>
 
-			<social-links></social-links>
+			<social-links :social_links="social_links"></social-links>
 
 		</div>
 	</nav>
@@ -23,10 +23,17 @@
 
 <script>
 import SocialLinks from "./divided/SocialLinks";
+import SiteSettings from "../../SiteSettings";
 
 export default {
   name: "header-component",
     components: {SocialLinks},
+
+    computed: {
+      social_links() {
+          return SiteSettings.social_links;
+      }
+    },
 };
 </script>
 

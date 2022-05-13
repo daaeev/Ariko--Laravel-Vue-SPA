@@ -2,19 +2,16 @@
     <!-- copyright -->
     <footer class="text-center mt-auto">
         <div class="container">
-            <span class="copyright">{{copyright}}</span>
+            <span class="copyright"><slot></slot></span>
         </div>
     </footer>
 
 </template>
 
 <script>
-import {mapGetters} from "vuex";
 
 export default {
-    computed: {
-        ...mapGetters('app', ['copyright']),
-    }
+
 }
 </script>
 

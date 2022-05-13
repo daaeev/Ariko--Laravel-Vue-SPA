@@ -1,5 +1,5 @@
 import axios from "axios";
-import store from '../store';
+import SiteSettings from '../SiteSettings';
 
 export default {
     /**
@@ -11,9 +11,9 @@ export default {
      * @param catchHandler
      * @returns {Promise<void>}
      */
-    async fetchWorks(limit, page,thenHandler, catchHandler = null) {
-        await axios.get(
-            store.getters['app/api_domain'] + "/api/works/photos",
+    async fetchWorks(limit, page,thenHandler = null, catchHandler = null) {
+        axios.get(
+            SiteSettings.api_domain + "/api/works/photos",
             {
                 params: {
                     _limit: limit,
@@ -33,25 +33,9 @@ export default {
      * @param catchHandler
      * @returns {Promise<void>}
      */
-    async fetchWorkById(work_id, thenHandler, catchHandler = null) {
-        await axios.get(
-            store.getters['app/api_domain'] + `/api/works/photos/${work_id}`
-        )
-            .then(thenHandler)
-            .catch(catchHandler);
-    },
-
-    /**
-     * Получение всех фотографий работы с идентификатором work_id
-     *
-     * @param work_id
-     * @param thenHandler
-     * @param catchHandler
-     * @returns {Promise<void>}
-     */
-    async fetchImagesByWorkId(work_id, thenHandler, catchHandler = null) {
-        await axios.get(
-            store.getters['app/api_domain'] + `/api/works/photos/images/${work_id}`
+    async fetchWorkById(work_id, thenHandler = null, catchHandler = null) {
+        axios.get(
+            SiteSettings.api_domain + `/api/works/photos/${work_id}`
         )
             .then(thenHandler)
             .catch(catchHandler);
@@ -65,9 +49,9 @@ export default {
      * @param catchHandler
      * @returns {Promise<void>}
      */
-    async fetchNextPrevIds(work_id, thenHandler, catchHandler = null) {
-        await axios.get(
-            store.getters['app/api_domain'] + `/api/works/photos/next/prev/${work_id}`
+    async fetchNextPrevIds(work_id, thenHandler = null, catchHandler = null) {
+        axios.get(
+            SiteSettings.api_domain + `/api/works/photos/next/prev/${work_id}`
         )
             .then(thenHandler)
             .catch(catchHandler);

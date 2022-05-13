@@ -19,23 +19,19 @@
 
     <hr>
 
-<!-- email section -->
-<section class="cta text-center clearfix">
-	<div class="container">
-		<span>Start a project</span>
-		<h2><a href="#">hello@ariko.com</a></h2>
-	</div>
-</section>
+    <email-section :email="email"></email-section>
 
 </template>
 
 <script>
 import PhotosList from "../components/index/PhotosList";
 import Pagination from "../components/index/Pagination";
+import EmailSection from "../components/global/divided/EmailSection";
 import {mapGetters, mapActions} from "vuex";
+import siteSettings from "../SiteSettings";
 
 export default {
-    components: {Pagination, PhotosList},
+    components: {EmailSection, Pagination, PhotosList},
 
     created() {
         if (this.works.length == 0) {
@@ -45,6 +41,10 @@ export default {
 
     computed: {
         ...mapGetters('photos', ['works', 'pagPage', 'totalPagesCount', 'isWorksLoading']),
+
+        email() {
+            return siteSettings.email;
+        }
     },
 
     methods: {

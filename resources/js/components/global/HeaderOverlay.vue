@@ -13,14 +13,14 @@
                     <i class="ion-md-close"></i>
                 </div>
 
-                <social-links class="light"></social-links>
+                <social-links class="light" :social_links="social_links"></social-links>
 
             </div>
         </nav>
 
-        <overlay-menu></overlay-menu>
+        <overlay-menu :overlay_menu="overlay_menu"></overlay-menu>
 
-        <copyright></copyright>
+        <copyright>{{copyright}}</copyright>
     </div>
 
 </template>
@@ -29,9 +29,24 @@
 import SocialLinks from "./divided/SocialLinks";
 import OverlayMenu from "./divided/OverlayMenu";
 import Copyright from "./divided/Copyright";
+import SiteSettings from "../../SiteSettings";
 export default {
     name: "header-overlay-component",
-    components: {Copyright, OverlayMenu, SocialLinks}
+    components: {Copyright, OverlayMenu, SocialLinks},
+
+    computed: {
+        copyright() {
+            return SiteSettings.copyright;
+        },
+
+        overlay_menu() {
+            return SiteSettings.overlay_menu;
+        },
+
+        social_links() {
+            return SiteSettings.social_links;
+        }
+    },
 }
 </script>
 

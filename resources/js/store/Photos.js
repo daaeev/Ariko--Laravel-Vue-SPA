@@ -62,10 +62,6 @@ export default {
             state.single = work;
         },
 
-        setImagesToSingle(state, images) {
-            state.single.images = images;
-        },
-
         incrementPagPage(state) {
             if (state.pagPage === null) {
                 state.pagPage = 1;
@@ -110,7 +106,7 @@ export default {
                     }
                 },
                 axiosError => {
-                    console.log('Fetch works error: ' + axiosError)
+                    console.log('Fetch works error; ' + axiosError)
                     dispatch('app/errorPage', null, {root: true});
                 }
             );
@@ -143,16 +139,7 @@ export default {
             const work = getters['singleFromWorksState'](work_id);
 
             if (work) {
-                if (!work.images) {
-                    await FetchPhotosWorks.fetchImagesByWorkId(
-                        work_id,
-                        axiosRes => commit('setImagesToSingle', axiosRes.data),
-                        axiosError => {
-                            console.log('Fetch work images error: ' + axiosError)
-                            dispatch('app/errorPage', null, {root: true});
-                        }
-                    );
-                }
+                commit('setSingle', work);
 
                 await FetchPhotosWorks.fetchNextPrevIds(
                     work.id,
@@ -161,7 +148,7 @@ export default {
                         commit('setSinglePagPrev', (axiosRes.data.prev ? axiosRes.data.prev.id : null));
                     },
                     axiosError => {
-                        console.log('Fetch next/prev works error: ' + axiosError)
+                        console.log('Fetch next/prev works error; ' + axiosError)
                         dispatch('app/errorPage', null, {root: true});
                     }
                 );
@@ -187,7 +174,7 @@ export default {
                             commit('setSinglePagPrev', (axiosRes.data.prev ? axiosRes.data.prev.id : null));
                         },
                         axiosError => {
-                            console.log('Fetch next/prev works error: ' + axiosError)
+                            console.log('Fetch next/prev works error; ' + axiosError)
                             dispatch('app/errorPage', null, {root: true});
                         }
                     );
@@ -195,7 +182,7 @@ export default {
                     commit('setSingle', work);
                 },
                 axiosError => {
-                    console.log('Fetch work by id error: ' + axiosError)
+                    console.log('Fetch work by id error; ' + axiosError)
                     dispatch('app/errorPage', null, {root: true});
                 }
             );

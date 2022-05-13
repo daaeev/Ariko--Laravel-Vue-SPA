@@ -8,12 +8,14 @@
 </template>
 
 <script>
-import {mapGetters} from 'vuex'
 
 export default {
-    computed: {
-        ...mapGetters('app', ['social_links']),
-    },
+    props: {
+        social_links: {
+            type: Array,
+            required: true,
+        }
+    }
 }
 </script>
 

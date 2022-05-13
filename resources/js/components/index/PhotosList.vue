@@ -33,7 +33,7 @@
                             </div>
                         </div>
                         <!-- image -->
-                        <img :src="'/storage/photos/' + work.preview.image" alt="portfolio-item" />
+                        <img :src="'/storage/photos/' + work.images[0].image" alt="portfolio-item" />
                     </div>
                 </div>
             </transition-group>
@@ -55,7 +55,7 @@ export default {
 <style scoped>
 .fade-enter-active,
 .fade-leave-active {
-    transition: opacity 0.5s ease;
+    transition: opacity 0.7s ease;
 }
 
 .fade-enter-from,
