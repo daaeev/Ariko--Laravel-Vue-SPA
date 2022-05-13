@@ -2,7 +2,9 @@
 
 namespace App\Http\Requests;
 
+use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
+use Symfony\Component\HttpKernel\Exception\HttpException;
 
 class CreateMessage extends FormRequest
 {
@@ -28,5 +30,10 @@ class CreateMessage extends FormRequest
             'email' => 'required|email:filter',
             'message' => 'required|string',
         ];
+    }
+
+    public function failedValidation(Validator $validator)
+    {
+        throw new HttpException(400, 'Bad request params');
     }
 }
