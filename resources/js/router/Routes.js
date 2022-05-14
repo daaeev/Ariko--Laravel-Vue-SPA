@@ -4,6 +4,7 @@ import SinglePhoto from "../pages/SinglePhoto";
 import Error from "../pages/Error";
 import Login from "../pages/admin/login";
 import Contact from "../pages/Contact";
+import About from "../pages/About";
 
 export default [
 
@@ -23,6 +24,10 @@ export default [
     {
         path: '/contact',
         component: Contact
+    },
+    {
+        path: '/about',
+        component: About,
     },
 
     // ADMIN PANEL

@@ -16,7 +16,7 @@ export default {
         },
         {
             title: 'About',
-            url: '#',
+            url: '/about',
             submenu: []
         },
         {
@@ -48,6 +48,13 @@ export default {
             url: '#',
             icon_class: 'fab fa-linkedin-in',
         },
+    ],
+
+    capabilities: [
+        'Mobile development',
+        'WordPress development',
+        'Logo design',
+        'Branding',
     ],
 
     copyright: '© 2018 PxlSolutions Media, Inc',
