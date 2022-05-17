@@ -75,8 +75,7 @@ class PhotoControllerTest extends TestCase
     public function testPhotoWorkSingleIfNotExist()
     {
         $this->json('get', route('works.photos.single', ['work_id' => 1]))
-            ->assertOk()
-            ->assertJson([]);
+            ->assertStatus(404);
     }
 
     public function testPhotoWorkSingleIfExist()

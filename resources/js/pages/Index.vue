@@ -13,7 +13,7 @@
         <div class="container">
             <photos-list :works="works"></photos-list>
 
-            <pagination :pag-page="pagPage" :total-pages-count="totalPagesCount" :is-works-loading="isWorksLoading" @loadmore="fetchWorks"></pagination>
+            <pagination :pag-page="pagPage" :total-pages-count="totalPagesCount" :is-works-loading="isWorksLoading" @loadmore="fetchWorksWithDynamicPag"></pagination>
         </div>
     </section>
 
@@ -35,7 +35,7 @@ export default {
 
     created() {
         if (this.works.length == 0) {
-            this.fetchWorks();
+            this.fetchWorksWithDynamicPag();
         }
     },
 
@@ -48,7 +48,7 @@ export default {
     },
 
     methods: {
-        ...mapActions('photos', ['fetchWorks']),
+        ...mapActions('photos', ['fetchWorksWithDynamicPag']),
     }
 }
 </script>

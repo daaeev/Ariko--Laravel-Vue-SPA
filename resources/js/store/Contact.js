@@ -1,4 +1,4 @@
-import CreateContactMessage from "../logic/CreateContactMessage";
+import CreateContactMessage from "../logic/api/ContactMessage";
 
 export default {
     actions: {
@@ -13,21 +13,15 @@ export default {
          * @returns {Promise<void>}
          */
         async sendMessage({dispatch}, {name, email, message}) {
-            let responseError = null
-
             await CreateContactMessage.saveMessage(
                 name,
                 email,
                 message,
                 axiosRes => {},
                 axiosError => {
-                    responseError = axiosError;
+                    throw axiosError;
                 }
             );
-
-            if (responseError) {
-                throw responseError;
-            }
         }
     },
 

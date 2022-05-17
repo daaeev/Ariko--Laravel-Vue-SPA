@@ -44,15 +44,15 @@ export default {
     methods: {
         ...mapActions('contact', ['sendMessage']),
 
-        form_submit(messageObject) {
+        async form_submit(messageObject) {
             this.submitSuccessMessage = '';
             this.submitFailedMessage = '';
 
-            this.sendMessage(messageObject)
+            await this.sendMessage(messageObject)
                 .then(() => {this.submitSuccessMessage = 'Your message has been sent successfully'})
                 .catch((error) => {
                     if (error.response.status == 429) {
-                        this.submitFailedMessage = 'Message sending limit exceeded';
+                        this.submitFailedMessage = 'Message sending limit exceeded. Wait ' + error.response.headers['retry-after'] + ' seconds';
                     } else {
                         this.submitFailedMessage = 'Oops, something wrong';
                     }

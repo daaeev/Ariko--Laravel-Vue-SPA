@@ -1,4 +1,4 @@
-import FetchPhotosWorks from "../logic/FetchPhotosWorks";
+import FetchPhotosWorks from "../logic/api/PhotosWorks";
 
 export default {
     state: {
@@ -92,7 +92,7 @@ export default {
          * @param dispatch
          * @returns {Promise<void>}
          */
-        async fetchWorks({commit, getters, dispatch}) {
+        async fetchWorksWithDynamicPag({commit, getters, dispatch}) {
             commit('setIsWorksLoading', true);
 
             await FetchPhotosWorks.fetchWorks(
@@ -161,11 +161,6 @@ export default {
                 work_id,
                 async axiosRes => {
                     const work = axiosRes.data;
-
-                    if (Object.keys(work) == 0) {
-                        dispatch('app/errorPage', null, {root: true});
-                        return;
-                    }
 
                     await FetchPhotosWorks.fetchNextPrevIds(
                         work.id,

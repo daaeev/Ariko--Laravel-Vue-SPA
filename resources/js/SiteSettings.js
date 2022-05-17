@@ -21,7 +21,7 @@ export default {
         },
         {
             title: 'Journal',
-            url: '#',
+            url: '/blog',
             submenu: []
         },
         {

@@ -1,5 +1,5 @@
 import axios from "axios";
-import SiteSettings from '../SiteSettings';
+import SiteSettings from '../../SiteSettings';
 
 export default {
 
@@ -15,7 +15,7 @@ export default {
      */
     async saveMessage(name, email, message,thenHandler = null, catchHandler = null) {
         await axios.post(
-            SiteSettings.api_domain + "/api/message/create",
+            SiteSettings.api_domain + "/api/message",
             {
                 name,
                 email,

@@ -1,5 +1,5 @@
 import axios from "axios";
-import SiteSettings from '../SiteSettings';
+import SiteSettings from '../../SiteSettings';
 
 export default {
     /**
@@ -12,7 +12,7 @@ export default {
      * @returns {Promise<void>}
      */
     async fetchWorks(limit, page,thenHandler = null, catchHandler = null) {
-        axios.get(
+        await axios.get(
             SiteSettings.api_domain + "/api/works/photos",
             {
                 params: {
@@ -34,7 +34,7 @@ export default {
      * @returns {Promise<void>}
      */
     async fetchWorkById(work_id, thenHandler = null, catchHandler = null) {
-        axios.get(
+        await axios.get(
             SiteSettings.api_domain + `/api/works/photos/${work_id}`
         )
             .then(thenHandler)
@@ -50,7 +50,7 @@ export default {
      * @returns {Promise<void>}
      */
     async fetchNextPrevIds(work_id, thenHandler = null, catchHandler = null) {
-        axios.get(
+        await axios.get(
             SiteSettings.api_domain + `/api/works/photos/next/prev/${work_id}`
         )
             .then(thenHandler)

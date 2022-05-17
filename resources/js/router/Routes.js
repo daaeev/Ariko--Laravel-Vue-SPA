@@ -5,6 +5,8 @@ import Error from "../pages/Error";
 import Login from "../pages/admin/login";
 import Contact from "../pages/Contact";
 import About from "../pages/About";
+import Blog from '../pages/Blog';
+import SinglePost from '../pages/SinglePost';
 
 export default [
 
@@ -28,6 +30,14 @@ export default [
     {
         path: '/about',
         component: About,
+    },
+    {
+        path: '/blog',
+        component: Blog,
+    },
+    {
+        path: '/blog/:id',
+        component: SinglePost,
     },
 
     // ADMIN PANEL

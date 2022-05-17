@@ -18,11 +18,7 @@ class PhotoController extends Controller
     {
         $perPage = $validate->get('_limit');
 
-        return response()
-            ->json(
-                PhotoWork::with('images')->paginate($perPage),
-                200
-            );
+        return response()->json(PhotoWork::with('images')->paginate($perPage));
     }
 
     /**
@@ -33,10 +29,7 @@ class PhotoController extends Controller
      */
     public function single($work_id)
     {
-        return response()->json(
-            PhotoWork::with('images')->find($work_id),
-            200
-        );
+        return response()->json(PhotoWork::with('images')->where('id', $work_id)->firstOrFail());
     }
 
     /**
