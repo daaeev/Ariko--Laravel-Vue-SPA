@@ -62,7 +62,7 @@ export default {
   },
 
   methods: {
-    ...mapActions("posts", ["fetchSinglePost", "createComment"]),
+    ...mapActions("posts", ["fetchPostById", "createComment"]),
 
     async submitCommentForm(commentObject) {
       this.CreateCommentSuccess = "";
@@ -81,7 +81,7 @@ export default {
   },
 
   async created() {
-    await this.fetchSinglePost(this.$route.params.id);
+    await this.fetchPostById(this.$route.params.id);
   },
 };
 </script>

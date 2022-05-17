@@ -20421,16 +20421,16 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       return _SiteSettings__WEBPACK_IMPORTED_MODULE_0__["default"].email;
     }
   }),
-  methods: _objectSpread(_objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_4__.mapActions)("posts", ["fetchPostsWithSimplePagination", "fetchPostsByTagWithSimplePagination"])), {}, {
+  methods: _objectSpread(_objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_4__.mapActions)("posts", ["fetchPosts", "fetchPostsByTag"])), {}, {
     changePage: function changePage(page) {
       if (this.$route.query.tag) {
         var tag = this.$route.query.tag;
-        this.fetchPostsByTagWithSimplePagination({
+        this.fetchPostsByTag({
           page: page,
           tag: tag
         });
       } else {
-        this.fetchPostsWithSimplePagination(page);
+        this.fetchPosts(page);
       } // Scroll to top of body
 
 
@@ -20442,11 +20442,11 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   created: function created() {
     if (this.$route.query.tag) {
       var tag = this.$route.query.tag;
-      this.fetchPostsByTagWithSimplePagination({
+      this.fetchPostsByTag({
         tag: tag
       });
     } else {
-      this.fetchPostsWithSimplePagination();
+      this.fetchPosts();
     }
   }
 });
@@ -20590,7 +20590,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   },
   created: function created() {
     if (this.works.length == 0) {
-      this.fetchWorksWithDynamicPag();
+      this.fetchWorks();
     }
   },
   computed: _objectSpread(_objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_4__.mapGetters)('photos', ['works', 'pagPage', 'totalPagesCount', 'isWorksLoading'])), {}, {
@@ -20598,7 +20598,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       return _SiteSettings__WEBPACK_IMPORTED_MODULE_3__["default"].email;
     }
   }),
-  methods: _objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_4__.mapActions)('photos', ['fetchWorksWithDynamicPag']))
+  methods: _objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_4__.mapActions)('photos', ['fetchWorks']))
 });
 
 /***/ }),
@@ -20712,7 +20712,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       return _SiteSettings__WEBPACK_IMPORTED_MODULE_2__["default"].social_links;
     }
   }),
-  methods: _objectSpread(_objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_7__.mapActions)("posts", ["fetchSinglePost", "createComment"])), {}, {
+  methods: _objectSpread(_objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_7__.mapActions)("posts", ["fetchPostById", "createComment"])), {}, {
     submitCommentForm: function submitCommentForm(commentObject) {
       var _this = this;
 
@@ -20754,7 +20754,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
           switch (_context2.prev = _context2.next) {
             case 0:
               _context2.next = 2;
-              return _this2.fetchSinglePost(_this2.$route.params.id);
+              return _this2.fetchPostById(_this2.$route.params.id);
 
             case 2:
             case "end":
@@ -22568,7 +22568,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     "pag-page": _ctx.pagPage,
     "total-pages-count": _ctx.totalPagesCount,
     "is-works-loading": _ctx.isWorksLoading,
-    onLoadmore: _ctx.fetchWorksWithDynamicPag
+    onLoadmore: _ctx.fetchWorks
   }, null, 8
   /* PROPS */
   , ["pag-page", "total-pages-count", "is-works-loading", "onLoadmore"])])]), _hoisted_4, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_email_section, {
@@ -22848,6 +22848,8 @@ __webpack_require__.r(__webpack_exports__);
     icon_class: 'fab fa-linkedin-in'
   }],
   capabilities: ['Mobile development', 'WordPress development', 'Logo design', 'Branding'],
+  photosPerPage: 6,
+  blogPerPage: 10,
   copyright: '© 2018 PxlSolutions Media, Inc',
   api_domain: 'http://ariko.vue',
   email: 'ariko@ariko.vue'
@@ -23342,6 +23344,532 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
 /***/ }),
 
+/***/ "./resources/js/logic/store/photos/fetchPhotosWithDynamicPag.js":
+/*!**********************************************************************!*\
+  !*** ./resources/js/logic/store/photos/fetchPhotosWithDynamicPag.js ***!
+  \**********************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _logic_api_PhotosWorks__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../../logic/api/PhotosWorks */ "./resources/js/logic/api/PhotosWorks.js");
+/* harmony import */ var _SiteSettings__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../SiteSettings */ "./resources/js/SiteSettings.js");
+
+
+function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+
+function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+
+
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  state: {
+    pageSize: _SiteSettings__WEBPACK_IMPORTED_MODULE_2__["default"].photosPerPage,
+    isWorksLoading: false,
+    pagPage: 0,
+    totalPagesCount: null,
+    single_pagination: {
+      next_id: null,
+      prev_id: null
+    }
+  },
+  getters: {
+    isWorksLoading: function isWorksLoading(state) {
+      return state.isWorksLoading;
+    },
+    pagPage: function pagPage(state) {
+      return state.pagPage;
+    },
+    totalPagesCount: function totalPagesCount(state) {
+      return state.totalPagesCount;
+    },
+    singlePagination: function singlePagination(state) {
+      return state.single_pagination;
+    },
+    pageSize: function pageSize(state) {
+      return state.pageSize;
+    }
+  },
+  mutations: {
+    setIsWorksLoading: function setIsWorksLoading(state, value) {
+      state.isWorksLoading = value;
+    },
+    incrementPagPage: function incrementPagPage(state) {
+      state.pagPage++;
+    },
+    setTotalPagesCount: function setTotalPagesCount(state, value) {
+      state.totalPagesCount = value;
+    },
+    setSinglePagNext: function setSinglePagNext(state, value) {
+      state.single_pagination.next_id = value;
+    },
+    setSinglePagPrev: function setSinglePagPrev(state, value) {
+      state.single_pagination.prev_id = value;
+    }
+  },
+  actions: {
+    /**
+     * Загрузить работы при помощи АПИ
+     *
+     * @param commit
+     * @param getters
+     * @param dispatch
+     * @returns {Promise<void>}
+     */
+    fetchWorks: function fetchWorks(_ref) {
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee() {
+        var commit, getters, dispatch;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee$(_context) {
+          while (1) {
+            switch (_context.prev = _context.next) {
+              case 0:
+                commit = _ref.commit, getters = _ref.getters, dispatch = _ref.dispatch;
+                commit('setIsWorksLoading', true);
+                commit('incrementPagPage');
+                _context.next = 5;
+                return _logic_api_PhotosWorks__WEBPACK_IMPORTED_MODULE_1__["default"].fetchWorks(getters.pageSize, getters.pagPage, function (axiosRes) {
+                  commit('addWorks', axiosRes.data.data);
+
+                  if (getters.totalPagesCount === null) {
+                    commit('setTotalPagesCount', axiosRes.data.last_page);
+                  }
+                }, function (axiosError) {
+                  console.log('Fetch works error; ' + axiosError);
+                  dispatch('app/errorPage', null, {
+                    root: true
+                  });
+                });
+
+              case 5:
+                commit('setIsWorksLoading', false);
+
+              case 6:
+              case "end":
+                return _context.stop();
+            }
+          }
+        }, _callee);
+      }))();
+    },
+
+    /**
+     * Несколько операций для получения работы с идентификатором work_id
+     * 1) Загружена ли раннее запрашиваемая работа (getters.single)
+     *
+     * 2) Проверяется наличие работы в массиве загруженных работ (getters.works)
+     *
+     * 3) Работа запрашивается у АПИ (FetchPhotosWorks.fetchWorkById)
+     *
+     * @param getters
+     * @param commit
+     * @param dispatch
+     * @param work_id
+     */
+    fetchWorkById: function fetchWorkById(_ref2, work_id) {
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee3() {
+        var getters, commit, dispatch, work;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee3$(_context3) {
+          while (1) {
+            switch (_context3.prev = _context3.next) {
+              case 0:
+                getters = _ref2.getters, commit = _ref2.commit, dispatch = _ref2.dispatch;
+
+                if (!(work_id == getters['single'].id)) {
+                  _context3.next = 3;
+                  break;
+                }
+
+                return _context3.abrupt("return");
+
+              case 3:
+                // Проверяется наличие работы в массиве загруженных работ (getters.works)
+                work = getters['singleFromWorksState'](work_id);
+
+                if (!work) {
+                  _context3.next = 9;
+                  break;
+                }
+
+                commit('setSingle', work);
+                _context3.next = 8;
+                return _logic_api_PhotosWorks__WEBPACK_IMPORTED_MODULE_1__["default"].fetchNextPrevIds(work.id, function (axiosRes) {
+                  commit('setSinglePagNext', axiosRes.data.next ? axiosRes.data.next.id : null);
+                  commit('setSinglePagPrev', axiosRes.data.prev ? axiosRes.data.prev.id : null);
+                }, function (axiosError) {
+                  console.log('Fetch next/prev works error; ' + axiosError);
+                  dispatch('app/errorPage', null, {
+                    root: true
+                  });
+                });
+
+              case 8:
+                return _context3.abrupt("return");
+
+              case 9:
+                _context3.next = 11;
+                return _logic_api_PhotosWorks__WEBPACK_IMPORTED_MODULE_1__["default"].fetchWorkById(work_id, /*#__PURE__*/function () {
+                  var _ref3 = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee2(axiosRes) {
+                    var work;
+                    return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee2$(_context2) {
+                      while (1) {
+                        switch (_context2.prev = _context2.next) {
+                          case 0:
+                            work = axiosRes.data;
+                            _context2.next = 3;
+                            return _logic_api_PhotosWorks__WEBPACK_IMPORTED_MODULE_1__["default"].fetchNextPrevIds(work.id, function (axiosRes) {
+                              commit('setSinglePagNext', axiosRes.data.next ? axiosRes.data.next.id : null);
+                              commit('setSinglePagPrev', axiosRes.data.prev ? axiosRes.data.prev.id : null);
+                            }, function (axiosError) {
+                              console.log('Fetch next/prev works error; ' + axiosError);
+                              dispatch('app/errorPage', null, {
+                                root: true
+                              });
+                            });
+
+                          case 3:
+                            commit('setSingle', work);
+
+                          case 4:
+                          case "end":
+                            return _context2.stop();
+                        }
+                      }
+                    }, _callee2);
+                  }));
+
+                  return function (_x) {
+                    return _ref3.apply(this, arguments);
+                  };
+                }(), function (axiosError) {
+                  console.log('Fetch work by id error; ' + axiosError);
+                  dispatch('app/errorPage', null, {
+                    root: true
+                  });
+                });
+
+              case 11:
+              case "end":
+                return _context3.stop();
+            }
+          }
+        }, _callee3);
+      }))();
+    }
+  }
+});
+
+/***/ }),
+
+/***/ "./resources/js/logic/store/posts/fetchPostsWithSimplePagination.js":
+/*!**************************************************************************!*\
+  !*** ./resources/js/logic/store/posts/fetchPostsWithSimplePagination.js ***!
+  \**************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _api_Posts__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../api/Posts */ "./resources/js/logic/api/Posts.js");
+/* harmony import */ var _api_Comments__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../api/Comments */ "./resources/js/logic/api/Comments.js");
+/* harmony import */ var _SiteSettings__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../../SiteSettings */ "./resources/js/SiteSettings.js");
+function _createForOfIteratorHelper(o, allowArrayLike) { var it = typeof Symbol !== "undefined" && o[Symbol.iterator] || o["@@iterator"]; if (!it) { if (Array.isArray(o) || (it = _unsupportedIterableToArray(o)) || allowArrayLike && o && typeof o.length === "number") { if (it) o = it; var i = 0; var F = function F() {}; return { s: F, n: function n() { if (i >= o.length) return { done: true }; return { done: false, value: o[i++] }; }, e: function e(_e) { throw _e; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var normalCompletion = true, didErr = false, err; return { s: function s() { it = it.call(o); }, n: function n() { var step = it.next(); normalCompletion = step.done; return step; }, e: function e(_e2) { didErr = true; err = _e2; }, f: function f() { try { if (!normalCompletion && it["return"] != null) it["return"](); } finally { if (didErr) throw err; } } }; }
+
+function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
+
+function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
+
+
+
+function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+
+function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+
+
+
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  state: {
+    isPostsLoading: false,
+    pagPage: null,
+    totalPagesCount: null,
+    pageSize: _SiteSettings__WEBPACK_IMPORTED_MODULE_3__["default"].blogPerPage
+  },
+  getters: {
+    pagPage: function pagPage(state) {
+      return state.pagPage;
+    },
+    pageSize: function pageSize(state) {
+      return state.pageSize;
+    },
+    isPostsLoading: function isPostsLoading(state) {
+      return state.isPostsLoading;
+    },
+    totalPagesCount: function totalPagesCount(state) {
+      return state.totalPagesCount;
+    }
+  },
+  mutations: {
+    setIsPostsLoading: function setIsPostsLoading(state, value) {
+      state.isPostsLoading = value;
+    },
+    setTotalPagesCount: function setTotalPagesCount(state, value) {
+      state.totalPagesCount = value;
+    },
+    setPagPage: function setPagPage(state, page) {
+      state.pagPage = page;
+    },
+    addCommentToSingle: function addCommentToSingle(state, comment) {
+      if (state.single.comments) {
+        state.single.comments[state.single.comments.length] = comment;
+      } else {
+        state.single.comments = [];
+        state.single.comments[0] = comment;
+      }
+    }
+  },
+  actions: {
+    /**
+     * Загрузить посты при помощи АПИ
+     *
+     * @param commit
+     * @param getters
+     * @param dispatch
+     * @param page
+     * @returns {Promise<void>}
+     */
+    fetchPosts: function fetchPosts(_ref) {
+      var _arguments = arguments;
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee() {
+        var commit, getters, dispatch, page;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee$(_context) {
+          while (1) {
+            switch (_context.prev = _context.next) {
+              case 0:
+                commit = _ref.commit, getters = _ref.getters, dispatch = _ref.dispatch;
+                page = _arguments.length > 1 && _arguments[1] !== undefined ? _arguments[1] : 1;
+                commit('setIsPostsLoading', true);
+                commit('setPagPage', page);
+                _context.next = 6;
+                return _api_Posts__WEBPACK_IMPORTED_MODULE_1__["default"].allPosts(getters.pageSize, page, function (axiosRes) {
+                  commit('setPosts', axiosRes.data.data);
+
+                  if (getters.totalPagesCount === null) {
+                    commit('setTotalPagesCount', axiosRes.data.last_page);
+                  }
+                }, function (axiosError) {
+                  console.log('Fetch posts error; ' + axiosError);
+                  dispatch('app/errorPage', null, {
+                    root: true
+                  });
+                });
+
+              case 6:
+                commit('setIsPostsLoading', false);
+
+              case 7:
+              case "end":
+                return _context.stop();
+            }
+          }
+        }, _callee);
+      }))();
+    },
+
+    /**
+     * Загрузить посты при помощи АПИ
+     *
+     * @param commit
+     * @param getters
+     * @param dispatch
+     * @param page
+     * @param tag
+     * @returns {Promise<void>}
+     */
+    fetchPostsByTag: function fetchPostsByTag(_ref2, _ref3) {
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee2() {
+        var commit, getters, dispatch, _ref3$page, page, tag;
+
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee2$(_context2) {
+          while (1) {
+            switch (_context2.prev = _context2.next) {
+              case 0:
+                commit = _ref2.commit, getters = _ref2.getters, dispatch = _ref2.dispatch;
+                _ref3$page = _ref3.page, page = _ref3$page === void 0 ? 1 : _ref3$page, tag = _ref3.tag;
+                commit('setIsPostsLoading', true);
+                commit('setPagPage', page);
+                _context2.next = 6;
+                return _api_Posts__WEBPACK_IMPORTED_MODULE_1__["default"].allPostsByTag(getters.pageSize, page, tag, function (axiosRes) {
+                  commit('setPosts', axiosRes.data.data);
+
+                  if (getters.totalPagesCount === null) {
+                    commit('setTotalPagesCount', axiosRes.data.last_page);
+                  }
+                }, function (axiosError) {
+                  console.log('Fetch posts error; ' + axiosError);
+                  dispatch('app/errorPage', null, {
+                    root: true
+                  });
+                });
+
+              case 6:
+                commit('setIsPostsLoading', false);
+
+              case 7:
+              case "end":
+                return _context2.stop();
+            }
+          }
+        }, _callee2);
+      }))();
+    },
+
+    /**
+     * Несколько операций для получения поста с идентификатором post_id
+     * 1) Загружена ли раннее запрашиваемая работа (getters.single)
+     *
+     * 2) Проверяется наличие работы в массиве загруженных работ (getters.posts)
+     *
+     * 3) Работа запрашивается у АПИ (FetchPosts.fetchPostById)
+     *
+     * @param getters
+     * @param commit
+     * @param dispatch
+     * @param post_id
+     */
+    fetchPostById: function fetchPostById(_ref4, post_id) {
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee4() {
+        var getters, commit, dispatch, post;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee4$(_context4) {
+          while (1) {
+            switch (_context4.prev = _context4.next) {
+              case 0:
+                getters = _ref4.getters, commit = _ref4.commit, dispatch = _ref4.dispatch;
+
+                if (!(post_id == getters['single'].id)) {
+                  _context4.next = 3;
+                  break;
+                }
+
+                return _context4.abrupt("return");
+
+              case 3:
+                // Проверяется наличие работы в массиве загруженных работ (getters.posts)
+                post = getters['singleFromPostsState'](post_id);
+
+                if (!post) {
+                  _context4.next = 8;
+                  break;
+                }
+
+                commit('setSingle', post);
+                _api_Comments__WEBPACK_IMPORTED_MODULE_2__["default"].fetchCommentsByPostId(post_id, function (axiosRes) {
+                  var _iterator = _createForOfIteratorHelper(axiosRes.data),
+                      _step;
+
+                  try {
+                    for (_iterator.s(); !(_step = _iterator.n()).done;) {
+                      var comment = _step.value;
+                      commit('addCommentToSingle', comment);
+                    }
+                  } catch (err) {
+                    _iterator.e(err);
+                  } finally {
+                    _iterator.f();
+                  }
+                }, function (axiosError) {
+                  console.log('Fetch post comments error; ' + axiosError);
+                  dispatch('app/errorPage', null, {
+                    root: true
+                  });
+                });
+                return _context4.abrupt("return");
+
+              case 8:
+                _context4.next = 10;
+                return _api_Posts__WEBPACK_IMPORTED_MODULE_1__["default"].fetchPostById(post_id, /*#__PURE__*/function () {
+                  var _ref5 = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee3(axiosRes) {
+                    var post;
+                    return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee3$(_context3) {
+                      while (1) {
+                        switch (_context3.prev = _context3.next) {
+                          case 0:
+                            post = axiosRes.data;
+                            commit('setSingle', post);
+
+                          case 2:
+                          case "end":
+                            return _context3.stop();
+                        }
+                      }
+                    }, _callee3);
+                  }));
+
+                  return function (_x) {
+                    return _ref5.apply(this, arguments);
+                  };
+                }(), function (axiosError) {
+                  console.log('Fetch post by id error; ' + axiosError);
+                  dispatch('app/errorPage', null, {
+                    root: true
+                  });
+                });
+
+              case 10:
+              case "end":
+                return _context4.stop();
+            }
+          }
+        }, _callee4);
+      }))();
+    },
+
+    /**
+     * Создание комментария
+     *
+     * @param commit
+     * @param name
+     * @param email
+     * @param comment
+     * @param post_id
+     */
+    createComment: function createComment(_ref6, _ref7) {
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee5() {
+        var commit, name, email, comment, post_id;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee5$(_context5) {
+          while (1) {
+            switch (_context5.prev = _context5.next) {
+              case 0:
+                commit = _ref6.commit;
+                name = _ref7.name, email = _ref7.email, comment = _ref7.comment, post_id = _ref7.post_id;
+                _context5.next = 4;
+                return _api_Comments__WEBPACK_IMPORTED_MODULE_2__["default"].createComment(name, email, comment, post_id, function (axiosRes) {
+                  return commit('addCommentToSingle', axiosRes.data);
+                }, function (axiosError) {
+                  throw axiosError;
+                });
+
+              case 4:
+              case "end":
+                return _context5.stop();
+            }
+          }
+        }, _callee5);
+      }))();
+    }
+  }
+});
+
+/***/ }),
+
 /***/ "./resources/js/mixins/DateFormat.js":
 /*!*******************************************!*\
   !*** ./resources/js/mixins/DateFormat.js ***!
@@ -23555,15 +24083,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
-/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _logic_api_PhotosWorks__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../logic/api/PhotosWorks */ "./resources/js/logic/api/PhotosWorks.js");
-
-
-function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
-
-function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
-
+/* harmony import */ var _logic_store_photos_fetchPhotosWithDynamicPag__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../logic/store/photos/fetchPhotosWithDynamicPag */ "./resources/js/logic/store/photos/fetchPhotosWithDynamicPag.js");
 function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _unsupportedIterableToArray(arr) || _nonIterableSpread(); }
 
 function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
@@ -23576,24 +24096,19 @@ function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) return _arrayLikeToAr
 
 function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
 
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); enumerableOnly && (symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? ownKeys(Object(source), !0).forEach(function (key) { _defineProperty(target, key, source[key]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)) : ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } return target; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
-  state: {
+  state: _objectSpread({
     works: [],
-    single: {},
-    isWorksLoading: false,
-    pageSize: 6,
-    pagPage: null,
-    totalPagesCount: null,
-    single_pagination: {
-      next_id: null,
-      prev_id: null
-    }
-  },
-  getters: {
-    isWorksLoading: function isWorksLoading(state) {
-      return state.isWorksLoading;
-    },
+    single: {}
+  }, _logic_store_photos_fetchPhotosWithDynamicPag__WEBPACK_IMPORTED_MODULE_0__["default"].state),
+  getters: _objectSpread({
     works: function works(state) {
       return state.works;
     },
@@ -23606,196 +24121,17 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
           return w.id == work_id;
         });
       };
-    },
-    pageSize: function pageSize(state) {
-      return state.pageSize;
-    },
-    pagPage: function pagPage(state) {
-      return state.pagPage;
-    },
-    totalPagesCount: function totalPagesCount(state) {
-      return state.totalPagesCount;
-    },
-    singlePagination: function singlePagination(state) {
-      return state.single_pagination;
     }
-  },
-  mutations: {
-    setIsWorksLoading: function setIsWorksLoading(state, value) {
-      state.isWorksLoading = value;
-    },
+  }, _logic_store_photos_fetchPhotosWithDynamicPag__WEBPACK_IMPORTED_MODULE_0__["default"].getters),
+  mutations: _objectSpread({
     addWorks: function addWorks(state, newWorks) {
       state.works = [].concat(_toConsumableArray(state.works), _toConsumableArray(newWorks));
     },
     setSingle: function setSingle(state, work) {
       state.single = work;
-    },
-    incrementPagPage: function incrementPagPage(state) {
-      if (state.pagPage === null) {
-        state.pagPage = 1;
-      } else {
-        state.pagPage++;
-      }
-    },
-    setTotalPagesCount: function setTotalPagesCount(state, value) {
-      state.totalPagesCount = value;
-    },
-    setSinglePagNext: function setSinglePagNext(state, value) {
-      state.single_pagination.next_id = value;
-    },
-    setSinglePagPrev: function setSinglePagPrev(state, value) {
-      state.single_pagination.prev_id = value;
     }
-  },
-  actions: {
-    /**
-     * Загрузить работы при помощи АПИ
-     *
-     * @param commit
-     * @param getters
-     * @param dispatch
-     * @returns {Promise<void>}
-     */
-    fetchWorksWithDynamicPag: function fetchWorksWithDynamicPag(_ref) {
-      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee() {
-        var commit, getters, dispatch;
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee$(_context) {
-          while (1) {
-            switch (_context.prev = _context.next) {
-              case 0:
-                commit = _ref.commit, getters = _ref.getters, dispatch = _ref.dispatch;
-                commit('setIsWorksLoading', true);
-                _context.next = 4;
-                return _logic_api_PhotosWorks__WEBPACK_IMPORTED_MODULE_1__["default"].fetchWorks(getters.pageSize, getters.pagPage, function (axiosRes) {
-                  commit('addWorks', axiosRes.data.data);
-
-                  if (getters.totalPagesCount === null) {
-                    commit('setTotalPagesCount', axiosRes.data.last_page);
-                  }
-                }, function (axiosError) {
-                  console.log('Fetch works error; ' + axiosError);
-                  dispatch('app/errorPage', null, {
-                    root: true
-                  });
-                });
-
-              case 4:
-                commit('incrementPagPage');
-                commit('setIsWorksLoading', false);
-
-              case 6:
-              case "end":
-                return _context.stop();
-            }
-          }
-        }, _callee);
-      }))();
-    },
-
-    /**
-     * Несколько операций для получения работы с идентификатором work_id
-     * 1) Загружена ли раннее запрашиваемая работа (getters.single)
-     *
-     * 2) Проверяется наличие работы в массиве загруженных работ (getters.works)
-     *
-     * 3) Работа запрашивается у АПИ (FetchPhotosWorks.fetchWorkById)
-     *
-     * @param getters
-     * @param commit
-     * @param dispatch
-     * @param work_id
-     */
-    fetchWorkById: function fetchWorkById(_ref2, work_id) {
-      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee3() {
-        var getters, commit, dispatch, work;
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee3$(_context3) {
-          while (1) {
-            switch (_context3.prev = _context3.next) {
-              case 0:
-                getters = _ref2.getters, commit = _ref2.commit, dispatch = _ref2.dispatch;
-
-                if (!(work_id == getters['single'].id)) {
-                  _context3.next = 3;
-                  break;
-                }
-
-                return _context3.abrupt("return");
-
-              case 3:
-                // Проверяется наличие работы в массиве загруженных работ (getters.works)
-                work = getters['singleFromWorksState'](work_id);
-
-                if (!work) {
-                  _context3.next = 9;
-                  break;
-                }
-
-                commit('setSingle', work);
-                _context3.next = 8;
-                return _logic_api_PhotosWorks__WEBPACK_IMPORTED_MODULE_1__["default"].fetchNextPrevIds(work.id, function (axiosRes) {
-                  commit('setSinglePagNext', axiosRes.data.next ? axiosRes.data.next.id : null);
-                  commit('setSinglePagPrev', axiosRes.data.prev ? axiosRes.data.prev.id : null);
-                }, function (axiosError) {
-                  console.log('Fetch next/prev works error; ' + axiosError);
-                  dispatch('app/errorPage', null, {
-                    root: true
-                  });
-                });
-
-              case 8:
-                return _context3.abrupt("return");
-
-              case 9:
-                _context3.next = 11;
-                return _logic_api_PhotosWorks__WEBPACK_IMPORTED_MODULE_1__["default"].fetchWorkById(work_id, /*#__PURE__*/function () {
-                  var _ref3 = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee2(axiosRes) {
-                    var work;
-                    return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee2$(_context2) {
-                      while (1) {
-                        switch (_context2.prev = _context2.next) {
-                          case 0:
-                            work = axiosRes.data;
-                            _context2.next = 3;
-                            return _logic_api_PhotosWorks__WEBPACK_IMPORTED_MODULE_1__["default"].fetchNextPrevIds(work.id, function (axiosRes) {
-                              commit('setSinglePagNext', axiosRes.data.next ? axiosRes.data.next.id : null);
-                              commit('setSinglePagPrev', axiosRes.data.prev ? axiosRes.data.prev.id : null);
-                            }, function (axiosError) {
-                              console.log('Fetch next/prev works error; ' + axiosError);
-                              dispatch('app/errorPage', null, {
-                                root: true
-                              });
-                            });
-
-                          case 3:
-                            commit('setSingle', work);
-
-                          case 4:
-                          case "end":
-                            return _context2.stop();
-                        }
-                      }
-                    }, _callee2);
-                  }));
-
-                  return function (_x) {
-                    return _ref3.apply(this, arguments);
-                  };
-                }(), function (axiosError) {
-                  console.log('Fetch work by id error; ' + axiosError);
-                  dispatch('app/errorPage', null, {
-                    root: true
-                  });
-                });
-
-              case 11:
-              case "end":
-                return _context3.stop();
-            }
-          }
-        }, _callee3);
-      }))();
-    }
-  },
+  }, _logic_store_photos_fetchPhotosWithDynamicPag__WEBPACK_IMPORTED_MODULE_0__["default"].mutations),
+  actions: _objectSpread({}, _logic_store_photos_fetchPhotosWithDynamicPag__WEBPACK_IMPORTED_MODULE_0__["default"].actions),
   namespaced: true
 });
 
@@ -23812,42 +24148,22 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
-/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _logic_api_Posts__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../logic/api/Posts */ "./resources/js/logic/api/Posts.js");
-/* harmony import */ var _logic_api_Comments__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../logic/api/Comments */ "./resources/js/logic/api/Comments.js");
-function _createForOfIteratorHelper(o, allowArrayLike) { var it = typeof Symbol !== "undefined" && o[Symbol.iterator] || o["@@iterator"]; if (!it) { if (Array.isArray(o) || (it = _unsupportedIterableToArray(o)) || allowArrayLike && o && typeof o.length === "number") { if (it) o = it; var i = 0; var F = function F() {}; return { s: F, n: function n() { if (i >= o.length) return { done: true }; return { done: false, value: o[i++] }; }, e: function e(_e) { throw _e; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var normalCompletion = true, didErr = false, err; return { s: function s() { it = it.call(o); }, n: function n() { var step = it.next(); normalCompletion = step.done; return step; }, e: function e(_e2) { didErr = true; err = _e2; }, f: function f() { try { if (!normalCompletion && it["return"] != null) it["return"](); } finally { if (didErr) throw err; } } }; }
+/* harmony import */ var _logic_store_posts_fetchPostsWithSimplePagination__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../logic/store/posts/fetchPostsWithSimplePagination */ "./resources/js/logic/store/posts/fetchPostsWithSimplePagination.js");
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); enumerableOnly && (symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
 
-function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? ownKeys(Object(source), !0).forEach(function (key) { _defineProperty(target, key, source[key]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)) : ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } return target; }
 
-function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
-
-
-
-function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
-
-function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
-
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
-  state: {
+  state: _objectSpread({
     posts: [],
-    single: {},
-    isPostsLoading: false,
-    pagPage: null,
-    pageSize: 10,
-    totalPagesCount: null
-  },
-  getters: {
+    single: {}
+  }, _logic_store_posts_fetchPostsWithSimplePagination__WEBPACK_IMPORTED_MODULE_0__["default"].state),
+  getters: _objectSpread({
     posts: function posts(state) {
       return state.posts;
-    },
-    pagPage: function pagPage(state) {
-      return state.pagPage;
-    },
-    isPostsLoading: function isPostsLoading(state) {
-      return state.isPostsLoading;
     },
     single: function single(state) {
       return state.single;
@@ -23858,266 +24174,17 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
           return p.id == post_id;
         });
       };
-    },
-    pageSize: function pageSize(state) {
-      return state.pageSize;
-    },
-    totalPagesCount: function totalPagesCount(state) {
-      return state.totalPagesCount;
     }
-  },
-  mutations: {
+  }, _logic_store_posts_fetchPostsWithSimplePagination__WEBPACK_IMPORTED_MODULE_0__["default"].getters),
+  mutations: _objectSpread({
     setPosts: function setPosts(state, posts) {
       state.posts = posts;
     },
-    setIsPostsLoading: function setIsPostsLoading(state, value) {
-      state.isPostsLoading = value;
-    },
     setSingle: function setSingle(state, post) {
       state.single = post;
-    },
-    setTotalPagesCount: function setTotalPagesCount(state, value) {
-      state.totalPagesCount = value;
-    },
-    setPagPage: function setPagPage(state, page) {
-      state.pagPage = page;
-    },
-    addCommentToSingle: function addCommentToSingle(state, comment) {
-      if (state.single.comments) {
-        state.single.comments[state.single.comments.length] = comment;
-      } else {
-        state.single.comments = [];
-        state.single.comments[0] = comment;
-      }
     }
-  },
-  actions: {
-    /**
-     * Загрузить посты при помощи АПИ
-     *
-     * @param commit
-     * @param getters
-     * @param dispatch
-     * @returns {Promise<void>}
-     */
-    fetchPostsWithSimplePagination: function fetchPostsWithSimplePagination(_ref) {
-      var _arguments = arguments;
-      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee() {
-        var commit, getters, dispatch, page;
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee$(_context) {
-          while (1) {
-            switch (_context.prev = _context.next) {
-              case 0:
-                commit = _ref.commit, getters = _ref.getters, dispatch = _ref.dispatch;
-                page = _arguments.length > 1 && _arguments[1] !== undefined ? _arguments[1] : 1;
-                commit('setIsPostsLoading', true);
-                commit('setPagPage', page);
-                _context.next = 6;
-                return _logic_api_Posts__WEBPACK_IMPORTED_MODULE_1__["default"].allPosts(getters.pageSize, page, function (axiosRes) {
-                  commit('setPosts', axiosRes.data.data);
-
-                  if (getters.totalPagesCount === null) {
-                    commit('setTotalPagesCount', axiosRes.data.last_page);
-                  }
-                }, function (axiosError) {
-                  console.log('Fetch posts error; ' + axiosError);
-                  dispatch('app/errorPage', null, {
-                    root: true
-                  });
-                });
-
-              case 6:
-                commit('setIsPostsLoading', false);
-
-              case 7:
-              case "end":
-                return _context.stop();
-            }
-          }
-        }, _callee);
-      }))();
-    },
-
-    /**
-     * Загрузить посты при помощи АПИ
-     *
-     * @param commit
-     * @param getters
-     * @param dispatch
-     * @returns {Promise<void>}
-     */
-    fetchPostsByTagWithSimplePagination: function fetchPostsByTagWithSimplePagination(_ref2, _ref3) {
-      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee2() {
-        var commit, getters, dispatch, _ref3$page, page, tag;
-
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee2$(_context2) {
-          while (1) {
-            switch (_context2.prev = _context2.next) {
-              case 0:
-                commit = _ref2.commit, getters = _ref2.getters, dispatch = _ref2.dispatch;
-                _ref3$page = _ref3.page, page = _ref3$page === void 0 ? 1 : _ref3$page, tag = _ref3.tag;
-                commit('setIsPostsLoading', true);
-                commit('setPagPage', page);
-                _context2.next = 6;
-                return _logic_api_Posts__WEBPACK_IMPORTED_MODULE_1__["default"].allPostsByTag(getters.pageSize, page, tag, function (axiosRes) {
-                  commit('setPosts', axiosRes.data.data);
-
-                  if (getters.totalPagesCount === null) {
-                    commit('setTotalPagesCount', axiosRes.data.last_page);
-                  }
-                }, function (axiosError) {
-                  console.log('Fetch posts error; ' + axiosError);
-                  dispatch('app/errorPage', null, {
-                    root: true
-                  });
-                });
-
-              case 6:
-                commit('setIsPostsLoading', false);
-
-              case 7:
-              case "end":
-                return _context2.stop();
-            }
-          }
-        }, _callee2);
-      }))();
-    },
-
-    /**
-     * Несколько операций для получения поста с идентификатором post_id
-     * 1) Загружена ли раннее запрашиваемая работа (getters.single)
-     *
-     * 2) Проверяется наличие работы в массиве загруженных работ (getters.posts)
-     *
-     * 3) Работа запрашивается у АПИ (FetchPosts.fetchPostById)
-     *
-     * @param getters
-     * @param commit
-     * @param dispatch
-     * @param post_id
-     */
-    fetchSinglePost: function fetchSinglePost(_ref4, post_id) {
-      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee4() {
-        var getters, commit, dispatch, post;
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee4$(_context4) {
-          while (1) {
-            switch (_context4.prev = _context4.next) {
-              case 0:
-                getters = _ref4.getters, commit = _ref4.commit, dispatch = _ref4.dispatch;
-
-                if (!(post_id == getters['single'].id)) {
-                  _context4.next = 3;
-                  break;
-                }
-
-                return _context4.abrupt("return");
-
-              case 3:
-                // Проверяется наличие работы в массиве загруженных работ (getters.posts)
-                post = getters['singleFromPostsState'](post_id);
-
-                if (!post) {
-                  _context4.next = 8;
-                  break;
-                }
-
-                commit('setSingle', post);
-                _logic_api_Comments__WEBPACK_IMPORTED_MODULE_2__["default"].fetchCommentsByPostId(post_id, function (axiosRes) {
-                  var _iterator = _createForOfIteratorHelper(axiosRes.data),
-                      _step;
-
-                  try {
-                    for (_iterator.s(); !(_step = _iterator.n()).done;) {
-                      var comment = _step.value;
-                      commit('addCommentToSingle', comment);
-                    }
-                  } catch (err) {
-                    _iterator.e(err);
-                  } finally {
-                    _iterator.f();
-                  }
-                }, function (axiosError) {
-                  console.log('Fetch post comments error; ' + axiosError);
-                  dispatch('app/errorPage', null, {
-                    root: true
-                  });
-                });
-                return _context4.abrupt("return");
-
-              case 8:
-                _context4.next = 10;
-                return _logic_api_Posts__WEBPACK_IMPORTED_MODULE_1__["default"].fetchPostById(post_id, /*#__PURE__*/function () {
-                  var _ref5 = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee3(axiosRes) {
-                    var post;
-                    return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee3$(_context3) {
-                      while (1) {
-                        switch (_context3.prev = _context3.next) {
-                          case 0:
-                            post = axiosRes.data;
-                            commit('setSingle', post);
-
-                          case 2:
-                          case "end":
-                            return _context3.stop();
-                        }
-                      }
-                    }, _callee3);
-                  }));
-
-                  return function (_x) {
-                    return _ref5.apply(this, arguments);
-                  };
-                }(), function (axiosError) {
-                  console.log('Fetch post by id error; ' + axiosError);
-                  dispatch('app/errorPage', null, {
-                    root: true
-                  });
-                });
-
-              case 10:
-              case "end":
-                return _context4.stop();
-            }
-          }
-        }, _callee4);
-      }))();
-    },
-
-    /**
-     * Создание комментария
-     * 
-     * @param commit
-     * @param name
-     * @param email
-     * @param comment
-     * @param post_id
-     */
-    createComment: function createComment(_ref6, _ref7) {
-      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee5() {
-        var commit, name, email, comment, post_id;
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee5$(_context5) {
-          while (1) {
-            switch (_context5.prev = _context5.next) {
-              case 0:
-                commit = _ref6.commit;
-                name = _ref7.name, email = _ref7.email, comment = _ref7.comment, post_id = _ref7.post_id;
-                _context5.next = 4;
-                return _logic_api_Comments__WEBPACK_IMPORTED_MODULE_2__["default"].createComment(name, email, comment, post_id, function (axiosRes) {
-                  return commit('addCommentToSingle', axiosRes.data);
-                }, function (axiosError) {
-                  throw axiosError;
-                });
-
-              case 4:
-              case "end":
-                return _context5.stop();
-            }
-          }
-        }, _callee5);
-      }))();
-    }
-  },
+  }, _logic_store_posts_fetchPostsWithSimplePagination__WEBPACK_IMPORTED_MODULE_0__["default"].mutations),
+  actions: _objectSpread({}, _logic_store_posts_fetchPostsWithSimplePagination__WEBPACK_IMPORTED_MODULE_0__["default"].actions),
   namespaced: true
 });
 

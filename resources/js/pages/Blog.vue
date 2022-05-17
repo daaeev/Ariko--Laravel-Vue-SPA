@@ -48,15 +48,15 @@ export default {
   },
 
   methods: {
-    ...mapActions("posts", ["fetchPostsWithSimplePagination", "fetchPostsByTagWithSimplePagination"]),
+    ...mapActions("posts", ["fetchPosts", "fetchPostsByTag"]),
 
     changePage(page) {
       if (this.$route.query.tag) {
         const tag = this.$route.query.tag;
 
-        this.fetchPostsByTagWithSimplePagination({page, tag});
+        this.fetchPostsByTag({page, tag});
       } else {
-        this.fetchPostsWithSimplePagination(page);
+        this.fetchPosts(page);
       }
 
       // Scroll to top of body
@@ -72,10 +72,10 @@ export default {
   created() {
     if (this.$route.query.tag) {
       const tag = this.$route.query.tag;
-      
-      this.fetchPostsByTagWithSimplePagination({tag});
+
+      this.fetchPostsByTag({tag});
     } else {
-      this.fetchPostsWithSimplePagination();
+      this.fetchPosts();
     }
   },
 };
