@@ -23365,6 +23365,18 @@ function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try
 
 function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
 
+function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _unsupportedIterableToArray(arr) || _nonIterableSpread(); }
+
+function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+
+function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
+
+function _iterableToArray(iter) { if (typeof Symbol !== "undefined" && iter[Symbol.iterator] != null || iter["@@iterator"] != null) return Array.from(iter); }
+
+function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) return _arrayLikeToArray(arr); }
+
+function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
+
 
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
@@ -23372,11 +23384,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     pageSize: _SiteSettings__WEBPACK_IMPORTED_MODULE_2__["default"].photosPerPage,
     isWorksLoading: false,
     pagPage: 0,
-    totalPagesCount: null,
-    single_pagination: {
-      next_id: null,
-      prev_id: null
-    }
+    totalPagesCount: null
   },
   getters: {
     isWorksLoading: function isWorksLoading(state) {
@@ -23396,6 +23404,9 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     }
   },
   mutations: {
+    addWorks: function addWorks(state, newWorks) {
+      state.works = [].concat(_toConsumableArray(state.works), _toConsumableArray(newWorks));
+    },
     setIsWorksLoading: function setIsWorksLoading(state, value) {
       state.isWorksLoading = value;
     },
@@ -23404,12 +23415,6 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     },
     setTotalPagesCount: function setTotalPagesCount(state, value) {
       state.totalPagesCount = value;
-    },
-    setSinglePagNext: function setSinglePagNext(state, value) {
-      state.single_pagination.next_id = value;
-    },
-    setSinglePagPrev: function setSinglePagPrev(state, value) {
-      state.single_pagination.prev_id = value;
     }
   },
   actions: {
@@ -23455,8 +23460,61 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
           }
         }, _callee);
       }))();
-    },
+    }
+  }
+});
 
+/***/ }),
+
+/***/ "./resources/js/logic/store/photos/fetchSingleWithWorkPagination.js":
+/*!**************************************************************************!*\
+  !*** ./resources/js/logic/store/photos/fetchSingleWithWorkPagination.js ***!
+  \**************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _api_PhotosWorks__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../api/PhotosWorks */ "./resources/js/logic/api/PhotosWorks.js");
+
+
+function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+
+function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  state: {
+    single_pagination: {
+      next_id: null,
+      prev_id: null
+    }
+  },
+  getters: {
+    singleFromWorksState: function singleFromWorksState(state) {
+      return function (work_id) {
+        return state.works.find(function (w) {
+          return w.id == work_id;
+        });
+      };
+    }
+  },
+  mutations: {
+    setSingle: function setSingle(state, work) {
+      state.single = work;
+    },
+    setSinglePagNext: function setSinglePagNext(state, value) {
+      state.single_pagination.next_id = value;
+    },
+    setSinglePagPrev: function setSinglePagPrev(state, value) {
+      state.single_pagination.prev_id = value;
+    }
+  },
+  actions: {
     /**
      * Несколько операций для получения работы с идентификатором work_id
      * 1) Загружена ли раннее запрашиваемая работа (getters.single)
@@ -23470,34 +23528,34 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
      * @param dispatch
      * @param work_id
      */
-    fetchWorkById: function fetchWorkById(_ref2, work_id) {
-      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee3() {
+    fetchWorkById: function fetchWorkById(_ref, work_id) {
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee2() {
         var getters, commit, dispatch, work;
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee3$(_context3) {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee2$(_context2) {
           while (1) {
-            switch (_context3.prev = _context3.next) {
+            switch (_context2.prev = _context2.next) {
               case 0:
-                getters = _ref2.getters, commit = _ref2.commit, dispatch = _ref2.dispatch;
+                getters = _ref.getters, commit = _ref.commit, dispatch = _ref.dispatch;
 
                 if (!(work_id == getters['single'].id)) {
-                  _context3.next = 3;
+                  _context2.next = 3;
                   break;
                 }
 
-                return _context3.abrupt("return");
+                return _context2.abrupt("return");
 
               case 3:
                 // Проверяется наличие работы в массиве загруженных работ (getters.works)
                 work = getters['singleFromWorksState'](work_id);
 
                 if (!work) {
-                  _context3.next = 9;
+                  _context2.next = 9;
                   break;
                 }
 
                 commit('setSingle', work);
-                _context3.next = 8;
-                return _logic_api_PhotosWorks__WEBPACK_IMPORTED_MODULE_1__["default"].fetchNextPrevIds(work.id, function (axiosRes) {
+                _context2.next = 8;
+                return _api_PhotosWorks__WEBPACK_IMPORTED_MODULE_1__["default"].fetchNextPrevIds(work.id, function (axiosRes) {
                   commit('setSinglePagNext', axiosRes.data.next ? axiosRes.data.next.id : null);
                   commit('setSinglePagPrev', axiosRes.data.prev ? axiosRes.data.prev.id : null);
                 }, function (axiosError) {
@@ -23508,20 +23566,20 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 });
 
               case 8:
-                return _context3.abrupt("return");
+                return _context2.abrupt("return");
 
               case 9:
-                _context3.next = 11;
-                return _logic_api_PhotosWorks__WEBPACK_IMPORTED_MODULE_1__["default"].fetchWorkById(work_id, /*#__PURE__*/function () {
-                  var _ref3 = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee2(axiosRes) {
+                _context2.next = 11;
+                return _api_PhotosWorks__WEBPACK_IMPORTED_MODULE_1__["default"].fetchWorkById(work_id, /*#__PURE__*/function () {
+                  var _ref2 = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee(axiosRes) {
                     var work;
-                    return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee2$(_context2) {
+                    return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee$(_context) {
                       while (1) {
-                        switch (_context2.prev = _context2.next) {
+                        switch (_context.prev = _context.next) {
                           case 0:
                             work = axiosRes.data;
-                            _context2.next = 3;
-                            return _logic_api_PhotosWorks__WEBPACK_IMPORTED_MODULE_1__["default"].fetchNextPrevIds(work.id, function (axiosRes) {
+                            _context.next = 3;
+                            return _api_PhotosWorks__WEBPACK_IMPORTED_MODULE_1__["default"].fetchNextPrevIds(work.id, function (axiosRes) {
                               commit('setSinglePagNext', axiosRes.data.next ? axiosRes.data.next.id : null);
                               commit('setSinglePagPrev', axiosRes.data.prev ? axiosRes.data.prev.id : null);
                             }, function (axiosError) {
@@ -23536,14 +23594,14 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
                           case 4:
                           case "end":
-                            return _context2.stop();
+                            return _context.stop();
                         }
                       }
-                    }, _callee2);
+                    }, _callee);
                   }));
 
                   return function (_x) {
-                    return _ref3.apply(this, arguments);
+                    return _ref2.apply(this, arguments);
                   };
                 }(), function (axiosError) {
                   console.log('Fetch work by id error; ' + axiosError);
@@ -23554,10 +23612,71 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
               case 11:
               case "end":
-                return _context3.stop();
+                return _context2.stop();
             }
           }
-        }, _callee3);
+        }, _callee2);
+      }))();
+    }
+  }
+});
+
+/***/ }),
+
+/***/ "./resources/js/logic/store/posts/createComment.js":
+/*!*********************************************************!*\
+  !*** ./resources/js/logic/store/posts/createComment.js ***!
+  \*********************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _api_Comments__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../api/Comments */ "./resources/js/logic/api/Comments.js");
+
+
+function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+
+function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  actions: {
+    /**
+     * Создание комментария
+     *
+     * @param commit
+     * @param name
+     * @param email
+     * @param comment
+     * @param post_id
+     */
+    createComment: function createComment(_ref, _ref2) {
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee() {
+        var commit, name, email, comment, post_id;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee$(_context) {
+          while (1) {
+            switch (_context.prev = _context.next) {
+              case 0:
+                commit = _ref.commit;
+                name = _ref2.name, email = _ref2.email, comment = _ref2.comment, post_id = _ref2.post_id;
+                _context.next = 4;
+                return _api_Comments__WEBPACK_IMPORTED_MODULE_1__["default"].createComment(name, email, comment, post_id, function (axiosRes) {
+                  return commit('addCommentToSingle', axiosRes.data);
+                }, function (axiosError) {
+                  throw axiosError;
+                });
+
+              case 4:
+              case "end":
+                return _context.stop();
+            }
+          }
+        }, _callee);
       }))();
     }
   }
@@ -23579,14 +23698,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
 /* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _api_Posts__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../api/Posts */ "./resources/js/logic/api/Posts.js");
-/* harmony import */ var _api_Comments__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../api/Comments */ "./resources/js/logic/api/Comments.js");
-/* harmony import */ var _SiteSettings__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../../SiteSettings */ "./resources/js/SiteSettings.js");
-function _createForOfIteratorHelper(o, allowArrayLike) { var it = typeof Symbol !== "undefined" && o[Symbol.iterator] || o["@@iterator"]; if (!it) { if (Array.isArray(o) || (it = _unsupportedIterableToArray(o)) || allowArrayLike && o && typeof o.length === "number") { if (it) o = it; var i = 0; var F = function F() {}; return { s: F, n: function n() { if (i >= o.length) return { done: true }; return { done: false, value: o[i++] }; }, e: function e(_e) { throw _e; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var normalCompletion = true, didErr = false, err; return { s: function s() { it = it.call(o); }, n: function n() { var step = it.next(); normalCompletion = step.done; return step; }, e: function e(_e2) { didErr = true; err = _e2; }, f: function f() { try { if (!normalCompletion && it["return"] != null) it["return"](); } finally { if (didErr) throw err; } } }; }
-
-function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
-
-function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
-
+/* harmony import */ var _SiteSettings__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../SiteSettings */ "./resources/js/SiteSettings.js");
 
 
 function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
@@ -23595,13 +23707,12 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
 
 
-
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   state: {
     isPostsLoading: false,
     pagPage: null,
     totalPagesCount: null,
-    pageSize: _SiteSettings__WEBPACK_IMPORTED_MODULE_3__["default"].blogPerPage
+    pageSize: _SiteSettings__WEBPACK_IMPORTED_MODULE_2__["default"].blogPerPage
   },
   getters: {
     pagPage: function pagPage(state) {
@@ -23626,14 +23737,6 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     },
     setPagPage: function setPagPage(state, page) {
       state.pagPage = page;
-    },
-    addCommentToSingle: function addCommentToSingle(state, comment) {
-      if (state.single.comments) {
-        state.single.comments[state.single.comments.length] = comment;
-      } else {
-        state.single.comments = [];
-        state.single.comments[0] = comment;
-      }
     }
   },
   actions: {
@@ -23730,8 +23833,62 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
           }
         }, _callee2);
       }))();
-    },
+    }
+  }
+});
 
+/***/ }),
+
+/***/ "./resources/js/logic/store/posts/fetchSingleFacade.js":
+/*!*************************************************************!*\
+  !*** ./resources/js/logic/store/posts/fetchSingleFacade.js ***!
+  \*************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _api_Posts__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../api/Posts */ "./resources/js/logic/api/Posts.js");
+/* harmony import */ var _api_Comments__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../api/Comments */ "./resources/js/logic/api/Comments.js");
+
+
+function _createForOfIteratorHelper(o, allowArrayLike) { var it = typeof Symbol !== "undefined" && o[Symbol.iterator] || o["@@iterator"]; if (!it) { if (Array.isArray(o) || (it = _unsupportedIterableToArray(o)) || allowArrayLike && o && typeof o.length === "number") { if (it) o = it; var i = 0; var F = function F() {}; return { s: F, n: function n() { if (i >= o.length) return { done: true }; return { done: false, value: o[i++] }; }, e: function e(_e) { throw _e; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var normalCompletion = true, didErr = false, err; return { s: function s() { it = it.call(o); }, n: function n() { var step = it.next(); normalCompletion = step.done; return step; }, e: function e(_e2) { didErr = true; err = _e2; }, f: function f() { try { if (!normalCompletion && it["return"] != null) it["return"](); } finally { if (didErr) throw err; } } }; }
+
+function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
+
+function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
+
+function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+
+function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+
+
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  getters: {
+    singleFromPostsState: function singleFromPostsState(state) {
+      return function (post_id) {
+        return state.posts.find(function (p) {
+          return p.id == post_id;
+        });
+      };
+    }
+  },
+  mutations: {
+    addCommentToSingle: function addCommentToSingle(state, comment) {
+      if (state.single.comments) {
+        state.single.comments[state.single.comments.length] = comment;
+      } else {
+        state.single.comments = [];
+        state.single.comments[0] = comment;
+      }
+    }
+  },
+  actions: {
     /**
      * Несколько операций для получения поста с идентификатором post_id
      * 1) Загружена ли раннее запрашиваемая работа (getters.single)
@@ -23745,28 +23902,28 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
      * @param dispatch
      * @param post_id
      */
-    fetchPostById: function fetchPostById(_ref4, post_id) {
-      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee4() {
+    fetchPostById: function fetchPostById(_ref, post_id) {
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee2() {
         var getters, commit, dispatch, post;
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee4$(_context4) {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee2$(_context2) {
           while (1) {
-            switch (_context4.prev = _context4.next) {
+            switch (_context2.prev = _context2.next) {
               case 0:
-                getters = _ref4.getters, commit = _ref4.commit, dispatch = _ref4.dispatch;
+                getters = _ref.getters, commit = _ref.commit, dispatch = _ref.dispatch;
 
                 if (!(post_id == getters['single'].id)) {
-                  _context4.next = 3;
+                  _context2.next = 3;
                   break;
                 }
 
-                return _context4.abrupt("return");
+                return _context2.abrupt("return");
 
               case 3:
                 // Проверяется наличие работы в массиве загруженных работ (getters.posts)
                 post = getters['singleFromPostsState'](post_id);
 
                 if (!post) {
-                  _context4.next = 8;
+                  _context2.next = 8;
                   break;
                 }
 
@@ -23791,30 +23948,30 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                     root: true
                   });
                 });
-                return _context4.abrupt("return");
+                return _context2.abrupt("return");
 
               case 8:
-                _context4.next = 10;
+                _context2.next = 10;
                 return _api_Posts__WEBPACK_IMPORTED_MODULE_1__["default"].fetchPostById(post_id, /*#__PURE__*/function () {
-                  var _ref5 = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee3(axiosRes) {
+                  var _ref2 = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee(axiosRes) {
                     var post;
-                    return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee3$(_context3) {
+                    return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee$(_context) {
                       while (1) {
-                        switch (_context3.prev = _context3.next) {
+                        switch (_context.prev = _context.next) {
                           case 0:
                             post = axiosRes.data;
                             commit('setSingle', post);
 
                           case 2:
                           case "end":
-                            return _context3.stop();
+                            return _context.stop();
                         }
                       }
-                    }, _callee3);
+                    }, _callee);
                   }));
 
                   return function (_x) {
-                    return _ref5.apply(this, arguments);
+                    return _ref2.apply(this, arguments);
                   };
                 }(), function (axiosError) {
                   console.log('Fetch post by id error; ' + axiosError);
@@ -23825,44 +23982,10 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
               case 10:
               case "end":
-                return _context4.stop();
+                return _context2.stop();
             }
           }
-        }, _callee4);
-      }))();
-    },
-
-    /**
-     * Создание комментария
-     *
-     * @param commit
-     * @param name
-     * @param email
-     * @param comment
-     * @param post_id
-     */
-    createComment: function createComment(_ref6, _ref7) {
-      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee5() {
-        var commit, name, email, comment, post_id;
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee5$(_context5) {
-          while (1) {
-            switch (_context5.prev = _context5.next) {
-              case 0:
-                commit = _ref6.commit;
-                name = _ref7.name, email = _ref7.email, comment = _ref7.comment, post_id = _ref7.post_id;
-                _context5.next = 4;
-                return _api_Comments__WEBPACK_IMPORTED_MODULE_2__["default"].createComment(name, email, comment, post_id, function (axiosRes) {
-                  return commit('addCommentToSingle', axiosRes.data);
-                }, function (axiosError) {
-                  throw axiosError;
-                });
-
-              case 4:
-              case "end":
-                return _context5.stop();
-            }
-          }
-        }, _callee5);
+        }, _callee2);
       }))();
     }
   }
@@ -24084,18 +24207,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
 /* harmony import */ var _logic_store_photos_fetchPhotosWithDynamicPag__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../logic/store/photos/fetchPhotosWithDynamicPag */ "./resources/js/logic/store/photos/fetchPhotosWithDynamicPag.js");
-function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _unsupportedIterableToArray(arr) || _nonIterableSpread(); }
-
-function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
-
-function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
-
-function _iterableToArray(iter) { if (typeof Symbol !== "undefined" && iter[Symbol.iterator] != null || iter["@@iterator"] != null) return Array.from(iter); }
-
-function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) return _arrayLikeToArray(arr); }
-
-function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
-
+/* harmony import */ var _logic_store_photos_fetchSingleWithWorkPagination__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../logic/store/photos/fetchSingleWithWorkPagination */ "./resources/js/logic/store/photos/fetchSingleWithWorkPagination.js");
 function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); enumerableOnly && (symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
 
 function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? ownKeys(Object(source), !0).forEach(function (key) { _defineProperty(target, key, source[key]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)) : ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } return target; }
@@ -24103,35 +24215,22 @@ function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { va
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
 
+
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
-  state: _objectSpread({
+  state: _objectSpread(_objectSpread({
     works: [],
     single: {}
-  }, _logic_store_photos_fetchPhotosWithDynamicPag__WEBPACK_IMPORTED_MODULE_0__["default"].state),
-  getters: _objectSpread({
+  }, _logic_store_photos_fetchPhotosWithDynamicPag__WEBPACK_IMPORTED_MODULE_0__["default"].state), _logic_store_photos_fetchSingleWithWorkPagination__WEBPACK_IMPORTED_MODULE_1__["default"].state),
+  getters: _objectSpread(_objectSpread({
     works: function works(state) {
       return state.works;
     },
     single: function single(state) {
       return state.single;
-    },
-    singleFromWorksState: function singleFromWorksState(state) {
-      return function (work_id) {
-        return state.works.find(function (w) {
-          return w.id == work_id;
-        });
-      };
     }
-  }, _logic_store_photos_fetchPhotosWithDynamicPag__WEBPACK_IMPORTED_MODULE_0__["default"].getters),
-  mutations: _objectSpread({
-    addWorks: function addWorks(state, newWorks) {
-      state.works = [].concat(_toConsumableArray(state.works), _toConsumableArray(newWorks));
-    },
-    setSingle: function setSingle(state, work) {
-      state.single = work;
-    }
-  }, _logic_store_photos_fetchPhotosWithDynamicPag__WEBPACK_IMPORTED_MODULE_0__["default"].mutations),
-  actions: _objectSpread({}, _logic_store_photos_fetchPhotosWithDynamicPag__WEBPACK_IMPORTED_MODULE_0__["default"].actions),
+  }, _logic_store_photos_fetchPhotosWithDynamicPag__WEBPACK_IMPORTED_MODULE_0__["default"].getters), _logic_store_photos_fetchSingleWithWorkPagination__WEBPACK_IMPORTED_MODULE_1__["default"].getters),
+  mutations: _objectSpread(_objectSpread({}, _logic_store_photos_fetchPhotosWithDynamicPag__WEBPACK_IMPORTED_MODULE_0__["default"].mutations), _logic_store_photos_fetchSingleWithWorkPagination__WEBPACK_IMPORTED_MODULE_1__["default"].mutations),
+  actions: _objectSpread(_objectSpread({}, _logic_store_photos_fetchPhotosWithDynamicPag__WEBPACK_IMPORTED_MODULE_0__["default"].actions), _logic_store_photos_fetchSingleWithWorkPagination__WEBPACK_IMPORTED_MODULE_1__["default"].actions),
   namespaced: true
 });
 
@@ -24149,6 +24248,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
 /* harmony import */ var _logic_store_posts_fetchPostsWithSimplePagination__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../logic/store/posts/fetchPostsWithSimplePagination */ "./resources/js/logic/store/posts/fetchPostsWithSimplePagination.js");
+/* harmony import */ var _logic_store_posts_fetchSingleFacade__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../logic/store/posts/fetchSingleFacade */ "./resources/js/logic/store/posts/fetchSingleFacade.js");
+/* harmony import */ var _logic_store_posts_createComment__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../logic/store/posts/createComment */ "./resources/js/logic/store/posts/createComment.js");
 function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); enumerableOnly && (symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
 
 function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? ownKeys(Object(source), !0).forEach(function (key) { _defineProperty(target, key, source[key]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)) : ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } return target; }
@@ -24156,35 +24257,30 @@ function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { va
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
 
+
+
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   state: _objectSpread({
     posts: [],
     single: {}
   }, _logic_store_posts_fetchPostsWithSimplePagination__WEBPACK_IMPORTED_MODULE_0__["default"].state),
-  getters: _objectSpread({
+  getters: _objectSpread(_objectSpread({
     posts: function posts(state) {
       return state.posts;
     },
     single: function single(state) {
       return state.single;
-    },
-    singleFromPostsState: function singleFromPostsState(state) {
-      return function (post_id) {
-        return state.posts.find(function (p) {
-          return p.id == post_id;
-        });
-      };
     }
-  }, _logic_store_posts_fetchPostsWithSimplePagination__WEBPACK_IMPORTED_MODULE_0__["default"].getters),
-  mutations: _objectSpread({
+  }, _logic_store_posts_fetchPostsWithSimplePagination__WEBPACK_IMPORTED_MODULE_0__["default"].getters), _logic_store_posts_fetchSingleFacade__WEBPACK_IMPORTED_MODULE_1__["default"].getters),
+  mutations: _objectSpread(_objectSpread({
     setPosts: function setPosts(state, posts) {
       state.posts = posts;
     },
     setSingle: function setSingle(state, post) {
       state.single = post;
     }
-  }, _logic_store_posts_fetchPostsWithSimplePagination__WEBPACK_IMPORTED_MODULE_0__["default"].mutations),
-  actions: _objectSpread({}, _logic_store_posts_fetchPostsWithSimplePagination__WEBPACK_IMPORTED_MODULE_0__["default"].actions),
+  }, _logic_store_posts_fetchPostsWithSimplePagination__WEBPACK_IMPORTED_MODULE_0__["default"].mutations), _logic_store_posts_fetchSingleFacade__WEBPACK_IMPORTED_MODULE_1__["default"].mutations),
+  actions: _objectSpread(_objectSpread(_objectSpread({}, _logic_store_posts_fetchPostsWithSimplePagination__WEBPACK_IMPORTED_MODULE_0__["default"].actions), _logic_store_posts_fetchSingleFacade__WEBPACK_IMPORTED_MODULE_1__["default"].actions), _logic_store_posts_createComment__WEBPACK_IMPORTED_MODULE_2__["default"].actions),
   namespaced: true
 });
 

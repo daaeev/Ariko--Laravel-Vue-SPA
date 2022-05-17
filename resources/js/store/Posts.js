@@ -1,4 +1,6 @@
 import fetchPostsWithSimplePagination from "../logic/store/posts/fetchPostsWithSimplePagination";
+import fetchSingleFacade from "../logic/store/posts/fetchSingleFacade";
+import createComment from '../logic/store/posts/createComment';
 
 export default {
     state: {
@@ -17,11 +19,8 @@ export default {
             return state.single;
         },
 
-        singleFromPostsState(state) {
-            return post_id => state.posts.find((p) => p.id == post_id);
-        },
-
-        ...fetchPostsWithSimplePagination.getters
+        ...fetchPostsWithSimplePagination.getters,
+        ...fetchSingleFacade.getters,
     },
 
     mutations: {
@@ -33,11 +32,14 @@ export default {
             state.single = post;
         },
 
-        ...fetchPostsWithSimplePagination.mutations
+        ...fetchPostsWithSimplePagination.mutations,
+        ...fetchSingleFacade.mutations,
     },
 
     actions: {
-        ...fetchPostsWithSimplePagination.actions
+        ...fetchPostsWithSimplePagination.actions,
+        ...fetchSingleFacade.actions,
+        ...createComment.actions,
     },
 
     namespaced: true,
