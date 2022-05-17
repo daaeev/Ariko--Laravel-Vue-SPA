@@ -34,7 +34,7 @@ class PaginationDataTest extends TestCase
 
     public function testFailed($limit)
     {
-        $this->post($this->route, ['_limit' => $limit])->assertStatus(400);
+        $this->post($this->route, ['_limit' => $limit])->assertStatus(422);
     }
 
     public function successData()

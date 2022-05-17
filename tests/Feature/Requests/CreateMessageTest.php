@@ -33,7 +33,7 @@ class CreateMessageTest extends TestCase
      */
     public function testFailed($data)
     {
-        $this->post($this->route, $data)->assertStatus(400);
+        $this->post($this->route, $data)->assertStatus(422);
     }
 
     public function successData()

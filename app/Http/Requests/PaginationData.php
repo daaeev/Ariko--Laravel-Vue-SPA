@@ -32,6 +32,6 @@ class PaginationData extends FormRequest
 
     public function failedValidation(Validator $validator)
     {
-        throw new HttpException(400, 'Bad request params');
+        throw new HttpException(422, 'Bad request params');
     }
 }

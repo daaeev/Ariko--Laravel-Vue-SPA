@@ -37,7 +37,7 @@ Route::prefix('posts')->group(function () {
 // ---COMMENTS---
 
 Route::prefix('comments')->group(function () {
-    Route::post('/', [CommentController::class, 'createComment'])->middleware('throttle:1, 5')->name('comments.create');
+    Route::post('/', [CommentController::class, 'createComment'])->middleware('throttle:1, 5')->name('comment.create');
     Route::get('/{post_id}', [CommentController::class, 'commentsByPost'])->name('comments.by-post');
 });
 

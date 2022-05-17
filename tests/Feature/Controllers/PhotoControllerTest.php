@@ -17,9 +17,6 @@ class PhotoControllerTest extends TestCase
             ->assertOk()
             ->assertJson([
                 'data' => [],
-                'per_page' => 15,
-                'current_page' => 1,
-                'last_page' => 1,
             ]);
     }
 
@@ -37,15 +34,20 @@ class PhotoControllerTest extends TestCase
             ->assertOk()
             ->assertJson([
                 'data' => $res_data,
-                'per_page' => 15,
-                'current_page' => 1,
-                'last_page' => 1,
             ]);
     }
 
     public function testPhotosListPagination()
     {
         PhotoWork::factory(2)->create();
+
+        $this->json('get', route('works.photos'))
+            ->assertOk()
+            ->assertJson([
+                'per_page' => 15,
+                'current_page' => 1,
+                'last_page' => 1,
+            ]);
 
         $this->json('get', route('works.photos', ['_limit' => 1]))
             ->assertOk()
