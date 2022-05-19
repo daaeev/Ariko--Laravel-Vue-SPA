@@ -27,7 +27,7 @@
 
 <script>
 export default {
-  created() {
+  mounted() {
     // Scroll to top of body
     $("body,html").animate(
       {

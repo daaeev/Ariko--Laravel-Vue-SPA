@@ -2,7 +2,7 @@
 
 namespace App\Http\Requests;
 
-class CreateComment extends ValidationWithFailedValidationMethod
+class UserLogin extends ValidationWithFailedValidationMethod
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -22,10 +22,8 @@ class CreateComment extends ValidationWithFailedValidationMethod
     public function rules()
     {
         return [
-            'name' => 'required|string|max:50',
-            'email' => 'required|string|max:254|email:filter',
-            'comment' => 'required|string',
-            'post_id' => 'bail|required|exists:\App\Models\Post,id'
+            'email' => 'required|email:filter|exists:\App\Models\User,email',
+            'password' => 'required|string|max:100',
         ];
     }
 }

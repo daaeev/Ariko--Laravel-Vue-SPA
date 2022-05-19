@@ -5,7 +5,7 @@
     <header>
       <!-- title -->
       <h2 class="title">
-        <router-link :to="'/blog/' + item.id">{{ item.title }}</router-link>
+        <router-link :to="{name: 'blog', params: {id: item.id}}">{{ item.title }}</router-link>
       </h2>
       <!-- meta -->
       <ul class="meta list-inline">
@@ -31,7 +31,7 @@
         {{ item.content.substr(0, 170) + "..." }}
       </p>
       <!-- button -->
-      <router-link :to="'/blog/' + item.id" class="btn btn-default"
+      <router-link :to="{name: 'blog', params: {id: item.id}}" class="btn btn-default"
         >Read more</router-link
       >
     </footer>

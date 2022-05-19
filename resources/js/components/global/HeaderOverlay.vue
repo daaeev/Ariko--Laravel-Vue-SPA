@@ -6,7 +6,7 @@
             <div class="container">
 
                 <!-- logo light -->
-                <router-link :to="'/'"><img src="/images/logo-light.png" alt="logo"/></router-link>
+                <router-link :to="{name: 'works.photos'}"><img src="/images/logo-light.png" alt="logo"/></router-link>
 
                 <!-- close icon -->
                 <div class="close-icon">

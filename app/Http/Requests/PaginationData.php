@@ -2,11 +2,7 @@
 
 namespace App\Http\Requests;
 
-use Illuminate\Contracts\Validation\Validator;
-use Illuminate\Foundation\Http\FormRequest;
-use Symfony\Component\HttpKernel\Exception\HttpException;
-
-class PaginationData extends FormRequest
+class PaginationData extends ValidationWithFailedValidationMethod
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -28,10 +24,5 @@ class PaginationData extends FormRequest
         return [
             '_limit' => 'nullable|numeric|integer'
         ];
-    }
-
-    public function failedValidation(Validator $validator)
-    {
-        throw new HttpException(422, 'Bad request params');
     }
 }

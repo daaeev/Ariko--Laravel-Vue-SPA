@@ -9,7 +9,7 @@
       <ul class="meta list-inline">
         <li class="list-inline-item">{{dateFormat(single.created_at)}}</li>
         <li class="list-inline-item" v-for="tag in single.tags" :key="tag.id">
-          <router-link :to="'/blog?tag=' + tag.name">{{tag.name}}</router-link>
+          <router-link :to="{name: 'blog', params: {tag: tag.name}}">{{tag.name}}</router-link>
         </li>
       </ul>
     </header>

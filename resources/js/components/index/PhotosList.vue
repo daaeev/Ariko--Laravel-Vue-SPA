@@ -12,11 +12,11 @@
 
                             <div class="info">
                                 <!-- title -->
-                                <h3><router-link :to="'/works/photos/' + work.id">{{work.name}}</router-link></h3>
+                                <h3><router-link :to="{name: 'works.photos.single', params: {id: work.id}}">{{work.name}}</router-link></h3>
                                 <span>{{work.subject}}</span>
                                 <!-- icons -->
                                 <div class="icons">
-                                    <router-link :to="'/works/photos/' + work.id" class="more-link">
+                                    <router-link :to="{name: 'works.photos.single', params: {id: work.id}}" class="more-link">
                                         <i class="ion-md-arrow-forward"></i>
                                     </router-link>
 

@@ -2,31 +2,31 @@ export default {
     overlay_menu: [
         {
             title: 'Works',
-            url: '/',
+            url: 'works.photos',
             submenu: [
                 {
                     title: 'Videos',
-                    url: '#',
+                    url: '',
                 },
                 {
                     title: 'Photos',
-                    url: '/',
+                    url: 'works.photos',
                 },
             ],
         },
         {
             title: 'About',
-            url: '/about',
+            url: 'about',
             submenu: []
         },
         {
             title: 'Journal',
-            url: '/blog',
+            url: 'blog',
             submenu: []
         },
         {
             title: 'Contact',
-            url: '/contact',
+            url: 'contact',
             submenu: []
         },
     ],

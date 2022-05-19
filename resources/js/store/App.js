@@ -7,7 +7,7 @@ export default {
          */
         errorPage()
         {
-            router.push('/error');
+            router.push({name: 'error'});
         }
     },
 

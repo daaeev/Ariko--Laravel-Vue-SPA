@@ -3,6 +3,7 @@ import app from "./App.js";
 import photos from "./Photos.js";
 import contact from "./Contact";
 import posts from './Posts';
+import auth from './Auth';
 
 export default createStore({
     modules: {
@@ -10,5 +11,6 @@ export default createStore({
         photos,
         contact,
         posts,
+        auth,
     },
 });

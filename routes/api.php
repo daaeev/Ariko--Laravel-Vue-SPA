@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\api\auth\AuthController;
 use App\Http\Controllers\api\CommentController;
 use App\Http\Controllers\api\PhotoController;
 use Illuminate\Support\Facades\Route;
@@ -37,8 +38,17 @@ Route::prefix('posts')->group(function () {
 // ---COMMENTS---
 
 Route::prefix('comments')->group(function () {
-    Route::post('/', [CommentController::class, 'createComment'])->middleware('throttle:1, 5')->name('comment.create');
+    Route::post('/', [CommentController::class, 'createComment'])->middleware('throttle:1,5')->name('comment.create');
     Route::get('/{post_id}', [CommentController::class, 'commentsByPost'])->name('comments.by-post');
 });
 
 // !!!COMMENTS!!!
+
+// ---AUTH---
+
+Route::prefix('auth')->group(function () {
+    Route::post('/login', [AuthController::class, 'login'])->middleware('throttle:1,0.5')->name('auth.login');
+    Route::post('/check', [AuthController::class, 'authCheck'])->name('auth.check');
+});
+
+// !!!AUTH!!!

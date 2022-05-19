@@ -16,7 +16,7 @@
             <div class="column col-md-6">
                 <!-- Email input -->
                 <div class="form-group">
-                    <input type="email" class="form-control" id="email" name="InputEmail" placeholder="Email address" required="required" v-model="email" maxlength="345">
+                    <input type="email" class="form-control" id="email" name="InputEmail" placeholder="Email address" required="required" v-model="email" maxlength="255">
                     <div class="help-block with-errors email-errors"></div>
                 </div>
             </div>
@@ -51,14 +51,24 @@ export default {
         onSubmit() {
             let hasErrors = false;
 
+            document.querySelector('.name-errors').innerHTML = '';
+            document.querySelector('.email-errors').innerHTML = '';
+            document.querySelector('.message-errors').innerHTML = '';
+
             if (!this.name) {
                 document.querySelector('.name-errors').append('Name is required');
+                hasErrors = true;
+            } else if (this.name.length > 50) {
+                document.querySelector('.name-errors').append('Name length must not exceed 50');
                 hasErrors = true;
             }
 
             if (!this.email) {
                 document.querySelector('.email-errors').append('Email is required');
                 hasErrors = true;
+            } else if (this.email.length > 255) {
+                document.querySelector('.email-errors').append('Email length must not exceed 255');
+                hasErrors = true;  
             }
 
             if (!this.message) {

@@ -1,7 +1,7 @@
 <template>
     <div class="error-block">
         <h1>Oops, something wrong</h1>
-        <router-link to="/">Home page</router-link>
+        <router-link :to="{name: 'works.photos'}">Home page</router-link>
     </div>
 </template>
 

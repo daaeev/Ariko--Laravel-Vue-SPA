@@ -4,7 +4,7 @@
 	<nav class="navbar navbar-light">
 		<div class="container d-flex">
 			<!-- logo -->
-			<router-link :to="'/'"><img src="/images/logo.png" alt="logo"/></router-link>
+			<router-link :to="{name: 'works.photos'}"><img src="/images/logo.png" alt="logo"/></router-link>
 
 			<!-- menu icon -->
 			<div class="menu-icon justify-content-end">
