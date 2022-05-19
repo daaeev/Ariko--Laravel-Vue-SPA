@@ -5,6 +5,7 @@ namespace Tests\Feature\Controllers;
 use App\Models\Message;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
+use Illuminate\Routing\Middleware\ThrottleRequests;
 use Tests\TestCase;
 
 class MessageControllerTest extends TestCase
@@ -38,7 +39,8 @@ class MessageControllerTest extends TestCase
 
         $this->instance(Message::class, $model_mock);
 
-        $this->post(route('message.create'), $data)
+        $this->withoutMiddleware(ThrottleRequests::class)
+            ->post(route('message.create'), $data)
             ->assertOk()
             ->assertJson($data);
     }
@@ -70,6 +72,8 @@ class MessageControllerTest extends TestCase
 
         $this->instance(Message::class, $model_mock);
 
-        $this->post(route('message.create'), $data)->assertStatus(500);
+        $this->withoutMiddleware(ThrottleRequests::class)
+            ->post(route('message.create'), $data)
+            ->assertStatus(500);
     }
 }

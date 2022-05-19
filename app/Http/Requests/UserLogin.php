@@ -22,7 +22,7 @@ class UserLogin extends ValidationWithFailedValidationMethod
     public function rules()
     {
         return [
-            'email' => 'required|email:filter|exists:\App\Models\User,email',
+            'email' => 'required|email:filter',
             'password' => 'required|string|max:100',
         ];
     }

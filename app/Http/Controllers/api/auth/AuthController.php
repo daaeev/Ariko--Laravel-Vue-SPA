@@ -47,7 +47,7 @@ class AuthController extends Controller
     /**
      * Проверка токена аутентификации
      *
-     * @param AuthCheck $validate
+     * @param AuthToken $validate
      * @return \Illuminate\Http\Response
      * @throws HttpException
      */

@@ -8,6 +8,7 @@ use App\Services\TestHelpers\GetModelQueryBuilder;
 use App\Services\TestHelpers\interfaces\GetModelQueryBuilderInterface;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Routing\Middleware\ThrottleRequests;
 use Tests\TestCase;
 
 class CommentsControllerTest extends TestCase
@@ -46,7 +47,8 @@ class CommentsControllerTest extends TestCase
 
         $this->instance(Comment::class, $model_mock);
 
-        $this->post(route('comment.create'), $data)
+        $this->withoutMiddleware(ThrottleRequests::class)
+            ->post(route('comment.create'), $data)
             ->assertOk()
             ->assertJson([
                 'name' => 'name',
@@ -88,7 +90,9 @@ class CommentsControllerTest extends TestCase
 
         $this->instance(Comment::class, $model_mock);
 
-        $this->post(route('comment.create'), $data)->assertStatus(500);
+        $this->withoutMiddleware(ThrottleRequests::class)
+            ->post(route('comment.create'), $data)
+            ->assertStatus(500);
     }
 
     public function testCommentsByPost()
