@@ -18,7 +18,12 @@ class PhotoController extends Controller
     {
         $perPage = $validate->get('_limit');
 
-        return response()->json(PhotoWork::with('images')->paginate($perPage));
+        return response()->json(
+            $this->query_helper
+                ->queryBuilder(PhotoWork::class)
+                ->with('images')
+                ->paginate($perPage)
+        );
     }
 
     /**
@@ -29,7 +34,13 @@ class PhotoController extends Controller
      */
     public function single($work_id)
     {
-        return response()->json(PhotoWork::with('images')->where('id', $work_id)->firstOrFail());
+        return response()->json(
+            $this->query_helper
+                ->queryBuilder(PhotoWork::class)
+                ->with('images')
+                ->where('id', $work_id)
+                ->firstOrFail()
+        );
     }
 
     /**
@@ -40,11 +51,14 @@ class PhotoController extends Controller
      */
     public function photosNextAndPrevIds($work_id)
     {
-        $next = PhotoWork::select('id')
+        $builder_next = $this->query_helper->queryBuilder(PhotoWork::class);
+        $builder_prev = $this->query_helper->queryBuilder(PhotoWork::class);
+
+        $next = $builder_next->select('id')
             ->where([['id', '>', $work_id]])
             ->first();
 
-        $prev = PhotoWork::select('id')
+        $prev = $builder_prev->select('id')
             ->where([['id', '<', $work_id]])
             ->orderBy('id', 'desc')
             ->first();

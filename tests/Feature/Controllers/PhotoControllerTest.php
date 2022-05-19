@@ -4,115 +4,258 @@ namespace Tests\Feature\Controllers;
 
 use App\Models\Image;
 use App\Models\PhotoWork;
+use App\Models\Post;
+use App\Services\TestHelpers\GetModelQueryBuilder;
+use App\Services\TestHelpers\interfaces\GetModelQueryBuilderInterface;
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
 class PhotoControllerTest extends TestCase
 {
-    use RefreshDatabase;
-
-    public function testPhotosListIfEmpty()
+    public function testPhotosList()
     {
-        $this->json('get', route('works.photos'))
+        $result = [
+            'some_pag_data1' => 1,
+            'some_pag_data2' => 2,
+            'some_pag_data3' => 3,
+            'data' => [],
+        ];
+
+        $builder_mock = $this->getMockBuilder(Builder::class)
+            ->disableOriginalConstructor()
+            ->onlyMethods(['with', 'paginate'])
+            ->getMock();
+
+        $builder_mock->expects($this->once())
+            ->method('with')
+            ->with('images')
+            ->willReturn($builder_mock);
+
+        $builder_mock->expects($this->once())
+            ->method('paginate')
+            ->with(null)
+            ->willReturn($result);
+
+        $query_helper_mock = $this->getMockBuilder(GetModelQueryBuilder::class)
+            ->onlyMethods(['queryBuilder'])
+            ->getMock();
+
+        $query_helper_mock->expects($this->once())
+            ->method('queryBuilder')
+            ->with(PhotoWork::class)
+            ->willReturn($builder_mock);
+
+        $this->app->instance(
+            GetModelQueryBuilderInterface::class,
+            $query_helper_mock
+        );
+
+        $this->get(route('works.photos'))
             ->assertOk()
-            ->assertJson([
-                'data' => [],
-            ]);
+            ->assertJson($result);
     }
 
-    public function testPhotosListIfExists()
+    public function testPhotosListWithPerPageVar()
     {
-        $works = PhotoWork::factory(2)->create();
-        $images1 = Image::factory(2)->create(['photo_work_id' => $works[0]->id]);
-        $images2 = Image::factory(2)->create(['photo_work_id' => $works[1]->id]);
+        $perPage = 6;
+        $result = [
+            'some_pag_data1' => 1,
+            'some_pag_data2' => 2,
+            'some_pag_data3' => 3,
+            'data' => [],
+        ];
 
-        $res_data = [$works[0]->attributesToArray(), $works[1]->attributesToArray()];
-        $res_data[0]['images'] = [$images1[0]->attributesToArray(), $images1[1]->attributesToArray()];
-        $res_data[1]['images'] = [$images2[0]->attributesToArray(), $images2[1]->attributesToArray()];
+        $builder_mock = $this->getMockBuilder(Builder::class)
+            ->disableOriginalConstructor()
+            ->onlyMethods(['with', 'paginate'])
+            ->getMock();
 
-        $this->json('get', route('works.photos'))
+        $builder_mock->expects($this->once())
+            ->method('with')
+            ->with('images')
+            ->willReturn($builder_mock);
+
+        $builder_mock->expects($this->once())
+            ->method('paginate')
+            ->with($perPage)
+            ->willReturn($result);
+
+        $query_helper_mock = $this->getMockBuilder(GetModelQueryBuilder::class)
+            ->onlyMethods(['queryBuilder'])
+            ->getMock();
+
+        $query_helper_mock->expects($this->once())
+            ->method('queryBuilder')
+            ->with(PhotoWork::class)
+            ->willReturn($builder_mock);
+
+        $this->app->instance(
+            GetModelQueryBuilderInterface::class,
+            $query_helper_mock
+        );
+
+        $this->get(route('works.photos', ['_limit' => $perPage]))
             ->assertOk()
-            ->assertJson([
-                'data' => $res_data,
-            ]);
-    }
-
-    public function testPhotosListPagination()
-    {
-        PhotoWork::factory(2)->create();
-
-        $this->json('get', route('works.photos'))
-            ->assertOk()
-            ->assertJson([
-                'per_page' => 15,
-                'current_page' => 1,
-                'last_page' => 1,
-            ]);
-
-        $this->json('get', route('works.photos', ['_limit' => 1]))
-            ->assertOk()
-            ->assertJson([
-                'per_page' => 1,
-                'current_page' => 1,
-                'last_page' => 2,
-            ]);
-
-        $this->json('get', route('works.photos', ['_limit' => 2]))
-            ->assertOk()
-            ->assertJson([
-                'per_page' => 2,
-                'current_page' => 1,
-                'last_page' => 1,
-            ]);
-
-        $this->json('get', route('works.photos', ['_limit' => 1, 'page' => 2]))
-            ->assertOk()
-            ->assertJson([
-                'per_page' => 1,
-                'current_page' => 2,
-                'last_page' => 2,
-            ]);
-    }
-
-    public function testPhotoWorkSingleIfNotExist()
-    {
-        $this->json('get', route('works.photos.single', ['work_id' => 1]))
-            ->assertStatus(404);
+            ->assertJson($result);
     }
 
     public function testPhotoWorkSingleIfExist()
     {
-        $work = PhotoWork::factory()->createOne();
-        $image = Image::factory()->createOne(['photo_work_id' => $work->id]);
+        $work_id = 1;
+        $result = [
+            'data1' => 1,
+            'data2' => 2,
+            'data3' => 3,
+        ];
 
-        $data = $work->attributesToArray();
-        $data['images'] = [$image->attributesToArray()];
+        $builder_mock = $this->getMockBuilder(Builder::class)
+            ->disableOriginalConstructor()
+            ->onlyMethods(['with', 'where', 'firstOrFail'])
+            ->getMock();
 
-        $this->json('get', route('works.photos.single', ['work_id' => $work->id]))
+        $builder_mock->expects($this->once())
+            ->method('with')
+            ->with('images')
+            ->willReturn($builder_mock);
+
+        $builder_mock->expects($this->once())
+            ->method('where')
+            ->with('id', $work_id)
+            ->willReturn($builder_mock);
+
+        $builder_mock->expects($this->once())
+            ->method('firstOrFail')
+            ->willReturn($result);
+
+        $query_helper_mock = $this->getMockBuilder(GetModelQueryBuilder::class)
+            ->onlyMethods(['queryBuilder'])
+            ->getMock();
+
+        $query_helper_mock->expects($this->once())
+            ->method('queryBuilder')
+            ->with(PhotoWork::class)
+            ->willReturn($builder_mock);
+
+        $this->app->instance(
+            GetModelQueryBuilderInterface::class,
+            $query_helper_mock
+        );
+
+        $this->get(route('works.photos.single', ['work_id' => $work_id]))
             ->assertOk()
-            ->assertJson($data);
+            ->assertJson($result);
+    }
+
+    public function testPhotoWorkSingleIfNotExist()
+    {
+        $work_id = 1;
+
+        $builder_mock = $this->getMockBuilder(Builder::class)
+            ->disableOriginalConstructor()
+            ->onlyMethods(['with', 'where', 'firstOrFail'])
+            ->getMock();
+
+        $builder_mock->expects($this->once())
+            ->method('with')
+            ->with('images')
+            ->willReturn($builder_mock);
+
+        $builder_mock->expects($this->once())
+            ->method('where')
+            ->with('id', $work_id)
+            ->willReturn($builder_mock);
+
+        $builder_mock->expects($this->once())
+            ->method('firstOrFail')
+            ->willThrowException(new ModelNotFoundException('', 404));
+
+        $query_helper_mock = $this->getMockBuilder(GetModelQueryBuilder::class)
+            ->onlyMethods(['queryBuilder'])
+            ->getMock();
+
+        $query_helper_mock->expects($this->once())
+            ->method('queryBuilder')
+            ->with(PhotoWork::class)
+            ->willReturn($builder_mock);
+
+        $this->app->instance(
+            GetModelQueryBuilderInterface::class,
+            $query_helper_mock
+        );
+
+        $this->get(route('works.photos.single', ['work_id' => $work_id]))
+            ->assertStatus(404);
     }
 
     public function testPhotoWorkNextPrevIds()
     {
-        $works = PhotoWork::factory(3)->create();
+        $work_id = 2;
 
-        $data = ['next' => ['id' => $works[1]->id], 'prev' => null];
+        $result1 = [
+            'data1' => 1
+        ];
 
-        $this->json('get', route('works.photos.next/prev', ['work_id' => $works[0]->id]))
+        $result2 = [
+            'data2' => 3
+        ];
+
+        $result = [
+            'next' => $result1,
+            'prev' => $result2,
+        ];
+
+        $builder_mock = $this->getMockBuilder(Builder::class)
+            ->disableOriginalConstructor()
+            ->onlyMethods(['where', 'first'])
+            ->addMethods(['select', 'orderBy'])
+            ->getMock();
+
+        $builder_mock->expects($this->exactly(2))
+            ->method('select')
+            ->with('id')
+            ->willReturn($builder_mock);
+
+        $builder_mock->expects($this->at(1))
+            ->method('where')
+            ->with([['id', '>', $work_id]])
+            ->willReturn($builder_mock);
+
+        $builder_mock->expects($this->at(4))
+            ->method('where')
+            ->with([['id', '<', $work_id]])
+            ->willReturn($builder_mock);
+
+        $builder_mock->expects($this->once())
+            ->method('orderBy')
+            ->with('id', 'desc')
+            ->willReturn($builder_mock);
+
+        $builder_mock->expects($this->at(2))
+            ->method('first')
+            ->willReturn($result1);
+
+        $builder_mock->expects($this->at(6))
+            ->method('first')
+            ->willReturn($result2);
+
+        $query_helper_mock = $this->getMockBuilder(GetModelQueryBuilder::class)
+            ->onlyMethods(['queryBuilder'])
+            ->getMock();
+
+        $query_helper_mock->expects($this->exactly(2))
+            ->method('queryBuilder')
+            ->with(PhotoWork::class)
+            ->willReturn($builder_mock);
+
+        $this->app->instance(
+            GetModelQueryBuilderInterface::class,
+            $query_helper_mock
+        );
+
+        $this->get(route('works.photos.next/prev', ['work_id' => $work_id]))
             ->assertOk()
-            ->assertJson($data);
-
-        $data = ['next' => ['id' => $works[2]->id], 'prev' => ['id' => $works[0]->id]];
-
-        $this->json('get', route('works.photos.next/prev', ['work_id' => $works[1]->id]))
-            ->assertOk()
-            ->assertJson($data);
-
-        $data = ['next' => null, 'prev' => ['id' => $works[1]->id]];
-
-        $this->json('get', route('works.photos.next/prev', ['work_id' => $works[2]->id]))
-            ->assertOk()
-            ->assertJson($data);
+            ->assertJson($result);
     }
 }

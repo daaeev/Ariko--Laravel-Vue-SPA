@@ -2,27 +2,14 @@
 
 namespace App\Providers;
 
+use App\Services\TestHelpers\GetModelQueryBuilder;
+use App\Services\TestHelpers\interfaces\GetModelQueryBuilderInterface;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
 {
-    /**
-     * Register any application services.
-     *
-     * @return void
-     */
-    public function register()
-    {
-        //
-    }
-
-    /**
-     * Bootstrap any application services.
-     *
-     * @return void
-     */
-    public function boot()
-    {
-        //
-    }
+    public $bindings = [
+        // TEST HELPERS
+        GetModelQueryBuilderInterface::class => GetModelQueryBuilder::class,
+    ];
 }

@@ -15,16 +15,21 @@ class AuthController extends Controller
 {
     /**
      * Аутентификация пользователя
-     * 
+     *
      * @param UserLogin $validate
-     * @return Illuminate\Http\Response
+     * @return \Illuminate\Http\Response
      * @throws HttpException
      */
     public function login(UserLogin $validate)
     {
         $email = $validate->validated('email');
         $password = $validate->validated('password');
-        $userDB_password = User::select('password')->where('email', $email)->first()->password;
+        $userDB_password = $this->query_helper
+            ->queryBuilder(User::class)
+            ->select('password')
+            ->where('email', $email)
+            ->first()
+            ->password;
 
         if (!$userDB_password) {
             throw new HttpException(401, 'User does not exist');
@@ -41,9 +46,9 @@ class AuthController extends Controller
 
     /**
      * Проверка токена аутентификации
-     * 
+     *
      * @param AuthCheck $validate
-     * @return Illuminate\Http\Response
+     * @return \Illuminate\Http\Response
      * @throws HttpException
      */
     public function authCheck(AuthToken $validate)
@@ -56,7 +61,9 @@ class AuthController extends Controller
             throw new HttpException(401, 'User does not exist');
         }
 
-        $userDB_password = User::select('password')
+        $userDB_password = $this->query_helper
+            ->queryBuilder(User::class)
+            ->select('password')
             ->where('email', $token_data['email'])
             ->first()
             ->password;

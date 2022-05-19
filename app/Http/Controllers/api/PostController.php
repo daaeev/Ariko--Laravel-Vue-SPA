@@ -10,43 +10,56 @@ class PostController extends Controller
 {
     /**
      * Получить все посты
-     * 
+     *
      * @param PaginationData $validate
-     * @return Illuminate\Http\JsonResponse
+     * @return \Illuminate\Http\JsonResponse
      */
     public function postsList(PaginationData $validate)
     {
         $perPage = $validate->validated('_limit');
 
-        return response()->json(Post::with('tags')->paginate($perPage));
+        return response()->json(
+            $this->query_helper
+                ->queryBuilder(Post::class)
+                ->with('tags')
+                ->paginate($perPage)
+        );
     }
 
     /**
      * Получение поста с id = $post_id
-     * 
+     *
      * @param $post_id
-     * @return Illuminate\Http\JsonResponse
-     * @throws Illuminate\Database\Eloquent\ModelNotFoundException
+     * @return \Illuminate\Http\JsonResponse
+     * @throws \Illuminate\Database\Eloquent\ModelNotFoundException
      */
     public function single($post_id)
     {
-        return response()->json(Post::with('tags', 'comments')
-            ->where('id', $post_id)
-            ->firstOrFail());
+        return response()->json(
+            $this->query_helper
+                ->queryBuilder(Post::class)
+                ->with('tags', 'comments')
+                ->where('id', $post_id)
+                ->firstOrFail()
+        );
     }
 
     /**
      * Получить все посты с тегом tag
-     * 
+     *
      * @param $tag
-     * @return Illuminate\Http\JsonResponse
+     * @return \Illuminate\Http\JsonResponse
      */
     public function postByTag($tag, PaginationData $validate)
     {
         $perPage = $validate->validated('_limit');
 
-        return response()->json(Post::with('tags')
-            ->whereRelation('tags', 'name', $tag)
-            ->paginate($perPage));
+        return response()->json(
+            $this->query_helper
+                ->queryBuilder(Post::class)
+                ->with('tags')
+                ->whereRelation('tags', 'name', $tag)
+                ->paginate($perPage)
+        );
     }
 }

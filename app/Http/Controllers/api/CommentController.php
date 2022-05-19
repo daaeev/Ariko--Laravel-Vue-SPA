@@ -11,16 +11,16 @@ class CommentController extends Controller
 {
     /**
      * Создание комментария
-     * 
+     *
      * @param Comment $model
      * @param CreateComment $validate
-     * @return Illuminate\Http\JsonResponse
-     * @throws Symfony\Component\HttpKernel\Exception\HttpException
+     * @return \Illuminate\Http\JsonResponse
+     * @throws \Symfony\Component\HttpKernel\Exception\HttpException
      */
     public function createComment(Comment $model, CreateComment $validate)
     {
         $data = $validate->validated();
-        
+
         $model->setRawAttributes($data);
 
         if ($model->save()) {
@@ -32,12 +32,17 @@ class CommentController extends Controller
 
     /**
      * Получить комментарии поста с id = $post_id
-     * 
+     *
      * @param $post_id
-     * @return Illuminate\Http\JsonResponse
+     * @return \Illuminate\Http\JsonResponse
      */
     public function commentsByPost($post_id)
     {
-        return response()->json(Comment::where('post_id', $post_id)->get());
+        return response()->json(
+            $this->query_helper
+                ->queryBuilder(Comment::class)
+                ->where('post_id', $post_id)
+                ->get()
+        );
     }
 }

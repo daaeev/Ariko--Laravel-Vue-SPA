@@ -4,6 +4,9 @@ namespace Tests\Feature\Controllers;
 
 use App\Models\Comment;
 use App\Models\Post;
+use App\Services\TestHelpers\GetModelQueryBuilder;
+use App\Services\TestHelpers\interfaces\GetModelQueryBuilderInterface;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
@@ -88,20 +91,45 @@ class CommentsControllerTest extends TestCase
         $this->post(route('comment.create'), $data)->assertStatus(500);
     }
 
-    public function testCommentsByPostIfNotExists()
+    public function testCommentsByPost()
     {
-        $this->get(route('comments.by-post', 1))
-            ->assertOk()
-            ->assertJson([]);
-    }
+        $post_id = 1;
+        $result = [
+            'data1' => [1, 2, 3],
+            'data2' => [1, 2, 3],
+            'data3' => [1, 2, 3],
+        ];
 
-    public function testCommentsByPostIfExists()
-    {
-        $post_id = Post::factory()->createOne()->id;
-        $comments = Comment::factory(2)->create(['post_id' => $post_id]);
-        
+        $builder_mock = $this->getMockBuilder(Builder::class)
+            ->disableOriginalConstructor()
+            ->onlyMethods(['where', 'get'])
+            ->getMock();
+
+        $builder_mock->expects($this->once())
+            ->method('where')
+            ->with('post_id', $post_id)
+            ->willReturn($builder_mock);
+
+        $builder_mock->expects($this->once())
+            ->method('get')
+            ->willReturn($result);
+
+        $query_helper_mock = $this->getMockBuilder(GetModelQueryBuilder::class)
+            ->onlyMethods(['queryBuilder'])
+            ->getMock();
+
+        $query_helper_mock->expects($this->once())
+            ->method('queryBuilder')
+            ->with(Comment::class)
+            ->willReturn($builder_mock);
+
+        $this->app->instance(
+            GetModelQueryBuilderInterface::class,
+            $query_helper_mock
+        );
+
         $this->get(route('comments.by-post', $post_id))
             ->assertOk()
-            ->assertJson([$comments[0]->attributesToArray(), $comments[1]->attributesToArray()]);
+            ->assertJson($result);
     }
 }

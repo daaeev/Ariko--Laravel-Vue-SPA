@@ -5,140 +5,288 @@ namespace Tests\Feature\Controllers;
 use App\Models\Post;
 use App\Models\PostTag;
 use App\Models\Tag;
+use App\Services\TestHelpers\GetModelQueryBuilder;
+use App\Services\TestHelpers\interfaces\GetModelQueryBuilderInterface;
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
 class PostControllerTest extends TestCase
 {
-    use RefreshDatabase;
-
-    public function testPostsListIfEmpty()
+    public function testPostsList()
     {
-        $this->json('get', route('posts.all'))
+        $result = [
+            'some_pag_data1' => 1,
+            'some_pag_data2' => 2,
+            'some_pag_data3' => 3,
+            'data' => [],
+        ];
+
+        $builder_mock = $this->getMockBuilder(Builder::class)
+            ->disableOriginalConstructor()
+            ->onlyMethods(['with', 'paginate'])
+            ->getMock();
+
+        $builder_mock->expects($this->once())
+            ->method('with')
+            ->with('tags')
+            ->willReturn($builder_mock);
+
+        $builder_mock->expects($this->once())
+            ->method('paginate')
+            ->with(null)
+            ->willReturn($result);
+
+        $query_helper_mock = $this->getMockBuilder(GetModelQueryBuilder::class)
+            ->onlyMethods(['queryBuilder'])
+            ->getMock();
+
+        $query_helper_mock->expects($this->once())
+            ->method('queryBuilder')
+            ->with(Post::class)
+            ->willReturn($builder_mock);
+
+        $this->app->instance(
+            GetModelQueryBuilderInterface::class,
+            $query_helper_mock
+        );
+
+        $this->get(route('posts.all'))
             ->assertOk()
-            ->assertJson([]);
+            ->assertJson($result);
     }
 
-    public function testPostsListIfExists()
+    public function testPostsListWithPerPageParam()
     {
-        $posts = Post::factory(2)->create();
+        $perPage = 10;
+        $result = [
+            'some_pag_data1' => 1,
+            'some_pag_data2' => 2,
+            'some_pag_data3' => 3,
+            'data' => [],
+        ];
 
-        $this->json('get', route('posts.all'))
+        $builder_mock = $this->getMockBuilder(Builder::class)
+            ->disableOriginalConstructor()
+            ->onlyMethods(['with', 'paginate'])
+            ->getMock();
+
+        $builder_mock->expects($this->once())
+            ->method('with')
+            ->with('tags')
+            ->willReturn($builder_mock);
+
+        $builder_mock->expects($this->once())
+            ->method('paginate')
+            ->with($perPage)
+            ->willReturn($result);
+
+        $query_helper_mock = $this->getMockBuilder(GetModelQueryBuilder::class)
+            ->onlyMethods(['queryBuilder'])
+            ->getMock();
+
+        $query_helper_mock->expects($this->once())
+            ->method('queryBuilder')
+            ->with(Post::class)
+            ->willReturn($builder_mock);
+
+        $this->app->instance(
+            GetModelQueryBuilderInterface::class,
+            $query_helper_mock
+        );
+
+        $this->get(route('posts.all', ['_limit' => $perPage]))
             ->assertOk()
-            ->assertJson(['data' => [$posts[0]->attributesToArray(), $posts[1]->attributesToArray()]]);
+            ->assertJson($result);
     }
 
-    public function testPostListPagination()
+    public function testSingleIfExist()
     {
-        Post::factory(2)->create();
+        $post_id = 1;
+        $result = [
+            'var1' => 1,
+            'var2' => 2,
+            'var3' => 3,
+            'var4' => 4,
+            'var5' => 5,
+        ];
 
-        $this->json('get', route('posts.all'))
-            ->assertOk()
-            ->assertJson([
-                'per_page' => 15,
-                'current_page' => 1,
-                'last_page' => 1,
-            ]);
+        $builder_mock = $this->getMockBuilder(Builder::class)
+            ->disableOriginalConstructor()
+            ->onlyMethods(['with', 'where', 'firstOrFail'])
+            ->getMock();
 
-        $this->json('get', route('posts.all', ['_limit' => 1]))
-            ->assertOk()
-            ->assertJson([
-                'per_page' => 1,
-                'current_page' => 1,
-                'last_page' => 2,
-            ]);
+        $builder_mock->expects($this->once())
+            ->method('with')
+            ->with('tags', 'comments')
+            ->willReturn($builder_mock);
 
-        $this->json('get', route('posts.all', ['_limit' => 2]))
-            ->assertOk()
-            ->assertJson([
-                'per_page' => 2,
-                'current_page' => 1,
-                'last_page' => 1,
-            ]);
+        $builder_mock->expects($this->once())
+            ->method('where')
+            ->with('id', $post_id)
+            ->willReturn($builder_mock);
 
-        $this->json('get', route('posts.all', ['_limit' => 1, 'page' => 2]))
+        $builder_mock->expects($this->once())
+            ->method('firstOrFail')
+            ->willReturn($result);
+
+        $query_helper_mock = $this->getMockBuilder(GetModelQueryBuilder::class)
+            ->onlyMethods(['queryBuilder'])
+            ->getMock();
+
+        $query_helper_mock->expects($this->once())
+            ->method('queryBuilder')
+            ->with(Post::class)
+            ->willReturn($builder_mock);
+
+        $this->app->instance(
+            GetModelQueryBuilderInterface::class,
+            $query_helper_mock
+        );
+
+        $this->get(route('posts.single', ['post_id' => $post_id]))
             ->assertOk()
-            ->assertJson([
-                'per_page' => 1,
-                'current_page' => 2,
-                'last_page' => 2,
-            ]);
+            ->assertJson($result);
     }
 
-    public function testSingleIfNotExists()
+    public function testSingleIfNotExist()
     {
-        $this->json('get', route('posts.single', ['post_id' => 1]))
+        $post_id = 1;
+
+        $builder_mock = $this->getMockBuilder(Builder::class)
+            ->disableOriginalConstructor()
+            ->onlyMethods(['with', 'where', 'firstOrFail'])
+            ->getMock();
+
+        $builder_mock->expects($this->once())
+            ->method('with')
+            ->with('tags', 'comments')
+            ->willReturn($builder_mock);
+
+        $builder_mock->expects($this->once())
+            ->method('where')
+            ->with('id', $post_id)
+            ->willReturn($builder_mock);
+
+        $builder_mock->expects($this->once())
+            ->method('firstOrFail')
+            ->willThrowException(new ModelNotFoundException('', 404));
+
+        $query_helper_mock = $this->getMockBuilder(GetModelQueryBuilder::class)
+            ->onlyMethods(['queryBuilder'])
+            ->getMock();
+
+        $query_helper_mock->expects($this->once())
+            ->method('queryBuilder')
+            ->with(Post::class)
+            ->willReturn($builder_mock);
+
+        $this->app->instance(
+            GetModelQueryBuilderInterface::class,
+            $query_helper_mock
+        );
+
+        $this->get(route('posts.single', ['post_id' => $post_id]))
             ->assertStatus(404);
     }
 
-    public function testSingleIfExists()
+    public function testPostsByTag()
     {
-        $post = Post::factory()->createOne();
+        $tag = 'tag';
+        $result = [
+            'some_pag_data1' => 1,
+            'some_pag_data2' => 2,
+            'some_pag_data3' => 3,
+            'data' => [],
+        ];
 
-        $this->json('get', route('posts.single', ['post_id' => $post->id]))
+        $builder_mock = $this->getMockBuilder(Builder::class)
+            ->disableOriginalConstructor()
+            ->onlyMethods(['with', 'paginate', 'whereRelation'])
+            ->getMock();
+
+        $builder_mock->expects($this->once())
+            ->method('with')
+            ->with('tags')
+            ->willReturn($builder_mock);
+
+        $builder_mock->expects($this->once())
+            ->method('whereRelation')
+            ->with('tags', 'name', $tag)
+            ->willReturn($builder_mock);
+
+        $builder_mock->expects($this->once())
+            ->method('paginate')
+            ->with(null)
+            ->willReturn($result);
+
+        $query_helper_mock = $this->getMockBuilder(GetModelQueryBuilder::class)
+            ->onlyMethods(['queryBuilder'])
+            ->getMock();
+
+        $query_helper_mock->expects($this->once())
+            ->method('queryBuilder')
+            ->with(Post::class)
+            ->willReturn($builder_mock);
+
+        $this->app->instance(
+            GetModelQueryBuilderInterface::class,
+            $query_helper_mock
+        );
+
+        $this->get(route('posts.by-tag', ['tag' => $tag]))
             ->assertOk()
-            ->assertJson($post->attributesToArray());
+            ->assertJson($result);
     }
 
-    public function testPostsByTagIfNotExists()
+    public function testPostsByTagWithPerPageVar()
     {
-        $this->json('get', route('posts.by-tag', ['tag' => 'undefined tag']))
+        $perPage = 6;
+        $tag = 'tag';
+        $result = [
+            'some_pag_data1' => 1,
+            'some_pag_data2' => 2,
+            'some_pag_data3' => 3,
+            'data' => [],
+        ];
+
+        $builder_mock = $this->getMockBuilder(Builder::class)
+            ->disableOriginalConstructor()
+            ->onlyMethods(['with', 'paginate', 'whereRelation'])
+            ->getMock();
+
+        $builder_mock->expects($this->once())
+            ->method('with')
+            ->with('tags')
+            ->willReturn($builder_mock);
+
+        $builder_mock->expects($this->once())
+            ->method('whereRelation')
+            ->with('tags', 'name', $tag)
+            ->willReturn($builder_mock);
+
+        $builder_mock->expects($this->once())
+            ->method('paginate')
+            ->with($perPage)
+            ->willReturn($result);
+
+        $query_helper_mock = $this->getMockBuilder(GetModelQueryBuilder::class)
+            ->onlyMethods(['queryBuilder'])
+            ->getMock();
+
+        $query_helper_mock->expects($this->once())
+            ->method('queryBuilder')
+            ->with(Post::class)
+            ->willReturn($builder_mock);
+
+        $this->app->instance(
+            GetModelQueryBuilderInterface::class,
+            $query_helper_mock
+        );
+
+        $this->get(route('posts.by-tag', ['tag' => $tag, '_limit' => $perPage]))
             ->assertOk()
-            ->assertJson([
-                'data' => [],
-            ]);
-    }
-
-    public function testPostsByTagIfExists()
-    {
-        $posts = Post::factory(2)->create();
-        $tag = Tag::factory()->createOne();
-        PostTag::factory()->createOne(['post_id' => $posts[0]->id, 'tag_id' => $tag->id]);
-
-        $this->json('get', route('posts.by-tag', ['tag' => $tag->name]))
-        ->assertOk()
-        ->assertJson([
-            'data' => [$posts[0]->attributesToArray()],
-        ]);
-    }
-
-    public function testPostsByTagPagination()
-    {
-        $posts = Post::factory(2)->create();
-        $tag = Tag::factory()->createOne();
-        PostTag::factory()->createOne(['post_id' => $posts[0]->id, 'tag_id' => $tag->id]);
-        PostTag::factory()->createOne(['post_id' => $posts[1]->id, 'tag_id' => $tag->id]);
-
-        $this->json('get', route('posts.by-tag', ['tag' => $tag->name]))
-            ->assertOk()
-            ->assertJson([
-                'per_page' => 15,
-                'current_page' => 1,
-                'last_page' => 1,
-            ]);
-
-        $this->json('get', route('posts.by-tag', ['_limit' => 1, 'tag' => $tag->name]))
-            ->assertOk()
-            ->assertJson([
-                'per_page' => 1,
-                'current_page' => 1,
-                'last_page' => 2,
-            ]);
-
-        $this->json('get', route('posts.by-tag', ['_limit' => 2, 'tag' => $tag->name]))
-            ->assertOk()
-            ->assertJson([
-                'per_page' => 2,
-                'current_page' => 1,
-                'last_page' => 1,
-            ]);
-
-        $this->json('get', route('posts.by-tag', ['_limit' => 1, 'page' => 2, 'tag' => $tag->name]))
-            ->assertOk()
-            ->assertJson([
-                'per_page' => 1,
-                'current_page' => 2,
-                'last_page' => 2,
-            ]);
+            ->assertJson($result);
     }
 }
