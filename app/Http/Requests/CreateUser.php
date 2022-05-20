@@ -2,7 +2,7 @@
 
 namespace App\Http\Requests;
 
-class PaginationData extends ValidationWithFailedValidationMethod
+class CreateUser extends ValidationWithFailedValidationMethod
 {
     /**
      * Get the validation rules that apply to the request.
@@ -12,7 +12,8 @@ class PaginationData extends ValidationWithFailedValidationMethod
     public function rules()
     {
         return [
-            '_limit' => 'nullable|numeric|integer'
+            'email' => 'bail|required|string|max:255|email:filter|unique:\App\Models\User,email',
+            'password' => 'bail|required|string',
         ];
     }
 }

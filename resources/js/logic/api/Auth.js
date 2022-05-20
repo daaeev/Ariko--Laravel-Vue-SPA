@@ -1,5 +1,4 @@
-import axios from "axios";
-import SiteSettings from '../../SiteSettings';
+import axios from "../../axios/axios";
 
 export default {
     /**
@@ -12,7 +11,7 @@ export default {
      */
     async login(email, password, thenHandler = null, catchHandler = null) {
         await axios.post(
-            SiteSettings.api_domain + '/api/auth/login', 
+            '/auth/login', 
             {
                 email,
                 password
@@ -31,7 +30,7 @@ export default {
      */
     async checkAuth(token, thenHandler = null, catchHandler = null) {
         await axios.post(
-            SiteSettings.api_domain + '/api/auth/check',
+            '/auth/check',
             {
                 token
             }

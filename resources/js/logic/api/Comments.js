@@ -1,4 +1,4 @@
-import SiteSettings from "../../SiteSettings";
+import axios from "../../axios/axios";
 
 export default {
     /**
@@ -13,7 +13,7 @@ export default {
      */
      async createComment(name, email, comment, post_id, thenHandler = null, catchHandler = null) {
         await axios.post(
-            SiteSettings.api_domain + '/api/comments',
+            '/comments',
             {
                 name,
                 email,
@@ -33,7 +33,7 @@ export default {
      * @param catchHandler 
      */
     async fetchCommentsByPostId(post_id, thenHandler = null, catchHandler = null) {
-        await axios.get(SiteSettings.api_domain + '/api/comments/' + post_id)
+        await axios.get('/comments/' + post_id)
             .then(thenHandler)
             .catch(catchHandler);
     }

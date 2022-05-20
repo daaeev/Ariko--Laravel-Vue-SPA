@@ -33,9 +33,9 @@ import siteSettings from "../SiteSettings";
 export default {
     components: {EmailSection, Pagination, PhotosList},
 
-    created() {
+    async created() {
         if (this.works.length == 0) {
-            this.fetchWorks();
+            await this.fetchWorks();
         }
     },
 

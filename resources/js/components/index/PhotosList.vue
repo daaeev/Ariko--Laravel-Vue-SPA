@@ -33,7 +33,7 @@
                             </div>
                         </div>
                         <!-- image -->
-                        <img :src="'/storage/photos/' + work.images[0].image" alt="portfolio-item" />
+                        <img :src="'/storage/photos/' + work.images[0]?.image" alt="portfolio-item" />
                     </div>
                 </div>
             </transition-group>

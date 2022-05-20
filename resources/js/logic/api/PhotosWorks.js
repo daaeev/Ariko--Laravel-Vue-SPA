@@ -1,5 +1,4 @@
-import axios from "axios";
-import SiteSettings from '../../SiteSettings';
+import axios from "../../axios/axios";
 
 export default {
     /**
@@ -13,7 +12,7 @@ export default {
      */
     async fetchWorks(limit, page,thenHandler = null, catchHandler = null) {
         await axios.get(
-            SiteSettings.api_domain + "/api/works/photos",
+            "/works/photos",
             {
                 params: {
                     _limit: limit,
@@ -35,7 +34,7 @@ export default {
      */
     async fetchWorkById(work_id, thenHandler = null, catchHandler = null) {
         await axios.get(
-            SiteSettings.api_domain + `/api/works/photos/${work_id}`
+            `/works/photos/${work_id}`
         )
             .then(thenHandler)
             .catch(catchHandler);
@@ -51,7 +50,7 @@ export default {
      */
     async fetchNextPrevIds(work_id, thenHandler = null, catchHandler = null) {
         await axios.get(
-            SiteSettings.api_domain + `/api/works/photos/next/prev/${work_id}`
+            `/works/photos/next/prev/${work_id}`
         )
             .then(thenHandler)
             .catch(catchHandler);

@@ -5,16 +5,6 @@ namespace App\Http\Requests;
 class UserLogin extends ValidationWithFailedValidationMethod
 {
     /**
-     * Determine if the user is authorized to make this request.
-     *
-     * @return bool
-     */
-    public function authorize()
-    {
-        return true;
-    }
-
-    /**
      * Get the validation rules that apply to the request.
      *
      * @return array<string, mixed>
@@ -23,7 +13,7 @@ class UserLogin extends ValidationWithFailedValidationMethod
     {
         return [
             'email' => 'required|email:filter',
-            'password' => 'required|string|max:100',
+            'password' => 'required|string',
         ];
     }
 }

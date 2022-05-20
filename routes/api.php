@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\api\admin\UserController;
 use App\Http\Controllers\api\auth\AuthController;
 use App\Http\Controllers\api\CommentController;
 use App\Http\Controllers\api\PhotoController;
@@ -52,3 +53,13 @@ Route::prefix('auth')->group(function () {
 });
 
 // !!!AUTH!!!
+
+// ---ADMIN ROUTES---
+
+    // ---USER---
+
+        Route::post('/user', [UserController::class, 'create'])->middleware('auth')->name('user.create');
+
+    // !!!USER!!!
+
+// !!!ADMIN ROUTES!!!

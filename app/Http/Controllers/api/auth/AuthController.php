@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\AuthToken;
 use App\Http\Requests\UserLogin;
 use App\Models\User;
+use App\Services\TokenValidators\interfaces\AuthTokenValidatorInterface;
 use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\Hash;
 use Symfony\Component\HttpKernel\Exception\HttpException;
@@ -47,35 +48,22 @@ class AuthController extends Controller
     /**
      * Проверка токена аутентификации
      *
+     * @param AuthTokenValidatorInterface $token_validator
      * @param AuthToken $validate
      * @return \Illuminate\Http\Response
      * @throws HttpException
      */
-    public function authCheck(AuthToken $validate)
+    public function authCheck(
+        AuthTokenValidatorInterface $token_validator,
+        AuthToken $validate
+    )
     {
         $token = $validate->validated('token');
 
-        try {
-            $token_data = Crypt::decrypt($token); // ['email' => email, 'password' => password]
-        } catch (Throwable) {
-            throw new HttpException(401, 'User does not exist');
+        if ($token_validator->validate($token)) {
+            return response('');
+        } else {
+            throw new HttpException(401, 'Invalid token');
         }
-
-        $userDB_password = $this->query_helper
-            ->queryBuilder(User::class)
-            ->select('password')
-            ->where('email', $token_data['email'])
-            ->first()
-            ->password;
-
-        if (!$userDB_password) {
-            throw new HttpException(401, 'User does not exist');
-        }
-
-        if (!Hash::check($token_data['password'], $userDB_password)) {
-            throw new HttpException(401, 'User does not exist');
-        }
-
-        return response('');
     }
 }

@@ -34,5 +34,13 @@ class UserLoginTest extends TestCase
             'email' => 'Not Email',
             'password' => 'Some password'
         ])->assertStatus(422);
+
+        $this->post($this->route, [
+            'email' => 'email@ariko.vue',
+        ])->assertStatus(422);
+
+        $this->post($this->route, [
+            'password' => 'Some password'
+        ])->assertStatus(422);
     }
 }

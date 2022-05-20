@@ -1,5 +1,4 @@
-import axios from "axios";
-import SiteSettings from '../../SiteSettings';
+import axios from "../../axios/axios";
 
 export default {
     /**
@@ -12,7 +11,7 @@ export default {
      */
     async allPosts(limit, page, thenHandler = null, catchHandler = null) {
         await axios.get(
-            SiteSettings.api_domain + "/api/posts",
+            "/posts",
             {
                 params: {
                     _limit: limit,
@@ -35,7 +34,7 @@ export default {
      */
      async allPostsByTag(limit, page, tag, thenHandler = null, catchHandler = null) {
         await axios.get(
-            SiteSettings.api_domain + "/api/posts/tag/" + tag,
+            "/posts/tag/" + tag,
             {
                 params: {
                     _limit: limit,
@@ -55,7 +54,7 @@ export default {
      * @param catchHandler 
      */
     async fetchPostById(post_id, thenHandler = null, catchHandler = null) {
-        await axios.get(SiteSettings.api_domain + "/api/posts/" + post_id)
+        await axios.get("/posts/" + post_id)
             .then(thenHandler)
             .catch(catchHandler);
     },

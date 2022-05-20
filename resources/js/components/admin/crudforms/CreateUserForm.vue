@@ -1,12 +1,10 @@
 <template>
-  <form @submit.prevent="submitForm">
+    <form @submit.prevent="submitForm">
     <div class="form-group">
       <label for="exampleInputEmail1">Email address</label>
       <input
         type="email"
         class="form-control"
-        id="exampleInputEmail1"
-        aria-describedby="emailHelp"
         placeholder="Enter email"
         maxlength="255"
         v-model="email"
@@ -18,17 +16,10 @@
       <input
         type="password"
         class="form-control"
-        id="exampleInputPassword1"
         placeholder="Password"
         v-model="password"
       />
       <div class="text-danger help-block password-errors"></div>
-    </div>
-    <div class="form-check mt-3">
-      <input type="checkbox" class="form-check-input" id="exampleCheck1" v-model="save"/>
-      <label class="form-check-label" for="exampleCheck1"
-        >Save state after exit</label
-      >
     </div>
     <button type="submit" class="btn btn-primary">Submit</button>
   </form>
@@ -40,7 +31,6 @@ export default {
         return {
             email: '',
             password: '',
-            save: false,
         };
     },
 
@@ -70,21 +60,20 @@ export default {
                 return;
             }
 
-            const authObject = {
+            const user = {
                 email: this.email,
                 password: this.password,
-                save: this.save
             };
 
-            this.$emit('submit', authObject);
+            this.$emit('submit', user);
 
             this.email = '';
             this.password = '';
-            this.save = false;
         }
-    }
-};
+    },
+}
 </script>
 
 <style>
+
 </style>
