@@ -22,7 +22,7 @@ class AuthWithToken
      */
     public function handle(Request $request, Closure $next)
     {
-        $token = $request->header('Authorization', null);
+        $token = $request->header('Authorization', '');
 
         if ($this->validator->validate($token)) {
             return $next($request);
