@@ -1,5 +1,5 @@
 <template>
-    <form @submit.prevent="submitForm">
+    <form @submit.prevent="submitForm" id="create-user-form">
     <div class="form-group">
       <label for="exampleInputEmail1">Email address</label>
       <input
@@ -8,6 +8,8 @@
         placeholder="Enter email"
         maxlength="255"
         v-model="email"
+        required
+        name="email"
       />
       <div class="text-danger help-block email-errors"></div>
     </div>
@@ -18,6 +20,8 @@
         class="form-control"
         placeholder="Password"
         v-model="password"
+        required
+        name="password"
       />
       <div class="text-danger help-block password-errors"></div>
     </div>
@@ -48,7 +52,7 @@ export default {
                 hasErrors = true;
             } else if (this.email.length > 255) {
                 document.querySelector('.email-errors').append('Email length must not exceed 255');
-                hasErrors = true; 
+                hasErrors = true;
             }
 
             if (!this.password) {
@@ -60,10 +64,7 @@ export default {
                 return;
             }
 
-            const user = {
-                email: this.email,
-                password: this.password,
-            };
+            const user = new FormData(document.querySelector('#create-user-form'));
 
             this.$emit('submit', user);
 

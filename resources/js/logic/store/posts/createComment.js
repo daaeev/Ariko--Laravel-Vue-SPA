@@ -6,17 +6,11 @@ export default {
          * Создание комментария
          *
          * @param commit
-         * @param name
-         * @param email
-         * @param comment
-         * @param post_id
+         * @param formData
          */
-        async createComment({commit}, {name, email, comment, post_id}) {
+        async createComment({commit}, formData) {
             await FetchComments.createComment(
-                name,
-                email,
-                comment,
-                post_id,
+                formData,
                 axiosRes => commit('addCommentToSingle', axiosRes.data),
                 axiosError => {
                     throw axiosError;

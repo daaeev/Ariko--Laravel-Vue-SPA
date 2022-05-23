@@ -22,6 +22,7 @@ class PhotoController extends Controller
             $this->query_helper
                 ->queryBuilder(PhotoWork::class)
                 ->with('images')
+                ->whereHas('images')
                 ->paginate($perPage)
         );
     }

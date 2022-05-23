@@ -5,22 +5,13 @@ export default {
     /**
      * Создание сообщения
      *
-     * @param name
-     * @param email
-     * @param message
+     * @param formData
      * @param thenHandler
      * @param catchHandler
      * @returns {Promise<void>}
      */
-    async saveMessage(name, email, message,thenHandler = null, catchHandler = null) {
-        await axios.post(
-            "/message",
-            {
-                name,
-                email,
-                message
-            }
-        )
+    async saveMessage(formData, thenHandler = null, catchHandler = null) {
+        await axios.post("/message", formData)
             .then(thenHandler)
             .catch(catchHandler);
     },

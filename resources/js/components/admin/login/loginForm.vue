@@ -1,5 +1,5 @@
 <template>
-  <form @submit.prevent="submitForm">
+  <form @submit.prevent="submitForm" id="login-form">
     <div class="form-group">
       <label for="exampleInputEmail1">Email address</label>
       <input
@@ -10,6 +10,7 @@
         placeholder="Enter email"
         maxlength="255"
         v-model="email"
+        name="email"
       />
       <div class="text-danger help-block email-errors"></div>
     </div>
@@ -21,12 +22,13 @@
         id="exampleInputPassword1"
         placeholder="Password"
         v-model="password"
+        name="password"
       />
       <div class="text-danger help-block password-errors"></div>
     </div>
     <div class="form-check mt-3">
-      <input type="checkbox" class="form-check-input" id="exampleCheck1" v-model="save"/>
-      <label class="form-check-label" for="exampleCheck1"
+      <input type="checkbox" class="form-check-input" v-model="save" name="save">
+      <label class="form-check-label"
         >Save state after exit</label
       >
     </div>
@@ -58,7 +60,7 @@ export default {
                 hasErrors = true;
             } else if (this.email.length > 255) {
                 document.querySelector('.email-errors').append('Email length must not exceed 255');
-                hasErrors = true; 
+                hasErrors = true;
             }
 
             if (!this.password) {
@@ -70,11 +72,7 @@ export default {
                 return;
             }
 
-            const authObject = {
-                email: this.email,
-                password: this.password,
-                save: this.save
-            };
+            const authObject = new FormData(document.querySelector('#login-form'));
 
             this.$emit('submit', authObject);
 

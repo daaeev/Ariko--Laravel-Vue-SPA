@@ -5,19 +5,12 @@ export default {
     /**
      * Отправка запроса на создание пользователя
      *
-     * @param email
-     * @param password
+     * @param formData
      * @param thenHandler
      * @param catchHandler
      */
-    async createUser(email, password, thenHandler = null, catchHandler = null) {
-        await axios.post(
-            '/user',
-            {
-                email,
-                password
-            }
-        )
+    async createUser(formData, thenHandler = null, catchHandler = null) {
+        await axios.post('/user', formData)
             .then(thenHandler)
             .catch(catchHandler);
     }

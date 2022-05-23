@@ -4,29 +4,22 @@ export default {
     /**
      * Аутентификация пользователя
      *
-     * @param email
-     * @param password
+     * @param formData
      * @param thenHandler
      * @param catchHandler
      */
-    async login(email, password, thenHandler = null, catchHandler = null) {
-        await axios.post(
-            '/auth/login', 
-            {
-                email,
-                password
-            }
-        )
+    async login(formData, thenHandler = null, catchHandler = null) {
+        await axios.post('/auth/login', formData)
             .then(thenHandler)
             .catch(catchHandler);
     },
 
     /**
      * Отправка запроса на проверку токена аутентификации
-     * 
-     * @param token 
-     * @param thenHandler 
-     * @param catchHandler 
+     *
+     * @param token
+     * @param thenHandler
+     * @param catchHandler
      */
     async checkAuth(token, thenHandler = null, catchHandler = null) {
         await axios.post(

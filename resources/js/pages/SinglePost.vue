@@ -64,11 +64,11 @@ export default {
   methods: {
     ...mapActions("posts", ["fetchPostById", "createComment"]),
 
-    async submitCommentForm(commentObject) {
+    async submitCommentForm(formData) {
       this.CreateCommentSuccess = "";
       this.CreateCommentFailed = "";
 
-      await this.createComment({...commentObject, post_id: this.$route.params.id})
+      await this.createComment(formData)
         .then(() => this.CreateCommentSuccess = "Your comment has been create successfully")
         .catch(error => {
           if (error.response.status == 429) {

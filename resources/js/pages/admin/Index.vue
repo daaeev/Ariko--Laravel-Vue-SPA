@@ -4,15 +4,36 @@
             <div class="col-md-2">
                 <dialog-button v-model:show="createUserShow">Create user</dialog-button>
             </div>
+
+            <div class="col-md-2">
+                <dialog-button v-model:show="createPhotoWorkShow">Create photo work</dialog-button>
+            </div>
+
+            <div class="col-md-2">
+                <dialog-button v-model:show="addImagesToWorkShow">Add photos to work</dialog-button>
+            </div>
         </div>
     </div>
 
     <!-- Dialogs -->
-    <my-dialog v-model:show="createUserShow">
-        <alert v-if="createUserSuccess" :type="'success'">{{createUserSuccess}}</alert>
-        <alert v-if="createUserFailed" :type="'danger'">{{createUserFailed}}</alert>
-        <create-user-form @submit="submitCreateUserForm"></create-user-form>
-    </my-dialog>
+        <my-dialog v-model:show="createUserShow">
+            <alert v-if="createUserSuccess" :type="'success'">{{createUserSuccess}}</alert>
+            <alert v-if="createUserFailed" :type="'danger'">{{createUserFailed}}</alert>
+            <create-user-form @submit="submitCreateUserForm"></create-user-form>
+        </my-dialog>
+
+        <my-dialog v-model:show="createPhotoWorkShow">
+            <alert v-if="createPhotoWorkSuccess" :type="'success'">{{createPhotoWorkSuccess}}</alert>
+            <alert v-if="createPhotoWorkFailed" :type="'danger'">{{createPhotoWorkFailed}}</alert>
+            <create-photo-work-form @submit="submitCreatePhotoWorkForm"></create-photo-work-form>
+        </my-dialog>
+
+        <my-dialog v-model:show="addImagesToWorkShow">
+            <alert v-if="addImagesSuccess" :type="'success'">{{addImagesSuccess}}</alert>
+            <alert v-if="addImagesFailed" :type="'danger'">{{addImagesFailed}}</alert>
+            <add-images-to-work-form @submit="submitAddImagesToWorkForm"></add-images-to-work-form>
+        </my-dialog>
+    <!-- Dialogs -->
 </template>
 
 <script>
@@ -20,29 +41,49 @@ import DialogButton from '../../components/admin/UI/DialogButton.vue'
 import MyDialog from '../../components/admin/UI/Dialog.vue'
 import CreateUserForm from '../../components/admin/crudforms/CreateUserForm.vue'
 import Alert from '../../components/UI/Alert.vue';
-import axiosAPI from '../../logic/api/crud/User';
+import axiosUserAPI from '../../logic/api/crud/User';
+import axiosPhotoWorkAPI from '../../logic/api/crud/PhotoWork';
+import CreatePhotoWorkForm from '../../components/admin/crudforms/CreatePhotoWorkForm.vue';
+import AddImagesToWorkForm from '../../components/admin/crudforms/AddImagesToWorkForm.vue';
 
 export default {
-    components: {DialogButton, MyDialog, CreateUserForm, Alert},
+    components: {
+        DialogButton, 
+        MyDialog, 
+        CreateUserForm, 
+        Alert, 
+        CreatePhotoWorkForm, 
+        AddImagesToWorkForm
+    },
 
     data() {
         return {
+            // CREATE USER FORM
             createUserShow: false,
             createUserSuccess: '',
             createUserFailed: '',
+
+            // CREATE PHOTO WORK FORM
+            createPhotoWorkShow: false,
+            createPhotoWorkSuccess: '',
+            createPhotoWorkFailed: '',
+
+            // ADD IMAGES TO WORK
+            addImagesToWorkShow: false,
+            addImagesSuccess: '',
+            addImagesFailed: '',
         };
     },
 
     methods: {
-        async submitCreateUserForm(user)
+        async submitCreateUserForm(formData)
         {
             this.createUserSuccess = '';
             this.createUserFailed = '';
 
-            await axiosAPI.createUser(
-                user.email,
-                user.password,
-                axiosRes => this.createUserSuccess = 'User create success',
+            await axiosUserAPI.createUser(
+                formData,
+                () => this.createUserSuccess = 'User create success',
                 axiosError => this.createUserFailed = axiosError.response?.data.message ?? 'User create failed',
             );
 
@@ -50,11 +91,45 @@ export default {
                 this.createUserSuccess = '';
                 this.createUserFailed = '';
             }, 5000);
+        },
+
+        async submitCreatePhotoWorkForm(formData)
+        {
+            this.createPhotoWorkSuccess = '';
+            this.createPhotoWorkFailed = '';
+
+            await axiosPhotoWorkAPI.createPhotoWork(
+                formData,
+                axiosRes => this.createPhotoWorkSuccess = 'Work create success (id: ' + axiosRes.data.id + ')',
+                axiosError => this.createPhotoWorkFailed = axiosError.response?.data.message ?? 'Work create failed',
+            );
+
+            setTimeout(() => {
+                this.createPhotoWorkSuccess = '';
+                this.createPhotoWorkFailed = '';
+            }, 5000);
+        },
+
+        async submitAddImagesToWorkForm(formData)
+        {
+            this.addImagesSuccess = '';
+            this.addImagesFailed = '';
+
+            await axiosPhotoWorkAPI.addImagesToWork(
+                formData,
+                () => this.addImagesSuccess = 'Photos added success',
+                axiosError => this.addImagesFailed = axiosError.response?.data.message ?? 'Photos add failed',
+            );
+
+            setTimeout(() => {
+                this.addImagesSuccess = '';
+                this.addImagesFailed = '';
+            }, 5000);
         }
     },
 }
 </script>
 
-<style>
+<style scoped>
 
 </style>

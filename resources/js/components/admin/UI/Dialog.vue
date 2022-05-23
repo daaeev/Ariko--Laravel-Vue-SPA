@@ -27,11 +27,16 @@ export default {
   position: fixed;
   background: rgba(0, 0, 0, 0.5);
   display: flex;
+  overflow-y:scroll;
+  overflow-x:hidden;
+  padding-top: 50px;
+  padding-bottom: 50px;
 }
 .dialog_content {
   margin: auto;
   background: white;
   border-radius: 12px;
   padding: 15px;
+  width: 60%;
 }
 </style>

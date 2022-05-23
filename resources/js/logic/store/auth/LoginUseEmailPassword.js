@@ -5,18 +5,17 @@ export default {
     actions: {
         /**
          * Логин пользователя
-         * 
-         * @param commit 
-         * @param authData 
+         *
+         * @param commit
+         * @param formData
          */
-        async login({commit}, authData) {
+        async login({commit}, formData) {
             await authAxios.login(
-                authData.email,
-                authData.password,
+                formData,
                 axiosRes => {
                     const token = axiosRes.data;
 
-                    if (authData.save) {
+                    if (formData.get('save')) {
                         localStorage.setItem('token', token);
                     }
 

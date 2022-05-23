@@ -16,7 +16,7 @@
             <div class="column col-md-6">
                 <!-- Email input -->
                 <div class="form-group">
-                    <input type="email" class="form-control" id="email" name="InputEmail" placeholder="Email address" required="required" v-model="email" maxlength="255">
+                    <input type="email" class="form-control" id="email" name="email" placeholder="Email address" required="required" v-model="email" maxlength="255">
                     <div class="help-block with-errors email-errors"></div>
                 </div>
             </div>
@@ -24,7 +24,7 @@
             <div class="column col-md-12">
                 <!-- Message textarea -->
                 <div class="form-group">
-                    <textarea name="InputMessage" id="message" class="form-control" rows="5" placeholder="Message" required="required" v-model="message"></textarea>
+                    <textarea name="message" id="message" class="form-control" rows="5" placeholder="Message" required="required" v-model="message"></textarea>
                     <div class="help-block with-errors message-errors"></div>
                 </div>
             </div>
@@ -68,7 +68,7 @@ export default {
                 hasErrors = true;
             } else if (this.email.length > 255) {
                 document.querySelector('.email-errors').append('Email length must not exceed 255');
-                hasErrors = true;  
+                hasErrors = true;
             }
 
             if (!this.message) {
@@ -80,11 +80,7 @@ export default {
                 return;
             }
 
-            const messageObject = {
-                name: this.name,
-                email: this.email,
-                message: this.message,
-            };
+            const messageObject = new FormData(document.querySelector('#contact-form'));
 
             this.$emit('submit', messageObject)
 

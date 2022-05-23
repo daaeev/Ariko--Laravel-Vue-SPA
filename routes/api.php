@@ -7,6 +7,7 @@ use App\Http\Controllers\api\PhotoController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\api\MessageController;
 use App\Http\Controllers\api\PostController;
+use App\Http\Controllers\api\admin\PhotoWorkController as AdminPhotoController;
 
 // ---WORKS---
 
@@ -61,5 +62,12 @@ Route::prefix('auth')->group(function () {
         Route::post('/user', [UserController::class, 'create'])->middleware('auth')->name('user.create');
 
     // !!!USER!!!
+
+    // ---PHOTOS WORK---
+
+        Route::post('/works/photos', [AdminPhotoController::class, 'createWork'])->middleware('auth')->name('works.photos.create');
+        Route::post('/works/photos/images', [AdminPhotoController::class, 'addImagesToWork'])->middleware('auth')->name('works.photos.images.add');
+
+    // !!!PHOTOS WORK!!!
 
 // !!!ADMIN ROUTES!!!

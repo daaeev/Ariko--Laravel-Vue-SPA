@@ -7,17 +7,13 @@ export default {
          * Создание сообщения
          *
          * @param dispatch
-         * @param name
-         * @param email
-         * @param message
+         * @param formData
          * @returns {Promise<void>}
          */
-        async sendMessage({dispatch}, {name, email, message}) {
+        async sendMessage({dispatch}, formData) {
             await CreateContactMessage.saveMessage(
-                name,
-                email,
-                message,
-                axiosRes => {},
+                formData,
+                () => {},
                 axiosError => {
                     throw axiosError;
                 }

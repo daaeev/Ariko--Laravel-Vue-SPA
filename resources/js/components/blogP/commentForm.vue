@@ -7,7 +7,7 @@
           <input
             type="text"
             class="form-control"
-            name="InputName"
+            name="name"
             id="InputName"
             placeholder="Your name"
             required="required"
@@ -24,7 +24,7 @@
             type="email"
             class="form-control"
             id="InputEmail"
-            name="InputEmail"
+            name="email"
             placeholder="Email address"
             required="required"
             v-model="email"
@@ -37,7 +37,7 @@
         <!-- Comment textarea -->
         <div class="form-group">
           <textarea
-            name="InputComment"
+            name="comment"
             id="InputComment"
             class="form-control"
             rows="5"
@@ -49,6 +49,8 @@
         </div>
       </div>
     </div>
+
+      <input type="hidden" name="post_id" :value="this.$route.params.id">
 
     <button
       type="submit"
@@ -97,11 +99,7 @@ export default {
                 return;
             }
 
-            const commentObject = {
-                name: this.name,
-                email: this.email,
-                comment: this.comment,
-            };
+            const commentObject = new FormData(document.querySelector('#comment-form'));
 
             this.$emit('submit', commentObject)
 

@@ -11,7 +11,7 @@ class PhotoWork extends Model
 
     public $timestamps = false;
     public $table = 'photos_works';
-    public $fillable = ['*'];
+    protected $guarded = [];
 
     /**
      * @return \Illuminate\Database\Eloquent\Relations\HasMany

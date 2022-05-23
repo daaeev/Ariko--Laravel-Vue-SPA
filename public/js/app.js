@@ -19740,6 +19740,139 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/admin/crudforms/AddImagesToWorkForm.vue?vue&type=script&lang=js":
+/*!*****************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/admin/crudforms/AddImagesToWorkForm.vue?vue&type=script&lang=js ***!
+  \*****************************************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  data: function data() {
+    return {
+      work_id: ''
+    };
+  },
+  emits: ['submit'],
+  methods: {
+    submitForm: function submitForm() {
+      var hasErrors = false;
+      document.querySelector('.work_id-errors').innerHTML = '';
+
+      if (!this.work_id) {
+        document.querySelector('.work_id-errors').append('Work id is required');
+        hasErrors = true;
+      }
+
+      if (hasErrors) {
+        return;
+      }
+
+      var formData = new FormData(document.querySelector('#add-images-to-work-form'));
+      this.$emit('submit', formData);
+      this.work_id = '';
+    }
+  }
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/admin/crudforms/CreatePhotoWorkForm.vue?vue&type=script&lang=js":
+/*!*****************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/admin/crudforms/CreatePhotoWorkForm.vue?vue&type=script&lang=js ***!
+  \*****************************************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  data: function data() {
+    return {
+      name: "",
+      subject: "",
+      year: String(new Date().getFullYear()),
+      client: "",
+      website: "",
+      title: "",
+      description: ""
+    };
+  },
+  emits: ["submit"],
+  methods: {
+    submitForm: function submitForm() {
+      var hasErrors = false;
+      document.querySelector(".name-errors").innerHTML = "";
+      document.querySelector(".subject-errors").innerHTML = "";
+      document.querySelector(".year-errors").innerHTML = "";
+      document.querySelector(".client-errors").innerHTML = "";
+      document.querySelector(".website-errors").innerHTML = "";
+      document.querySelector(".title-errors").innerHTML = "";
+      document.querySelector(".description-errors").innerHTML = "";
+
+      if (!this.name) {
+        document.querySelector(".name-errors").append("Name is required");
+        hasErrors = true;
+      } else if (this.name.length > 30) {
+        document.querySelector(".name-errors").append("Name length must not exceed 30");
+        hasErrors = true;
+      }
+
+      if (!this.subject) {
+        document.querySelector(".subject-errors").append("Subject is required");
+        hasErrors = true;
+      } else if (this.subject.length > 50) {
+        document.querySelector(".subject-errors").append("Subject length must not exceed 50");
+        hasErrors = true;
+      }
+
+      if (!this.year) {
+        document.querySelector(".year-errors").append("Year is required");
+        hasErrors = true;
+      } else if (this.year.length > 10) {
+        document.querySelector(".year-errors").append("Year length must not exceed 10");
+        hasErrors = true;
+      }
+
+      if (this.client.length > 50) {
+        document.querySelector(".client-errors").append("Client length must not exceed 50");
+        hasErrors = true;
+      }
+
+      if (this.website.length > 255) {
+        document.querySelector(".website-errors").append("Website length must not exceed 255");
+        hasErrors = true;
+      }
+
+      if (this.title.length > 255) {
+        document.querySelector(".title-errors").append("Title length must not exceed 255");
+        hasErrors = true;
+      }
+
+      if (hasErrors) {
+        return;
+      }
+
+      var result = new FormData(document.querySelector('#create-photo-work-form'));
+      this.$emit("submit", result);
+      this.name = '';
+      this.subject = '';
+      this.client = '';
+      this.website = '';
+      this.title = '';
+      this.description = '';
+    }
+  }
+});
+
+/***/ }),
+
 /***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/admin/crudforms/CreateUserForm.vue?vue&type=script&lang=js":
 /*!************************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/admin/crudforms/CreateUserForm.vue?vue&type=script&lang=js ***!
@@ -19782,10 +19915,7 @@ __webpack_require__.r(__webpack_exports__);
         return;
       }
 
-      var user = {
-        email: this.email,
-        password: this.password
-      };
+      var user = new FormData(document.querySelector('#create-user-form'));
       this.$emit('submit', user);
       this.email = '';
       this.password = '';
@@ -19838,11 +19968,7 @@ __webpack_require__.r(__webpack_exports__);
         return;
       }
 
-      var authObject = {
-        email: this.email,
-        password: this.password,
-        save: this.save
-      };
+      var authObject = new FormData(document.querySelector('#login-form'));
       this.$emit('submit', authObject);
       this.email = '';
       this.password = '';
@@ -19926,11 +20052,7 @@ __webpack_require__.r(__webpack_exports__);
         return;
       }
 
-      var commentObject = {
-        name: this.name,
-        email: this.email,
-        comment: this.comment
-      };
+      var commentObject = new FormData(document.querySelector('#comment-form'));
       this.$emit('submit', commentObject);
       this.name = '';
       this.email = '';
@@ -20120,11 +20242,7 @@ __webpack_require__.r(__webpack_exports__);
         return;
       }
 
-      var messageObject = {
-        name: this.name,
-        email: this.email,
-        message: this.message
-      };
+      var messageObject = new FormData(document.querySelector('#contact-form'));
       this.$emit('submit', messageObject);
       this.name = '';
       this.email = '';
@@ -20672,7 +20790,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     }
   },
   methods: _objectSpread(_objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_5__.mapActions)('contact', ['sendMessage'])), {}, {
-    form_submit: function form_submit(messageObject) {
+    form_submit: function form_submit(formData) {
       var _this = this;
 
       return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee() {
@@ -20683,8 +20801,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
                 _this.submitSuccessMessage = '';
                 _this.submitFailedMessage = '';
                 _context.next = 4;
-                return _this.sendMessage(messageObject).then(function () {
-                  _this.submitSuccessMessage = 'Your message has been sent successfully';
+                return _this.sendMessage(formData).then(function () {
+                  return _this.submitSuccessMessage = 'Your message has been sent successfully';
                 })["catch"](function (error) {
                   if (error.response.status == 429) {
                     _this.submitFailedMessage = 'Message sending limit exceeded. Wait ' + error.response.headers['retry-after'] + ' seconds';
@@ -20906,7 +21024,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     }
   }),
   methods: _objectSpread(_objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_7__.mapActions)("posts", ["fetchPostById", "createComment"])), {}, {
-    submitCommentForm: function submitCommentForm(commentObject) {
+    submitCommentForm: function submitCommentForm(formData) {
       var _this = this;
 
       return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee() {
@@ -20917,9 +21035,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
                 _this.CreateCommentSuccess = "";
                 _this.CreateCommentFailed = "";
                 _context.next = 4;
-                return _this.createComment(_objectSpread(_objectSpread({}, commentObject), {}, {
-                  post_id: _this.$route.params.id
-                })).then(function () {
+                return _this.createComment(formData).then(function () {
                   return _this.CreateCommentSuccess = "Your comment has been create successfully";
                 })["catch"](function (error) {
                   if (error.response.status == 429) {
@@ -20995,6 +21111,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _components_admin_crudforms_CreateUserForm_vue__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../components/admin/crudforms/CreateUserForm.vue */ "./resources/js/components/admin/crudforms/CreateUserForm.vue");
 /* harmony import */ var _components_UI_Alert_vue__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../components/UI/Alert.vue */ "./resources/js/components/UI/Alert.vue");
 /* harmony import */ var _logic_api_crud_User__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../logic/api/crud/User */ "./resources/js/logic/api/crud/User.js");
+/* harmony import */ var _logic_api_crud_PhotoWork__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../../logic/api/crud/PhotoWork */ "./resources/js/logic/api/crud/PhotoWork.js");
+/* harmony import */ var _components_admin_crudforms_CreatePhotoWorkForm_vue__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../../components/admin/crudforms/CreatePhotoWorkForm.vue */ "./resources/js/components/admin/crudforms/CreatePhotoWorkForm.vue");
+/* harmony import */ var _components_admin_crudforms_AddImagesToWorkForm_vue__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../../components/admin/crudforms/AddImagesToWorkForm.vue */ "./resources/js/components/admin/crudforms/AddImagesToWorkForm.vue");
 
 
 function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
@@ -21006,22 +21125,36 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
 
 
+
+
+
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   components: {
     DialogButton: _components_admin_UI_DialogButton_vue__WEBPACK_IMPORTED_MODULE_1__["default"],
     MyDialog: _components_admin_UI_Dialog_vue__WEBPACK_IMPORTED_MODULE_2__["default"],
     CreateUserForm: _components_admin_crudforms_CreateUserForm_vue__WEBPACK_IMPORTED_MODULE_3__["default"],
-    Alert: _components_UI_Alert_vue__WEBPACK_IMPORTED_MODULE_4__["default"]
+    Alert: _components_UI_Alert_vue__WEBPACK_IMPORTED_MODULE_4__["default"],
+    CreatePhotoWorkForm: _components_admin_crudforms_CreatePhotoWorkForm_vue__WEBPACK_IMPORTED_MODULE_7__["default"],
+    AddImagesToWorkForm: _components_admin_crudforms_AddImagesToWorkForm_vue__WEBPACK_IMPORTED_MODULE_8__["default"]
   },
   data: function data() {
     return {
+      // CREATE USER FORM
       createUserShow: false,
       createUserSuccess: '',
-      createUserFailed: ''
+      createUserFailed: '',
+      // CREATE PHOTO WORK FORM
+      createPhotoWorkShow: false,
+      createPhotoWorkSuccess: '',
+      createPhotoWorkFailed: '',
+      // ADD IMAGES TO WORK
+      addImagesToWorkShow: false,
+      addImagesSuccess: '',
+      addImagesFailed: ''
     };
   },
   methods: {
-    submitCreateUserForm: function submitCreateUserForm(user) {
+    submitCreateUserForm: function submitCreateUserForm(formData) {
       var _this = this;
 
       return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee() {
@@ -21032,7 +21165,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 _this.createUserSuccess = '';
                 _this.createUserFailed = '';
                 _context.next = 4;
-                return _logic_api_crud_User__WEBPACK_IMPORTED_MODULE_5__["default"].createUser(user.email, user.password, function (axiosRes) {
+                return _logic_api_crud_User__WEBPACK_IMPORTED_MODULE_5__["default"].createUser(formData, function () {
                   return _this.createUserSuccess = 'User create success';
                 }, function (axiosError) {
                   var _axiosError$response$, _axiosError$response;
@@ -21052,6 +21185,72 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
             }
           }
         }, _callee);
+      }))();
+    },
+    submitCreatePhotoWorkForm: function submitCreatePhotoWorkForm(formData) {
+      var _this2 = this;
+
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee2() {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee2$(_context2) {
+          while (1) {
+            switch (_context2.prev = _context2.next) {
+              case 0:
+                _this2.createPhotoWorkSuccess = '';
+                _this2.createPhotoWorkFailed = '';
+                _context2.next = 4;
+                return _logic_api_crud_PhotoWork__WEBPACK_IMPORTED_MODULE_6__["default"].createPhotoWork(formData, function (axiosRes) {
+                  return _this2.createPhotoWorkSuccess = 'Work create success (id: ' + axiosRes.data.id + ')';
+                }, function (axiosError) {
+                  var _axiosError$response$2, _axiosError$response2;
+
+                  return _this2.createPhotoWorkFailed = (_axiosError$response$2 = (_axiosError$response2 = axiosError.response) === null || _axiosError$response2 === void 0 ? void 0 : _axiosError$response2.data.message) !== null && _axiosError$response$2 !== void 0 ? _axiosError$response$2 : 'Work create failed';
+                });
+
+              case 4:
+                setTimeout(function () {
+                  _this2.createPhotoWorkSuccess = '';
+                  _this2.createPhotoWorkFailed = '';
+                }, 5000);
+
+              case 5:
+              case "end":
+                return _context2.stop();
+            }
+          }
+        }, _callee2);
+      }))();
+    },
+    submitAddImagesToWorkForm: function submitAddImagesToWorkForm(formData) {
+      var _this3 = this;
+
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee3() {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee3$(_context3) {
+          while (1) {
+            switch (_context3.prev = _context3.next) {
+              case 0:
+                _this3.addImagesSuccess = '';
+                _this3.addImagesFailed = '';
+                _context3.next = 4;
+                return _logic_api_crud_PhotoWork__WEBPACK_IMPORTED_MODULE_6__["default"].addImagesToWork(formData, function () {
+                  return _this3.addImagesSuccess = 'Photos added success';
+                }, function (axiosError) {
+                  var _axiosError$response$3, _axiosError$response3;
+
+                  return _this3.addImagesFailed = (_axiosError$response$3 = (_axiosError$response3 = axiosError.response) === null || _axiosError$response3 === void 0 ? void 0 : _axiosError$response3.data.message) !== null && _axiosError$response$3 !== void 0 ? _axiosError$response$3 : 'Photos add failed';
+                });
+
+              case 4:
+                setTimeout(function () {
+                  _this3.addImagesSuccess = '';
+                  _this3.addImagesFailed = '';
+                }, 5000);
+
+              case 5:
+              case "end":
+                return _context3.stop();
+            }
+          }
+        }, _callee3);
       }))();
     }
   }
@@ -21093,11 +21292,11 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     };
   },
   methods: _objectSpread(_objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_2__.mapActions)("auth", ["login"])), {}, {
-    submitForm: function submitForm(authObject) {
+    submitForm: function submitForm(formData) {
       var _this = this;
 
       this.failedLoginMessage = '';
-      this.login(authObject)["catch"](function (error) {
+      this.login(formData)["catch"](function (error) {
         if (error.response.status == 429) {
           _this.failedLoginMessage = "Login attempt limit exceeded. Wait " + error.response.headers["retry-after"] + " seconds";
         } else {
@@ -21281,6 +21480,285 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
 
 /***/ }),
 
+/***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/admin/crudforms/AddImagesToWorkForm.vue?vue&type=template&id=ed7a8aa0":
+/*!*********************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/admin/crudforms/AddImagesToWorkForm.vue?vue&type=template&id=ed7a8aa0 ***!
+  \*********************************************************************************************************************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "render": () => (/* binding */ render)
+/* harmony export */ });
+/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm-bundler.js");
+
+
+var _hoisted_1 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+  "class": "form-group"
+}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("p", null, "Images"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
+  type: "file",
+  required: "",
+  name: "images[]",
+  multiple: ""
+})], -1
+/* HOISTED */
+);
+
+var _hoisted_2 = {
+  "class": "form-group mt-3"
+};
+
+var _hoisted_3 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", null, "Work id", -1
+/* HOISTED */
+);
+
+var _hoisted_4 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+  "class": "text-danger help-block work_id-errors"
+}, null, -1
+/* HOISTED */
+);
+
+var _hoisted_5 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
+  type: "submit",
+  "class": "btn btn-primary"
+}, "Submit", -1
+/* HOISTED */
+);
+
+function render(_ctx, _cache, $props, $setup, $data, $options) {
+  return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("form", {
+    onSubmit: _cache[1] || (_cache[1] = (0,vue__WEBPACK_IMPORTED_MODULE_0__.withModifiers)(function () {
+      return $options.submitForm && $options.submitForm.apply($options, arguments);
+    }, ["prevent"])),
+    id: "add-images-to-work-form"
+  }, [_hoisted_1, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_2, [_hoisted_3, (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
+    type: "numeric",
+    "class": "form-control",
+    placeholder: "Work id",
+    required: "",
+    name: "work_id",
+    "onUpdate:modelValue": _cache[0] || (_cache[0] = function ($event) {
+      return $data.work_id = $event;
+    })
+  }, null, 512
+  /* NEED_PATCH */
+  ), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, $data.work_id]]), _hoisted_4]), _hoisted_5], 32
+  /* HYDRATE_EVENTS */
+  );
+}
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/admin/crudforms/CreatePhotoWorkForm.vue?vue&type=template&id=28699772":
+/*!*********************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/admin/crudforms/CreatePhotoWorkForm.vue?vue&type=template&id=28699772 ***!
+  \*********************************************************************************************************************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "render": () => (/* binding */ render)
+/* harmony export */ });
+/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm-bundler.js");
+
+var _hoisted_1 = {
+  "class": "form-group"
+};
+
+var _hoisted_2 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", null, "Name", -1
+/* HOISTED */
+);
+
+var _hoisted_3 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+  "class": "text-danger help-block name-errors"
+}, null, -1
+/* HOISTED */
+);
+
+var _hoisted_4 = {
+  "class": "form-group mt-3"
+};
+
+var _hoisted_5 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", null, "Subject", -1
+/* HOISTED */
+);
+
+var _hoisted_6 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+  "class": "text-danger help-block subject-errors"
+}, null, -1
+/* HOISTED */
+);
+
+var _hoisted_7 = {
+  "class": "form-group mt-3"
+};
+
+var _hoisted_8 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", null, "Year", -1
+/* HOISTED */
+);
+
+var _hoisted_9 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+  "class": "text-danger help-block year-errors"
+}, null, -1
+/* HOISTED */
+);
+
+var _hoisted_10 = {
+  "class": "form-group mt-3"
+};
+
+var _hoisted_11 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", null, "Client", -1
+/* HOISTED */
+);
+
+var _hoisted_12 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+  "class": "text-danger help-block client-errors"
+}, null, -1
+/* HOISTED */
+);
+
+var _hoisted_13 = {
+  "class": "form-group mt-3"
+};
+
+var _hoisted_14 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", null, "Website", -1
+/* HOISTED */
+);
+
+var _hoisted_15 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+  "class": "text-danger help-block website-errors"
+}, null, -1
+/* HOISTED */
+);
+
+var _hoisted_16 = {
+  "class": "form-group mt-3"
+};
+
+var _hoisted_17 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", null, "Title", -1
+/* HOISTED */
+);
+
+var _hoisted_18 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+  "class": "text-danger help-block title-errors"
+}, null, -1
+/* HOISTED */
+);
+
+var _hoisted_19 = {
+  "class": "form-group mt-3"
+};
+
+var _hoisted_20 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", null, "Description", -1
+/* HOISTED */
+);
+
+var _hoisted_21 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+  "class": "text-danger help-block description-errors"
+}, null, -1
+/* HOISTED */
+);
+
+var _hoisted_22 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
+  type: "submit",
+  "class": "btn btn-primary"
+}, "Submit", -1
+/* HOISTED */
+);
+
+function render(_ctx, _cache, $props, $setup, $data, $options) {
+  return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("form", {
+    onSubmit: _cache[7] || (_cache[7] = (0,vue__WEBPACK_IMPORTED_MODULE_0__.withModifiers)(function () {
+      return $options.submitForm && $options.submitForm.apply($options, arguments);
+    }, ["prevent"])),
+    id: "create-photo-work-form"
+  }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_1, [_hoisted_2, (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
+    type: "text",
+    "class": "form-control",
+    placeholder: "Work name",
+    maxlength: "30",
+    "onUpdate:modelValue": _cache[0] || (_cache[0] = function ($event) {
+      return $data.name = $event;
+    }),
+    required: "",
+    name: "name"
+  }, null, 512
+  /* NEED_PATCH */
+  ), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, $data.name]]), _hoisted_3]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_4, [_hoisted_5, (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
+    type: "text",
+    "class": "form-control",
+    placeholder: "Work subject",
+    maxlength: "50",
+    "onUpdate:modelValue": _cache[1] || (_cache[1] = function ($event) {
+      return $data.subject = $event;
+    }),
+    required: "",
+    name: "subject"
+  }, null, 512
+  /* NEED_PATCH */
+  ), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, $data.subject]]), _hoisted_6]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_7, [_hoisted_8, (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
+    type: "text",
+    "class": "form-control",
+    placeholder: "Year of creation",
+    maxlength: "10",
+    "onUpdate:modelValue": _cache[2] || (_cache[2] = function ($event) {
+      return $data.year = $event;
+    }),
+    required: "",
+    name: "year"
+  }, null, 512
+  /* NEED_PATCH */
+  ), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, $data.year]]), _hoisted_9]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_10, [_hoisted_11, (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
+    type: "text",
+    "class": "form-control",
+    placeholder: "Client name",
+    maxlength: "50",
+    "onUpdate:modelValue": _cache[3] || (_cache[3] = function ($event) {
+      return $data.client = $event;
+    }),
+    name: "client"
+  }, null, 512
+  /* NEED_PATCH */
+  ), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, $data.client]]), _hoisted_12]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_13, [_hoisted_14, (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
+    type: "text",
+    "class": "form-control",
+    placeholder: "Work done for",
+    maxlength: "255",
+    "onUpdate:modelValue": _cache[4] || (_cache[4] = function ($event) {
+      return $data.website = $event;
+    }),
+    name: "website"
+  }, null, 512
+  /* NEED_PATCH */
+  ), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, $data.website]]), _hoisted_15]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_16, [_hoisted_17, (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
+    type: "text",
+    "class": "form-control",
+    placeholder: "Title (about)",
+    maxlength: "255",
+    "onUpdate:modelValue": _cache[5] || (_cache[5] = function ($event) {
+      return $data.title = $event;
+    }),
+    name: "title"
+  }, null, 512
+  /* NEED_PATCH */
+  ), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, $data.title]]), _hoisted_18]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_19, [_hoisted_20, (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("textarea", {
+    "class": "form-control",
+    placeholder: "Description (about)",
+    "onUpdate:modelValue": _cache[6] || (_cache[6] = function ($event) {
+      return $data.description = $event;
+    }),
+    name: "description"
+  }, null, 512
+  /* NEED_PATCH */
+  ), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, $data.description]]), _hoisted_21]), _hoisted_22], 32
+  /* HYDRATE_EVENTS */
+  );
+}
+
+/***/ }),
+
 /***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/admin/crudforms/CreateUserForm.vue?vue&type=template&id=10c349d4":
 /*!****************************************************************************************************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/admin/crudforms/CreateUserForm.vue?vue&type=template&id=10c349d4 ***!
@@ -21337,7 +21815,8 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
   return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("form", {
     onSubmit: _cache[2] || (_cache[2] = (0,vue__WEBPACK_IMPORTED_MODULE_0__.withModifiers)(function () {
       return $options.submitForm && $options.submitForm.apply($options, arguments);
-    }, ["prevent"]))
+    }, ["prevent"])),
+    id: "create-user-form"
   }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_1, [_hoisted_2, (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
     type: "email",
     "class": "form-control",
@@ -21345,7 +21824,9 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     maxlength: "255",
     "onUpdate:modelValue": _cache[0] || (_cache[0] = function ($event) {
       return $data.email = $event;
-    })
+    }),
+    required: "",
+    name: "email"
   }, null, 512
   /* NEED_PATCH */
   ), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, $data.email]]), _hoisted_3]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_4, [_hoisted_5, (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
@@ -21354,7 +21835,9 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     placeholder: "Password",
     "onUpdate:modelValue": _cache[1] || (_cache[1] = function ($event) {
       return $data.password = $event;
-    })
+    }),
+    required: "",
+    name: "password"
   }, null, 512
   /* NEED_PATCH */
   ), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, $data.password]]), _hoisted_6]), _hoisted_7], 32
@@ -21414,8 +21897,7 @@ var _hoisted_7 = {
 };
 
 var _hoisted_8 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
-  "class": "form-check-label",
-  "for": "exampleCheck1"
+  "class": "form-check-label"
 }, "Save state after exit", -1
 /* HOISTED */
 );
@@ -21431,7 +21913,8 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
   return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("form", {
     onSubmit: _cache[3] || (_cache[3] = (0,vue__WEBPACK_IMPORTED_MODULE_0__.withModifiers)(function () {
       return $options.submitForm && $options.submitForm.apply($options, arguments);
-    }, ["prevent"]))
+    }, ["prevent"])),
+    id: "login-form"
   }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_1, [_hoisted_2, (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
     type: "email",
     "class": "form-control",
@@ -21441,7 +21924,8 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     maxlength: "255",
     "onUpdate:modelValue": _cache[0] || (_cache[0] = function ($event) {
       return $data.email = $event;
-    })
+    }),
+    name: "email"
   }, null, 512
   /* NEED_PATCH */
   ), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, $data.email]]), _hoisted_3]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_4, [_hoisted_5, (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
@@ -21451,16 +21935,17 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     placeholder: "Password",
     "onUpdate:modelValue": _cache[1] || (_cache[1] = function ($event) {
       return $data.password = $event;
-    })
+    }),
+    name: "password"
   }, null, 512
   /* NEED_PATCH */
   ), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, $data.password]]), _hoisted_6]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_7, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
     type: "checkbox",
     "class": "form-check-input",
-    id: "exampleCheck1",
     "onUpdate:modelValue": _cache[2] || (_cache[2] = function ($event) {
       return $data.save = $event;
-    })
+    }),
+    name: "save"
   }, null, 512
   /* NEED_PATCH */
   ), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelCheckbox, $data.save]]), _hoisted_8]), _hoisted_9], 32
@@ -21553,7 +22038,9 @@ var _hoisted_10 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElement
 /* HOISTED */
 );
 
-var _hoisted_11 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
+var _hoisted_11 = ["value"];
+
+var _hoisted_12 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
   type: "submit",
   name: "submit",
   id: "submit",
@@ -21573,7 +22060,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
   }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_1, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_2, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" Name input "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_3, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
     type: "text",
     "class": "form-control",
-    name: "InputName",
+    name: "name",
     id: "InputName",
     placeholder: "Your name",
     required: "required",
@@ -21586,7 +22073,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     type: "email",
     "class": "form-control",
     id: "InputEmail",
-    name: "InputEmail",
+    name: "email",
     placeholder: "Email address",
     required: "required",
     "onUpdate:modelValue": _cache[1] || (_cache[1] = function ($event) {
@@ -21595,7 +22082,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
   }, null, 512
   /* NEED_PATCH */
   ), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, $data.email]]), _hoisted_7])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_8, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" Comment textarea "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_9, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("textarea", {
-    name: "InputComment",
+    name: "comment",
     id: "InputComment",
     "class": "form-control",
     rows: "5",
@@ -21606,7 +22093,13 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     })
   }, null, 512
   /* NEED_PATCH */
-  ), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, $data.comment]]), _hoisted_10])])]), _hoisted_11, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" Send Button ")], 32
+  ), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, $data.comment]]), _hoisted_10])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
+    type: "hidden",
+    name: "post_id",
+    value: this.$route.params.id
+  }, null, 8
+  /* PROPS */
+  , _hoisted_11), _hoisted_12, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" Send Button ")], 32
   /* HYDRATE_EVENTS */
   );
 }
@@ -22035,7 +22528,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     type: "email",
     "class": "form-control",
     id: "email",
-    name: "InputEmail",
+    name: "email",
     placeholder: "Email address",
     required: "required",
     "onUpdate:modelValue": _cache[1] || (_cache[1] = function ($event) {
@@ -22045,7 +22538,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
   }, null, 512
   /* NEED_PATCH */
   ), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, $data.email]]), _hoisted_8])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_9, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" Message textarea "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_10, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("textarea", {
-    name: "InputMessage",
+    name: "message",
     id: "message",
     "class": "form-control",
     rows: "5",
@@ -23407,6 +23900,18 @@ var _hoisted_3 = {
 
 var _hoisted_4 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)("Create user");
 
+var _hoisted_5 = {
+  "class": "col-md-2"
+};
+
+var _hoisted_6 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)("Create photo work");
+
+var _hoisted_7 = {
+  "class": "col-md-2"
+};
+
+var _hoisted_8 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)("Add photos to work");
+
 function render(_ctx, _cache, $props, $setup, $data, $options) {
   var _component_dialog_button = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("dialog-button");
 
@@ -23415,6 +23920,10 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
   var _component_create_user_form = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("create-user-form");
 
   var _component_my_dialog = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("my-dialog");
+
+  var _component_create_photo_work_form = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("create-photo-work-form");
+
+  var _component_add_images_to_work_form = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("add-images-to-work-form");
 
   return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_1, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_2, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_3, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_dialog_button, {
     show: $data.createUserShow,
@@ -23430,9 +23939,37 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
 
   }, 8
   /* PROPS */
+  , ["show"])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_5, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_dialog_button, {
+    show: $data.createPhotoWorkShow,
+    "onUpdate:show": _cache[1] || (_cache[1] = function ($event) {
+      return $data.createPhotoWorkShow = $event;
+    })
+  }, {
+    "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
+      return [_hoisted_6];
+    }),
+    _: 1
+    /* STABLE */
+
+  }, 8
+  /* PROPS */
+  , ["show"])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_7, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_dialog_button, {
+    show: $data.addImagesToWorkShow,
+    "onUpdate:show": _cache[2] || (_cache[2] = function ($event) {
+      return $data.addImagesToWorkShow = $event;
+    })
+  }, {
+    "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
+      return [_hoisted_8];
+    }),
+    _: 1
+    /* STABLE */
+
+  }, 8
+  /* PROPS */
   , ["show"])])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" Dialogs "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_my_dialog, {
     show: $data.createUserShow,
-    "onUpdate:show": _cache[1] || (_cache[1] = function ($event) {
+    "onUpdate:show": _cache[3] || (_cache[3] = function ($event) {
       return $data.createUserShow = $event;
     })
   }, {
@@ -23472,7 +24009,91 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
 
   }, 8
   /* PROPS */
-  , ["show"])], 64
+  , ["show"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_my_dialog, {
+    show: $data.createPhotoWorkShow,
+    "onUpdate:show": _cache[4] || (_cache[4] = function ($event) {
+      return $data.createPhotoWorkShow = $event;
+    })
+  }, {
+    "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
+      return [$data.createPhotoWorkSuccess ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_alert, {
+        key: 0,
+        type: 'success'
+      }, {
+        "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
+          return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)((0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.createPhotoWorkSuccess), 1
+          /* TEXT */
+          )];
+        }),
+        _: 1
+        /* STABLE */
+
+      })) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), $data.createPhotoWorkFailed ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_alert, {
+        key: 1,
+        type: 'danger'
+      }, {
+        "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
+          return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)((0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.createPhotoWorkFailed), 1
+          /* TEXT */
+          )];
+        }),
+        _: 1
+        /* STABLE */
+
+      })) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_create_photo_work_form, {
+        onSubmit: $options.submitCreatePhotoWorkForm
+      }, null, 8
+      /* PROPS */
+      , ["onSubmit"])];
+    }),
+    _: 1
+    /* STABLE */
+
+  }, 8
+  /* PROPS */
+  , ["show"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_my_dialog, {
+    show: $data.addImagesToWorkShow,
+    "onUpdate:show": _cache[5] || (_cache[5] = function ($event) {
+      return $data.addImagesToWorkShow = $event;
+    })
+  }, {
+    "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
+      return [$data.addImagesSuccess ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_alert, {
+        key: 0,
+        type: 'success'
+      }, {
+        "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
+          return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)((0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.addImagesSuccess), 1
+          /* TEXT */
+          )];
+        }),
+        _: 1
+        /* STABLE */
+
+      })) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), $data.addImagesFailed ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_alert, {
+        key: 1,
+        type: 'danger'
+      }, {
+        "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
+          return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)((0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.addImagesFailed), 1
+          /* TEXT */
+          )];
+        }),
+        _: 1
+        /* STABLE */
+
+      })) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_add_images_to_work_form, {
+        onSubmit: $options.submitAddImagesToWorkForm
+      }, null, 8
+      /* PROPS */
+      , ["onSubmit"])];
+    }),
+    _: 1
+    /* STABLE */
+
+  }, 8
+  /* PROPS */
+  , ["show"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" Dialogs ")], 64
   /* STABLE_FRAGMENT */
   );
 }
@@ -23733,12 +24354,11 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
   /**
    * Аутентификация пользователя
    *
-   * @param email
-   * @param password
+   * @param formData
    * @param thenHandler
    * @param catchHandler
    */
-  login: function login(email, password) {
+  login: function login(formData) {
     var _arguments = arguments;
     return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee() {
       var thenHandler, catchHandler;
@@ -23746,13 +24366,10 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         while (1) {
           switch (_context.prev = _context.next) {
             case 0:
-              thenHandler = _arguments.length > 2 && _arguments[2] !== undefined ? _arguments[2] : null;
-              catchHandler = _arguments.length > 3 && _arguments[3] !== undefined ? _arguments[3] : null;
+              thenHandler = _arguments.length > 1 && _arguments[1] !== undefined ? _arguments[1] : null;
+              catchHandler = _arguments.length > 2 && _arguments[2] !== undefined ? _arguments[2] : null;
               _context.next = 4;
-              return _axios_axios__WEBPACK_IMPORTED_MODULE_1__["default"].post('/auth/login', {
-                email: email,
-                password: password
-              }).then(thenHandler)["catch"](catchHandler);
+              return _axios_axios__WEBPACK_IMPORTED_MODULE_1__["default"].post('/auth/login', formData).then(thenHandler)["catch"](catchHandler);
 
             case 4:
             case "end":
@@ -23765,10 +24382,10 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
   /**
    * Отправка запроса на проверку токена аутентификации
-   * 
-   * @param token 
-   * @param thenHandler 
-   * @param catchHandler 
+   *
+   * @param token
+   * @param thenHandler
+   * @param catchHandler
    */
   checkAuth: function checkAuth(token) {
     var _arguments2 = arguments;
@@ -23821,15 +24438,12 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   /**
    * Отправить запрос на создание комментария
-   * 
-   * @param name 
-   * @param email 
-   * @param comment 
-   * @param post_id 
-   * @param thenHandler 
-   * @param catchHandler 
+   *
+   * @param formData
+   * @param thenHandler
+   * @param catchHandler
    */
-  createComment: function createComment(name, email, comment, post_id) {
+  createComment: function createComment(formData) {
     var _arguments = arguments;
     return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee() {
       var thenHandler, catchHandler;
@@ -23837,15 +24451,10 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         while (1) {
           switch (_context.prev = _context.next) {
             case 0:
-              thenHandler = _arguments.length > 4 && _arguments[4] !== undefined ? _arguments[4] : null;
-              catchHandler = _arguments.length > 5 && _arguments[5] !== undefined ? _arguments[5] : null;
+              thenHandler = _arguments.length > 1 && _arguments[1] !== undefined ? _arguments[1] : null;
+              catchHandler = _arguments.length > 2 && _arguments[2] !== undefined ? _arguments[2] : null;
               _context.next = 4;
-              return _axios_axios__WEBPACK_IMPORTED_MODULE_1__["default"].post('/comments', {
-                name: name,
-                email: email,
-                comment: comment,
-                post_id: post_id
-              }).then(thenHandler)["catch"](catchHandler);
+              return _axios_axios__WEBPACK_IMPORTED_MODULE_1__["default"].post('/comments', formData).then(thenHandler)["catch"](catchHandler);
 
             case 4:
             case "end":
@@ -23858,10 +24467,10 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
   /**
    * Получить комментарии поста с id = post_id
-   * 
-   * @param post_id 
-   * @param thenHandler 
-   * @param catchHandler 
+   *
+   * @param post_id
+   * @param thenHandler
+   * @param catchHandler
    */
   fetchCommentsByPostId: function fetchCommentsByPostId(post_id) {
     var _arguments2 = arguments;
@@ -23913,14 +24522,12 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
   /**
    * Создание сообщения
    *
-   * @param name
-   * @param email
-   * @param message
+   * @param formData
    * @param thenHandler
    * @param catchHandler
    * @returns {Promise<void>}
    */
-  saveMessage: function saveMessage(name, email, message) {
+  saveMessage: function saveMessage(formData) {
     var _arguments = arguments;
     return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee() {
       var thenHandler, catchHandler;
@@ -23928,14 +24535,10 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         while (1) {
           switch (_context.prev = _context.next) {
             case 0:
-              thenHandler = _arguments.length > 3 && _arguments[3] !== undefined ? _arguments[3] : null;
-              catchHandler = _arguments.length > 4 && _arguments[4] !== undefined ? _arguments[4] : null;
+              thenHandler = _arguments.length > 1 && _arguments[1] !== undefined ? _arguments[1] : null;
+              catchHandler = _arguments.length > 2 && _arguments[2] !== undefined ? _arguments[2] : null;
               _context.next = 4;
-              return _axios_axios__WEBPACK_IMPORTED_MODULE_1__["default"].post("/message", {
-                name: name,
-                email: email,
-                message: message
-              }).then(thenHandler)["catch"](catchHandler);
+              return _axios_axios__WEBPACK_IMPORTED_MODULE_1__["default"].post("/message", formData).then(thenHandler)["catch"](catchHandler);
 
             case 4:
             case "end":
@@ -24195,6 +24798,89 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
 /***/ }),
 
+/***/ "./resources/js/logic/api/crud/PhotoWork.js":
+/*!**************************************************!*\
+  !*** ./resources/js/logic/api/crud/PhotoWork.js ***!
+  \**************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _axios_axiosWithAuthToken__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../../axios/axiosWithAuthToken */ "./resources/js/axios/axiosWithAuthToken.js");
+
+
+function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+
+function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  /**
+   * Отправка запроса на создание работы (фотографии)
+   *
+   * @param formData
+   * @param thenHandler
+   * @param catchHandler
+   */
+  createPhotoWork: function createPhotoWork(formData) {
+    var _arguments = arguments;
+    return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee() {
+      var thenHandler, catchHandler;
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee$(_context) {
+        while (1) {
+          switch (_context.prev = _context.next) {
+            case 0:
+              thenHandler = _arguments.length > 1 && _arguments[1] !== undefined ? _arguments[1] : null;
+              catchHandler = _arguments.length > 2 && _arguments[2] !== undefined ? _arguments[2] : null;
+              _context.next = 4;
+              return _axios_axiosWithAuthToken__WEBPACK_IMPORTED_MODULE_1__["default"].post('/works/photos', formData).then(thenHandler)["catch"](catchHandler);
+
+            case 4:
+            case "end":
+              return _context.stop();
+          }
+        }
+      }, _callee);
+    }))();
+  },
+
+  /**
+   * Отправка запроса на добавление изображений к работе
+   * 
+   * @param formData
+   * @param thenHandler
+   * @param catchHandler
+   */
+  addImagesToWork: function addImagesToWork(formData) {
+    var _arguments2 = arguments;
+    return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee2() {
+      var thenHandler, catchHandler;
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee2$(_context2) {
+        while (1) {
+          switch (_context2.prev = _context2.next) {
+            case 0:
+              thenHandler = _arguments2.length > 1 && _arguments2[1] !== undefined ? _arguments2[1] : null;
+              catchHandler = _arguments2.length > 2 && _arguments2[2] !== undefined ? _arguments2[2] : null;
+              _context2.next = 4;
+              return _axios_axiosWithAuthToken__WEBPACK_IMPORTED_MODULE_1__["default"].post('/works/photos/images', formData).then(thenHandler)["catch"](catchHandler);
+
+            case 4:
+            case "end":
+              return _context2.stop();
+          }
+        }
+      }, _callee2);
+    }))();
+  }
+});
+
+/***/ }),
+
 /***/ "./resources/js/logic/api/crud/User.js":
 /*!*********************************************!*\
   !*** ./resources/js/logic/api/crud/User.js ***!
@@ -24220,12 +24906,11 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
   /**
    * Отправка запроса на создание пользователя
    *
-   * @param email
-   * @param password
+   * @param formData
    * @param thenHandler
    * @param catchHandler
    */
-  createUser: function createUser(email, password) {
+  createUser: function createUser(formData) {
     var _arguments = arguments;
     return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee() {
       var thenHandler, catchHandler;
@@ -24233,13 +24918,10 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         while (1) {
           switch (_context.prev = _context.next) {
             case 0:
-              thenHandler = _arguments.length > 2 && _arguments[2] !== undefined ? _arguments[2] : null;
-              catchHandler = _arguments.length > 3 && _arguments[3] !== undefined ? _arguments[3] : null;
+              thenHandler = _arguments.length > 1 && _arguments[1] !== undefined ? _arguments[1] : null;
+              catchHandler = _arguments.length > 2 && _arguments[2] !== undefined ? _arguments[2] : null;
               _context.next = 4;
-              return _axios_axiosWithAuthToken__WEBPACK_IMPORTED_MODULE_1__["default"].post('/user', {
-                email: email,
-                password: password
-              }).then(thenHandler)["catch"](catchHandler);
+              return _axios_axiosWithAuthToken__WEBPACK_IMPORTED_MODULE_1__["default"].post('/user', formData).then(thenHandler)["catch"](catchHandler);
 
             case 4:
             case "end":
@@ -24352,11 +25034,11 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
   actions: {
     /**
      * Логин пользователя
-     * 
-     * @param commit 
-     * @param authData 
+     *
+     * @param commit
+     * @param formData
      */
-    login: function login(_ref, authData) {
+    login: function login(_ref, formData) {
       return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee() {
         var commit;
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee$(_context) {
@@ -24365,10 +25047,10 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
               case 0:
                 commit = _ref.commit;
                 _context.next = 3;
-                return _api_Auth__WEBPACK_IMPORTED_MODULE_1__["default"].login(authData.email, authData.password, function (axiosRes) {
+                return _api_Auth__WEBPACK_IMPORTED_MODULE_1__["default"].login(formData, function (axiosRes) {
                   var token = axiosRes.data;
 
-                  if (authData.save) {
+                  if (formData.get('save')) {
                     localStorage.setItem('token', token);
                   }
 
@@ -24699,28 +25381,24 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
      * Создание комментария
      *
      * @param commit
-     * @param name
-     * @param email
-     * @param comment
-     * @param post_id
+     * @param formData
      */
-    createComment: function createComment(_ref, _ref2) {
+    createComment: function createComment(_ref, formData) {
       return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee() {
-        var commit, name, email, comment, post_id;
+        var commit;
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee$(_context) {
           while (1) {
             switch (_context.prev = _context.next) {
               case 0:
                 commit = _ref.commit;
-                name = _ref2.name, email = _ref2.email, comment = _ref2.comment, post_id = _ref2.post_id;
-                _context.next = 4;
-                return _api_Comments__WEBPACK_IMPORTED_MODULE_1__["default"].createComment(name, email, comment, post_id, function (axiosRes) {
+                _context.next = 3;
+                return _api_Comments__WEBPACK_IMPORTED_MODULE_1__["default"].createComment(formData, function (axiosRes) {
                   return commit('addCommentToSingle', axiosRes.data);
                 }, function (axiosError) {
                   throw axiosError;
                 });
 
-              case 4:
+              case 3:
               case "end":
                 return _context.stop();
             }
@@ -25330,26 +26008,23 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
      * Создание сообщения
      *
      * @param dispatch
-     * @param name
-     * @param email
-     * @param message
+     * @param formData
      * @returns {Promise<void>}
      */
-    sendMessage: function sendMessage(_ref, _ref2) {
+    sendMessage: function sendMessage(_ref, formData) {
       return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee() {
-        var dispatch, name, email, message;
+        var dispatch;
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee$(_context) {
           while (1) {
             switch (_context.prev = _context.next) {
               case 0:
                 dispatch = _ref.dispatch;
-                name = _ref2.name, email = _ref2.email, message = _ref2.message;
-                _context.next = 4;
-                return _logic_api_ContactMessage__WEBPACK_IMPORTED_MODULE_1__["default"].saveMessage(name, email, message, function (axiosRes) {}, function (axiosError) {
+                _context.next = 3;
+                return _logic_api_ContactMessage__WEBPACK_IMPORTED_MODULE_1__["default"].saveMessage(formData, function () {}, function (axiosError) {
                   throw axiosError;
                 });
 
-              case 4:
+              case 3:
               case "end":
                 return _context.stop();
             }
@@ -25554,7 +26229,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "\n.dialog[data-v-2c4624f0] {\r\n  top: 0;\r\n  left: 0;\r\n  right: 0;\r\n  bottom: 0;\r\n  position: fixed;\r\n  background: rgba(0, 0, 0, 0.5);\r\n  display: flex;\n}\n.dialog_content[data-v-2c4624f0] {\r\n  margin: auto;\r\n  background: white;\r\n  border-radius: 12px;\r\n  padding: 15px;\n}\r\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "\n.dialog[data-v-2c4624f0] {\r\n  top: 0;\r\n  left: 0;\r\n  right: 0;\r\n  bottom: 0;\r\n  position: fixed;\r\n  background: rgba(0, 0, 0, 0.5);\r\n  display: flex;\r\n  overflow-y:scroll;\r\n  overflow-x:hidden;\r\n  padding-top: 50px;\r\n  padding-bottom: 50px;\n}\n.dialog_content[data-v-2c4624f0] {\r\n  margin: auto;\r\n  background: white;\r\n  border-radius: 12px;\r\n  padding: 15px;\r\n  width: 60%;\n}\r\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -25578,7 +26253,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "\n.dialog-button {\r\n    transition-duration: 0.4s;\r\n    background-color: white;\r\n    border: 2px solid #000000;\r\n    border-radius: 7px;\r\n    color: #000000;\r\n    padding: 15px 32px;\r\n    text-align: center;\r\n    text-decoration: none;\r\n    display: inline-block;\r\n    font-size: 16px;\r\n    cursor: pointer;\r\n    white-space: nowrap;\n}\n.dialog-button:hover {\r\n    background-color: #3f3f3f;\r\n    color: white;\n}\r\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "\n.dialog-button {\r\n    transition-duration: 0.4s;\r\n    background-color: white;\r\n    border: 2px solid #000000;\r\n    border-radius: 7px;\r\n    color: #000000;\r\n    padding: 15px 32px;\r\n    text-align: center;\r\n    text-decoration: none;\r\n    font-size: 16px;\r\n    cursor: pointer;\r\n    width: 100%;\n}\n.dialog-button:hover {\r\n    background-color: #3f3f3f;\r\n    color: white;\n}\r\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -44684,6 +45359,62 @@ if (false) {}
 
 /***/ }),
 
+/***/ "./resources/js/components/admin/crudforms/AddImagesToWorkForm.vue":
+/*!*************************************************************************!*\
+  !*** ./resources/js/components/admin/crudforms/AddImagesToWorkForm.vue ***!
+  \*************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _AddImagesToWorkForm_vue_vue_type_template_id_ed7a8aa0__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./AddImagesToWorkForm.vue?vue&type=template&id=ed7a8aa0 */ "./resources/js/components/admin/crudforms/AddImagesToWorkForm.vue?vue&type=template&id=ed7a8aa0");
+/* harmony import */ var _AddImagesToWorkForm_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./AddImagesToWorkForm.vue?vue&type=script&lang=js */ "./resources/js/components/admin/crudforms/AddImagesToWorkForm.vue?vue&type=script&lang=js");
+/* harmony import */ var C_OpenServer_domains_laravel_vue_ariko_node_modules_vue_loader_dist_exportHelper_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./node_modules/vue-loader/dist/exportHelper.js */ "./node_modules/vue-loader/dist/exportHelper.js");
+
+
+
+
+;
+const __exports__ = /*#__PURE__*/(0,C_OpenServer_domains_laravel_vue_ariko_node_modules_vue_loader_dist_exportHelper_js__WEBPACK_IMPORTED_MODULE_2__["default"])(_AddImagesToWorkForm_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__["default"], [['render',_AddImagesToWorkForm_vue_vue_type_template_id_ed7a8aa0__WEBPACK_IMPORTED_MODULE_0__.render],['__file',"resources/js/components/admin/crudforms/AddImagesToWorkForm.vue"]])
+/* hot reload */
+if (false) {}
+
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (__exports__);
+
+/***/ }),
+
+/***/ "./resources/js/components/admin/crudforms/CreatePhotoWorkForm.vue":
+/*!*************************************************************************!*\
+  !*** ./resources/js/components/admin/crudforms/CreatePhotoWorkForm.vue ***!
+  \*************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _CreatePhotoWorkForm_vue_vue_type_template_id_28699772__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./CreatePhotoWorkForm.vue?vue&type=template&id=28699772 */ "./resources/js/components/admin/crudforms/CreatePhotoWorkForm.vue?vue&type=template&id=28699772");
+/* harmony import */ var _CreatePhotoWorkForm_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./CreatePhotoWorkForm.vue?vue&type=script&lang=js */ "./resources/js/components/admin/crudforms/CreatePhotoWorkForm.vue?vue&type=script&lang=js");
+/* harmony import */ var C_OpenServer_domains_laravel_vue_ariko_node_modules_vue_loader_dist_exportHelper_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./node_modules/vue-loader/dist/exportHelper.js */ "./node_modules/vue-loader/dist/exportHelper.js");
+
+
+
+
+;
+const __exports__ = /*#__PURE__*/(0,C_OpenServer_domains_laravel_vue_ariko_node_modules_vue_loader_dist_exportHelper_js__WEBPACK_IMPORTED_MODULE_2__["default"])(_CreatePhotoWorkForm_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__["default"], [['render',_CreatePhotoWorkForm_vue_vue_type_template_id_28699772__WEBPACK_IMPORTED_MODULE_0__.render],['__file',"resources/js/components/admin/crudforms/CreatePhotoWorkForm.vue"]])
+/* hot reload */
+if (false) {}
+
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (__exports__);
+
+/***/ }),
+
 /***/ "./resources/js/components/admin/crudforms/CreateUserForm.vue":
 /*!********************************************************************!*\
   !*** ./resources/js/components/admin/crudforms/CreateUserForm.vue ***!
@@ -45703,6 +46434,38 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./resources/js/components/admin/crudforms/AddImagesToWorkForm.vue?vue&type=script&lang=js":
+/*!*************************************************************************************************!*\
+  !*** ./resources/js/components/admin/crudforms/AddImagesToWorkForm.vue?vue&type=script&lang=js ***!
+  \*************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (/* reexport safe */ _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_AddImagesToWorkForm_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_0__["default"])
+/* harmony export */ });
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_AddImagesToWorkForm_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!../../../../../node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./AddImagesToWorkForm.vue?vue&type=script&lang=js */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/admin/crudforms/AddImagesToWorkForm.vue?vue&type=script&lang=js");
+ 
+
+/***/ }),
+
+/***/ "./resources/js/components/admin/crudforms/CreatePhotoWorkForm.vue?vue&type=script&lang=js":
+/*!*************************************************************************************************!*\
+  !*** ./resources/js/components/admin/crudforms/CreatePhotoWorkForm.vue?vue&type=script&lang=js ***!
+  \*************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (/* reexport safe */ _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_CreatePhotoWorkForm_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_0__["default"])
+/* harmony export */ });
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_CreatePhotoWorkForm_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!../../../../../node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./CreatePhotoWorkForm.vue?vue&type=script&lang=js */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/admin/crudforms/CreatePhotoWorkForm.vue?vue&type=script&lang=js");
+ 
+
+/***/ }),
+
 /***/ "./resources/js/components/admin/crudforms/CreateUserForm.vue?vue&type=script&lang=js":
 /*!********************************************************************************************!*\
   !*** ./resources/js/components/admin/crudforms/CreateUserForm.vue?vue&type=script&lang=js ***!
@@ -46307,6 +47070,38 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "render": () => (/* reexport safe */ _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_dist_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_DialogButton_vue_vue_type_template_id_4aaa13da__WEBPACK_IMPORTED_MODULE_0__.render)
 /* harmony export */ });
 /* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_dist_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_DialogButton_vue_vue_type_template_id_4aaa13da__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!../../../../../node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!../../../../../node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./DialogButton.vue?vue&type=template&id=4aaa13da */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/admin/UI/DialogButton.vue?vue&type=template&id=4aaa13da");
+
+
+/***/ }),
+
+/***/ "./resources/js/components/admin/crudforms/AddImagesToWorkForm.vue?vue&type=template&id=ed7a8aa0":
+/*!*******************************************************************************************************!*\
+  !*** ./resources/js/components/admin/crudforms/AddImagesToWorkForm.vue?vue&type=template&id=ed7a8aa0 ***!
+  \*******************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "render": () => (/* reexport safe */ _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_dist_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_AddImagesToWorkForm_vue_vue_type_template_id_ed7a8aa0__WEBPACK_IMPORTED_MODULE_0__.render)
+/* harmony export */ });
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_dist_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_AddImagesToWorkForm_vue_vue_type_template_id_ed7a8aa0__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!../../../../../node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!../../../../../node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./AddImagesToWorkForm.vue?vue&type=template&id=ed7a8aa0 */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/admin/crudforms/AddImagesToWorkForm.vue?vue&type=template&id=ed7a8aa0");
+
+
+/***/ }),
+
+/***/ "./resources/js/components/admin/crudforms/CreatePhotoWorkForm.vue?vue&type=template&id=28699772":
+/*!*******************************************************************************************************!*\
+  !*** ./resources/js/components/admin/crudforms/CreatePhotoWorkForm.vue?vue&type=template&id=28699772 ***!
+  \*******************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "render": () => (/* reexport safe */ _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_dist_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_CreatePhotoWorkForm_vue_vue_type_template_id_28699772__WEBPACK_IMPORTED_MODULE_0__.render)
+/* harmony export */ });
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_dist_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_CreatePhotoWorkForm_vue_vue_type_template_id_28699772__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!../../../../../node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!../../../../../node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./CreatePhotoWorkForm.vue?vue&type=template&id=28699772 */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/admin/crudforms/CreatePhotoWorkForm.vue?vue&type=template&id=28699772");
 
 
 /***/ }),

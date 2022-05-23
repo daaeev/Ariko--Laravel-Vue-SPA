@@ -25,11 +25,16 @@ class PhotoControllerTest extends TestCase
 
         $builder_mock = $this->getMockBuilder(Builder::class)
             ->disableOriginalConstructor()
-            ->onlyMethods(['with', 'paginate'])
+            ->onlyMethods(['with', 'paginate', 'whereHas'])
             ->getMock();
 
         $builder_mock->expects($this->once())
             ->method('with')
+            ->with('images')
+            ->willReturn($builder_mock);
+
+        $builder_mock->expects($this->once())
+            ->method('whereHas')
             ->with('images')
             ->willReturn($builder_mock);
 
@@ -69,8 +74,13 @@ class PhotoControllerTest extends TestCase
 
         $builder_mock = $this->getMockBuilder(Builder::class)
             ->disableOriginalConstructor()
-            ->onlyMethods(['with', 'paginate'])
+            ->onlyMethods(['with', 'paginate', 'whereHas'])
             ->getMock();
+
+        $builder_mock->expects($this->once())
+            ->method('whereHas')
+            ->with('images')
+            ->willReturn($builder_mock);
 
         $builder_mock->expects($this->once())
             ->method('with')

@@ -10,7 +10,7 @@ class Image extends Model
     use HasFactory;
 
     public $timestamps = false;
-    protected $fillable = ['*'];
+    protected $guarded = [];
 
     public function work()
     {

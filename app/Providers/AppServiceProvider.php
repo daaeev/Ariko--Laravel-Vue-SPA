@@ -2,6 +2,8 @@
 
 namespace App\Providers;
 
+use App\Services\ImageProcessing\ImageProcessing;
+use App\Services\ImageProcessing\Interfaces\ImageProcessingInterface;
 use App\Services\TestHelpers\GetModelQueryBuilder;
 use App\Services\TestHelpers\interfaces\GetModelQueryBuilderInterface;
 use App\Services\TokenValidators\CryptTokenValidator;
@@ -16,5 +18,8 @@ class AppServiceProvider extends ServiceProvider
 
         // TOKEN VALIDATORS
         AuthTokenValidatorInterface::class => CryptTokenValidator::class,
+
+        // IMAGE PROCESSING
+        ImageProcessingInterface::class => ImageProcessing::class,
     ];
 }

@@ -22,10 +22,10 @@ export default {
   methods: {
     ...mapActions("auth", ["login"]),
 
-    submitForm(authObject) {
+    submitForm(formData) {
       this.failedLoginMessage = '';
-      
-      this.login(authObject)
+
+      this.login(formData)
         .catch((error) => {
             if (error.response.status == 429) {
                 this.failedLoginMessage =
