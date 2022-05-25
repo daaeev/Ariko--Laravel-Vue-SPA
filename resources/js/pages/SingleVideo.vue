@@ -11,41 +11,43 @@
 
         <portfolio-info :year="single.year" :client="single.client" :website="single.website"></portfolio-info>
 
-        <image-slider :images="single.images"></image-slider>
+        <div class="container container-padding text-center">
+            <video-player :src="'/storage/videos/' + single.video"></video-player>
+        </div>
 
         <div class="container container-padding">
             <h2 class="mt-15 mb-4">{{single.title}}</h2>
             <p>{{single.description}}</p>
         </div>
 
-        <projects-pagination :next_id="singlePagination.next_id" :prev_id="singlePagination.prev_id" :route_name="'works.photos.single'" @loadsingle="fetchSingleByPagination"></projects-pagination>
+        <projects-pagination :next_id="singlePagination.next_id" :prev_id="singlePagination.prev_id" :route_name="'works.videos.single'" @loadsingle="fetchSingleByPagination"></projects-pagination>
 
     </section>
 </template>
 
 <script>
 import {mapActions, mapGetters} from "vuex";
-import ImageSlider from "../components/singleP/ImageSlider";
 import PortfolioInfo from "../components/singleP/PortfolioInfo";
 import ProjectsPagination from "../components/singleP/ProjectsPagination";
+import VideoPlayer from "../components/videoSingle/VideoPlayer";
 
 export default {
     components: {
+        VideoPlayer,
         ProjectsPagination,
         PortfolioInfo,
-        ImageSlider,
     },
 
-    created() {
-        this.fetchWorkById(this.$route.params.id);
+    async created() {
+        await this.fetchWorkById(this.$route.params.id);
     },
 
     computed: {
-        ...mapGetters('photos', ['single', 'singlePagination']),
+        ...mapGetters('videos', ['single', 'singlePagination']),
     },
 
     methods: {
-        ...mapActions('photos', ['fetchWorkById']),
+        ...mapActions('videos', ['fetchWorkById']),
 
         fetchSingleByPagination(work_id) {
             this.fetchWorkById(work_id);

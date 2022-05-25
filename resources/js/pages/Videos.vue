@@ -11,7 +11,7 @@
     <!-- portfolio section -->
     <section class="home-portfolio">
         <div class="container">
-            <photos-list :works="works"></photos-list>
+            <videos-list :works="works"></videos-list>
 
             <pagination :pag-page="pagPage" :total-pages-count="totalPagesCount" :is-works-loading="isWorksLoading" @loadmore="fetchWorks"></pagination>
         </div>
@@ -24,14 +24,14 @@
 </template>
 
 <script>
-import PhotosList from "../components/index/PhotosList";
+import VideosList from "../components/videosP/VideosList";
 import Pagination from "../components/index/Pagination";
 import EmailSection from "../components/global/divided/EmailSection";
 import {mapGetters, mapActions} from "vuex";
 import siteSettings from "../SiteSettings";
 
 export default {
-    components: {EmailSection, Pagination, PhotosList},
+    components: {EmailSection, Pagination, VideosList},
 
     async created() {
         if (this.works.length == 0) {
@@ -40,7 +40,7 @@ export default {
     },
 
     computed: {
-        ...mapGetters('photos', ['works', 'pagPage', 'totalPagesCount', 'isWorksLoading']),
+        ...mapGetters('videos', ['works', 'pagPage', 'totalPagesCount', 'isWorksLoading']),
 
         email() {
             return siteSettings.email;
@@ -48,7 +48,7 @@ export default {
     },
 
     methods: {
-        ...mapActions('photos', ['fetchWorks']),
+        ...mapActions('videos', ['fetchWorks']),
     }
 }
 </script>

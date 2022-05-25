@@ -8,7 +8,8 @@ import About from "../pages/About";
 import Blog from '../pages/Blog';
 import SinglePost from '../pages/SinglePost';
 import AdminIndex from '../pages/admin/Index.vue'
-import VideosList from "../pages/VideosList";
+import Videos from "../pages/Videos";
+import SingleVideo from "../pages/SingleVideo";
 
 export default [
 
@@ -20,8 +21,13 @@ export default [
     },
     {
         path: '/videos',
-        component: VideosList,
+        component: Videos,
         name: 'works.videos'
+    },
+    {
+        path: '/works/videos/:id',
+        component: SingleVideo,
+        name: 'works.videos.single'
     },
     {
         path: '/test',

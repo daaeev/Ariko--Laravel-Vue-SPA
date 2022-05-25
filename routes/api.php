@@ -4,6 +4,7 @@ use App\Http\Controllers\api\admin\UserController;
 use App\Http\Controllers\api\auth\AuthController;
 use App\Http\Controllers\api\CommentController;
 use App\Http\Controllers\api\PhotoController;
+use App\Http\Controllers\api\VideoController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\api\MessageController;
 use App\Http\Controllers\api\PostController;
@@ -16,6 +17,12 @@ Route::prefix('works')->group(function () {
         Route::get('/', [PhotoController::class, 'photosList'])->name('works.photos');
         Route::get('/next/prev/{work_id}', [PhotoController::class, 'photosNextAndPrevIds'])->name('works.photos.next/prev');
         Route::get('/{work_id}', [PhotoController::class, 'single'])->name('works.photos.single');
+    });
+
+    Route::prefix('videos')->group(function () {
+        Route::get('/', [VideoController::class, 'videosList'])->name('works.videos');
+        Route::get('/next/prev/{work_id}', [VideoController::class, 'videosNextAndPrevIds'])->name('works.videos.next/prev');
+        Route::get('/{work_id}', [VideoController::class, 'single'])->name('works.videos.single');
     });
 });
 

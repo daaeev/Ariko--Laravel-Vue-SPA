@@ -6,7 +6,7 @@ export default {
             submenu: [
                 {
                     title: 'Videos',
-                    url: '',
+                    url: 'works.videos',
                 },
                 {
                     title: 'Photos',
