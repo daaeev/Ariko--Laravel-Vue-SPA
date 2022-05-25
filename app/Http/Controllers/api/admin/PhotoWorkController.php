@@ -7,6 +7,7 @@ use App\Http\Requests\AddImagesToWork;
 use App\Http\Requests\CreatePhotoWork;
 use App\Models\Image;
 use App\Models\PhotoWork;
+use App\Services\ImageProcessing\FileNameGenerators\Interfaces\FileNameGeneratorInterface;
 use App\Services\ImageProcessing\Interfaces\ImageProcessingInterface;
 use Symfony\Component\HttpKernel\Exception\HttpException;
 
@@ -26,7 +27,7 @@ class PhotoWorkController extends Controller
         $data = $validate->validated();
 
         // Занесение данных работы в бд
-        $model->setRawAttributes($data);
+        $model->fill($data);
 
         if (!$model->save()) {
             throw new HttpException(500, 'Save data in db failed');
@@ -71,20 +72,24 @@ class PhotoWorkController extends Controller
     /**
      * Сохранение изображений в локальном хранилище
      *
-     * @param array[UploadedImage] $images
+     * @param array $images
      * @param ImageProcessingInterface $imgProcess
-     * @return array[String]|boolean
+     * @return array|bool
      */
     protected function saveImagesInLocalStorage(
-        array $images, 
+        array $images,
         ImageProcessingInterface $imgProcess
     ): array|bool {
         $savedImages = [];
+        $fnGenService = app(FileNameGeneratorInterface::class);
 
         foreach ($images as $image) {
-            $name = $imgProcess->saveImage($image);
+            $name = $imgProcess->saveImage($image, $fnGenService);
 
+            // Если сохранение изображения прошло неуспешно
             if (!$name) {
+
+                // Удалить уже сохраненные изображения
                 foreach ($savedImages as $savedName) {
                     $imgProcess->deleteImage($savedName);
                 }
@@ -101,19 +106,30 @@ class PhotoWorkController extends Controller
     /**
      * Сохранение изображений в базе данных
      *
-     * @param array[String] $images
+     * @param array $images
      * @param integer $work_id
-     * @return array[Image]|boolean
+     * @return array|bool
      */
-    protected function saveImagesInDb(array $images, int $work_id)
+    protected function saveImagesInDb(array $images, int $work_id): array|bool
     {
         $created = [];
-        
+
         foreach ($images as $image_name) {
-            $model = Image::create([
+            $model = app(Image::class)->fill([
                 'image' => $image_name,
                 'photo_work_id' => $work_id
             ]);
+
+            // Если сохранение модели в бд прошло неуспешно
+            if (!$model->save()) {
+
+                // Удалить уже созданные модели
+                foreach ($created as $createdModel) {
+                    $createdModel->delete();
+                }
+
+                return false;
+            }
 
             $created[] = $model;
         }

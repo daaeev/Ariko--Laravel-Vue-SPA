@@ -2,6 +2,7 @@
 
 namespace App\Services\ImageProcessing\Interfaces;
 
+use App\Services\ImageProcessing\FileNameGenerators\Interfaces\FileNameGeneratorInterface;
 use Illuminate\Http\UploadedFile;
 
 interface ImageProcessingInterface
@@ -10,9 +11,10 @@ interface ImageProcessingInterface
      * Сохранение переданного файла-изображения
      *
      * @param UploadedFile $image
+     * @param FileNameGeneratorInterface $fnGen
      * @return string|false имя изображения или false, при ошибке
      */
-    public function saveImage(UploadedFile $image): string|false;
+    public function saveImage(UploadedFile $image, FileNameGeneratorInterface $fnGen): string|false;
 
     /**
      * Удаление файла-изображения с переданным именем

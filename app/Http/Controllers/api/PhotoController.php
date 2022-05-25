@@ -16,7 +16,7 @@ class PhotoController extends Controller
      */
     public function photosList(PaginationData $validate)
     {
-        $perPage = $validate->get('_limit');
+        $perPage = $validate->validated('_limit');
 
         return response()->json(
             $this->query_helper

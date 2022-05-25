@@ -57,17 +57,21 @@ Route::prefix('auth')->group(function () {
 
 // ---ADMIN ROUTES---
 
+Route::middleware('auth')->group(function () {
+
     // ---USER---
 
-        Route::post('/user', [UserController::class, 'create'])->middleware('auth')->name('user.create');
+    Route::post('/user', [UserController::class, 'create'])->name('user.create');
 
     // !!!USER!!!
 
     // ---PHOTOS WORK---
 
-        Route::post('/works/photos', [AdminPhotoController::class, 'createWork'])->middleware('auth')->name('works.photos.create');
-        Route::post('/works/photos/images', [AdminPhotoController::class, 'addImagesToWork'])->middleware('auth')->name('works.photos.images.add');
+    Route::post('/works/photos', [AdminPhotoController::class, 'createWork'])->name('works.photos.create');
+    Route::post('/works/photos/images', [AdminPhotoController::class, 'addImagesToWork'])->name('works.photos.images.add');
 
     // !!!PHOTOS WORK!!!
+
+});
 
 // !!!ADMIN ROUTES!!!

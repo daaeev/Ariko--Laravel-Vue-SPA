@@ -2,7 +2,9 @@
 
 namespace App\Services\ImageProcessing;
 
+use App\Services\ImageProcessing\FileNameGenerators\Interfaces\FileNameGeneratorInterface;
 use App\Services\ImageProcessing\Interfaces\ImageProcessingInterface;
+use Exception;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
@@ -22,9 +24,13 @@ class ImageProcessing implements ImageProcessingInterface
     /**
      * @inheritDoc
      */
-    public function saveImage(UploadedFile $image): string|false
+    public function saveImage(UploadedFile $image, FileNameGeneratorInterface $fnGen): string|false
     {
-        $image_name = Str::random(60) . '.' . $image->getClientOriginalExtension();
+        if (!isset($this->image_store_dir) || !isset($this->storage_disk)) {
+            throw new Exception("Two methods 'directory' and 'disk' must be called");
+        }
+
+        $image_name = $fnGen->generate($image);
 
         if ($image->storeAs($this->image_store_dir, $image_name, $this->storage_disk)) {
             return $image_name;
@@ -38,6 +44,10 @@ class ImageProcessing implements ImageProcessingInterface
      */
     public function deleteImage(string $image_name): bool
     {
+        if (!isset($this->image_store_dir) || !isset($this->storage_disk)) {
+            throw new Exception("Two methods 'directory' and 'disk' must be called");
+        }
+
         if (empty($image_name)) {
             return false;
         }

@@ -2,6 +2,8 @@
 
 namespace Tests\Feature\Controllers;
 
+use App\Http\Requests\AuthToken;
+use App\Http\Requests\UserLogin;
 use App\Models\User;
 use App\Services\TestHelpers\GetModelQueryBuilder;
 use App\Services\TestHelpers\interfaces\GetModelQueryBuilderInterface;
@@ -56,6 +58,20 @@ class AuthControllerTest extends TestCase
         $this->app->instance(
             GetModelQueryBuilderInterface::class,
             $query_helper_mock
+        );
+
+        $request_mock = $this->getMockBuilder(UserLogin::class)
+            ->disableOriginalConstructor()
+            ->onlyMethods(['validated'])
+            ->getMock();
+
+        $request_mock->expects($this->once())
+            ->method('validated')
+            ->willReturn($req_data);
+
+        $this->app->instance(
+            UserLogin::class,
+            $request_mock
         );
 
         Hash::shouldReceive('check')
@@ -117,6 +133,20 @@ class AuthControllerTest extends TestCase
             $query_helper_mock
         );
 
+        $request_mock = $this->getMockBuilder(UserLogin::class)
+            ->disableOriginalConstructor()
+            ->onlyMethods(['validated'])
+            ->getMock();
+
+        $request_mock->expects($this->once())
+            ->method('validated')
+            ->willReturn($req_data);
+
+        $this->app->instance(
+            UserLogin::class,
+            $request_mock
+        );
+
         $this->withoutMiddleware(ThrottleRequests::class)
             ->post(route('auth.login', $req_data))
             ->assertUnauthorized();
@@ -164,6 +194,20 @@ class AuthControllerTest extends TestCase
             $query_helper_mock
         );
 
+        $request_mock = $this->getMockBuilder(UserLogin::class)
+            ->disableOriginalConstructor()
+            ->onlyMethods(['validated'])
+            ->getMock();
+
+        $request_mock->expects($this->once())
+            ->method('validated')
+            ->willReturn($req_data);
+
+        $this->app->instance(
+            UserLogin::class,
+            $request_mock
+        );
+
         Hash::shouldReceive('check')
             ->once()
             ->with($req_data['password'], $user->password)
@@ -193,6 +237,21 @@ class AuthControllerTest extends TestCase
             $token_validator_mock
         );
 
+        $request_mock = $this->getMockBuilder(AuthToken::class)
+            ->disableOriginalConstructor()
+            ->onlyMethods(['validated'])
+            ->getMock();
+
+        $request_mock->expects($this->once())
+            ->method('validated')
+            ->with('token')
+            ->willReturn($token);
+
+        $this->app->instance(
+            AuthToken::class,
+            $request_mock
+        );
+
         $this->post(route('auth.check', ['token' => $token]))
             ->assertOk();
     }
@@ -214,6 +273,21 @@ class AuthControllerTest extends TestCase
         $this->app->instance(
             AuthTokenValidatorInterface::class,
             $token_validator_mock
+        );
+
+        $request_mock = $this->getMockBuilder(AuthToken::class)
+            ->disableOriginalConstructor()
+            ->onlyMethods(['validated'])
+            ->getMock();
+
+        $request_mock->expects($this->once())
+            ->method('validated')
+            ->with('token')
+            ->willReturn($token);
+
+        $this->app->instance(
+            AuthToken::class,
+            $request_mock
         );
 
         $this->post(route('auth.check', ['token' => $token]))

@@ -23,12 +23,12 @@ class AuthController extends Controller
      */
     public function login(UserLogin $validate)
     {
-        $email = $validate->validated('email');
-        $password = $validate->validated('password');
+        $data = $validate->validated();
+
         $userDB_password = $this->query_helper
             ->queryBuilder(User::class)
             ->select('password')
-            ->where('email', $email)
+            ->where('email', $data['email'])
             ->first()
             ->password;
 
@@ -36,11 +36,11 @@ class AuthController extends Controller
             throw new HttpException(401, 'User does not exist');
         }
 
-        if (!Hash::check($password, $userDB_password)) {
+        if (!Hash::check($data['password'], $userDB_password)) {
             throw new HttpException(401, 'User does not exist');
         }
 
-        $encrypted_data = Crypt::encrypt(['email' => $email, 'password' => $password]);
+        $encrypted_data = Crypt::encrypt(['email' => $data['email'], 'password' => $data['password']]);
 
         return response($encrypted_data);
     }

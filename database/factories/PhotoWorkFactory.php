@@ -22,7 +22,7 @@ class PhotoWorkFactory extends Factory
             'subject' => $this->faker->text(50),
             'year' => $this->faker->year,
             'client' => $this->faker->text(50),
-            'website' => 'http://test.ua',
+            'website' => 'https://test.ua',
             'title' => $this->faker->text(50),
             'description' => $this->faker->text(),
         ];

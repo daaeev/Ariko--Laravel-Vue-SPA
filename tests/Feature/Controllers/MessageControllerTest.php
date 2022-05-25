@@ -2,16 +2,13 @@
 
 namespace Tests\Feature\Controllers;
 
+use App\Http\Requests\CreateMessage;
 use App\Models\Message;
-use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Routing\Middleware\ThrottleRequests;
 use Tests\TestCase;
 
 class MessageControllerTest extends TestCase
 {
-    use RefreshDatabase;
-
     public function testCreateSuccess()
     {
         $data = [
@@ -22,11 +19,11 @@ class MessageControllerTest extends TestCase
 
         $model_mock = $this->getMockBuilder(Message::class)
             ->disableOriginalConstructor()
-            ->onlyMethods(['setRawAttributes', 'save'])
+            ->onlyMethods(['fill', 'save'])
             ->getMock();
 
         $model_mock->expects($this->once())
-            ->method('setRawAttributes')
+            ->method('fill')
             ->with($data);
 
         $model_mock->expects($this->once())
@@ -38,6 +35,20 @@ class MessageControllerTest extends TestCase
         $model_mock->message = $data['message'];
 
         $this->instance(Message::class, $model_mock);
+
+        $request_mock = $this->getMockBuilder(CreateMessage::class)
+            ->disableOriginalConstructor()
+            ->onlyMethods(['validated'])
+            ->getMock();
+
+        $request_mock->expects($this->once())
+            ->method('validated')
+            ->willReturn($data);
+
+        $this->app->instance(
+            CreateMessage::class,
+            $request_mock
+        );
 
         $this->withoutMiddleware(ThrottleRequests::class)
             ->post(route('message.create'), $data)
@@ -55,11 +66,11 @@ class MessageControllerTest extends TestCase
 
         $model_mock = $this->getMockBuilder(Message::class)
             ->disableOriginalConstructor()
-            ->onlyMethods(['setRawAttributes', 'save'])
+            ->onlyMethods(['fill', 'save'])
             ->getMock();
 
         $model_mock->expects($this->once())
-            ->method('setRawAttributes')
+            ->method('fill')
             ->with($data);
 
         $model_mock->expects($this->once())
@@ -71,6 +82,20 @@ class MessageControllerTest extends TestCase
         $model_mock->message = $data['message'];
 
         $this->instance(Message::class, $model_mock);
+
+        $request_mock = $this->getMockBuilder(CreateMessage::class)
+            ->disableOriginalConstructor()
+            ->onlyMethods(['validated'])
+            ->getMock();
+
+        $request_mock->expects($this->once())
+            ->method('validated')
+            ->willReturn($data);
+
+        $this->app->instance(
+            CreateMessage::class,
+            $request_mock
+        );
 
         $this->withoutMiddleware(ThrottleRequests::class)
             ->post(route('message.create'), $data)

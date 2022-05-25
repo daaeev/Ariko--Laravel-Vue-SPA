@@ -2,37 +2,32 @@
 
 namespace Tests\Feature\Controllers;
 
+use App\Http\Requests\CreateComment;
 use App\Models\Comment;
-use App\Models\Post;
 use App\Services\TestHelpers\GetModelQueryBuilder;
 use App\Services\TestHelpers\interfaces\GetModelQueryBuilderInterface;
 use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Routing\Middleware\ThrottleRequests;
 use Tests\TestCase;
 
 class CommentsControllerTest extends TestCase
 {
-    use RefreshDatabase;
-
     public function testCreateSuccess()
     {
-        $post_id = Post::factory()->createOne()->id;
-
         $data = [
             'name' => 'name',
             'email' => 'test@gmail.com',
             'comment' => 'content',
-            'post_id' => $post_id
+            'post_id' => 1
         ];
 
         $model_mock = $this->getMockBuilder(Comment::class)
             ->disableOriginalConstructor()
-            ->onlyMethods(['setRawAttributes', 'save'])
+            ->onlyMethods(['fill', 'save'])
             ->getMock();
 
         $model_mock->expects($this->once())
-            ->method('setRawAttributes')
+            ->method('fill')
             ->with($data);
 
         $model_mock->expects($this->once())
@@ -44,8 +39,23 @@ class CommentsControllerTest extends TestCase
         $model_mock->comment = $data['comment'];
         $model_mock->post_id = $data['post_id'];
         $model_mock->checked = false;
+        $model_mock->id = 1;
 
         $this->instance(Comment::class, $model_mock);
+
+        $request_mock = $this->getMockBuilder(CreateComment::class)
+            ->disableOriginalConstructor()
+            ->onlyMethods(['validated'])
+            ->getMock();
+
+        $request_mock->expects($this->once())
+            ->method('validated')
+            ->willReturn($data);
+
+        $this->app->instance(
+            CreateComment::class,
+            $request_mock
+        );
 
         $this->withoutMiddleware(ThrottleRequests::class)
             ->post(route('comment.create'), $data)
@@ -54,29 +64,28 @@ class CommentsControllerTest extends TestCase
                 'name' => 'name',
                 'email' => 'test@gmail.com',
                 'comment' => 'content',
-                'post_id' => $post_id,
+                'post_id' => 1,
                 'checked' => false,
+                'id' => 1
             ]);
     }
 
     public function testCreateSaveInDbFailed()
     {
-        $post_id = Post::factory()->createOne()->id;
-
         $data = [
             'name' => 'name',
             'email' => 'test@gmail.com',
             'comment' => 'content',
-            'post_id' => $post_id
+            'post_id' => 1
         ];
 
         $model_mock = $this->getMockBuilder(Comment::class)
             ->disableOriginalConstructor()
-            ->onlyMethods(['setRawAttributes', 'save'])
+            ->onlyMethods(['fill', 'save'])
             ->getMock();
 
         $model_mock->expects($this->once())
-            ->method('setRawAttributes')
+            ->method('fill')
             ->with($data);
 
         $model_mock->expects($this->once())
@@ -89,6 +98,20 @@ class CommentsControllerTest extends TestCase
         $model_mock->post_id = $data['post_id'];
 
         $this->instance(Comment::class, $model_mock);
+
+        $request_mock = $this->getMockBuilder(CreateComment::class)
+            ->disableOriginalConstructor()
+            ->onlyMethods(['validated'])
+            ->getMock();
+
+        $request_mock->expects($this->once())
+            ->method('validated')
+            ->willReturn($data);
+
+        $this->app->instance(
+            CreateComment::class,
+            $request_mock
+        );
 
         $this->withoutMiddleware(ThrottleRequests::class)
             ->post(route('comment.create'), $data)

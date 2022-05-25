@@ -2,14 +2,13 @@
 
 namespace Tests\Feature\Controllers;
 
+use App\Http\Requests\PaginationData;
 use App\Models\Image;
 use App\Models\PhotoWork;
-use App\Models\Post;
 use App\Services\TestHelpers\GetModelQueryBuilder;
 use App\Services\TestHelpers\interfaces\GetModelQueryBuilderInterface;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
-use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
 class PhotoControllerTest extends TestCase
@@ -55,6 +54,21 @@ class PhotoControllerTest extends TestCase
         $this->app->instance(
             GetModelQueryBuilderInterface::class,
             $query_helper_mock
+        );
+
+        $request_mock = $this->getMockBuilder(PaginationData::class)
+            ->disableOriginalConstructor()
+            ->onlyMethods(['validated'])
+            ->getMock();
+
+        $request_mock->expects($this->once())
+            ->method('validated')
+            ->with('_limit')
+            ->willReturn(null);
+
+        $this->app->instance(
+            PaginationData::class,
+            $request_mock
         );
 
         $this->get(route('works.photos'))
@@ -104,6 +118,21 @@ class PhotoControllerTest extends TestCase
         $this->app->instance(
             GetModelQueryBuilderInterface::class,
             $query_helper_mock
+        );
+
+        $request_mock = $this->getMockBuilder(PaginationData::class)
+            ->disableOriginalConstructor()
+            ->onlyMethods(['validated'])
+            ->getMock();
+
+        $request_mock->expects($this->once())
+            ->method('validated')
+            ->with('_limit')
+            ->willReturn($perPage);
+
+        $this->app->instance(
+            PaginationData::class,
+            $request_mock
         );
 
         $this->get(route('works.photos', ['_limit' => $perPage]))

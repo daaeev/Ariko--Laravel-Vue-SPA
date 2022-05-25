@@ -21,7 +21,7 @@ class CommentController extends Controller
     {
         $data = $validate->validated();
 
-        $model->setRawAttributes($data);
+        $model->fill($data);
 
         if ($model->save()) {
             return response()->json($model);

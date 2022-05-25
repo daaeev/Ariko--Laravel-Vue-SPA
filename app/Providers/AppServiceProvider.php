@@ -2,6 +2,8 @@
 
 namespace App\Providers;
 
+use App\Services\ImageProcessing\FileNameGenerators\FileNameGenerator;
+use App\Services\ImageProcessing\FileNameGenerators\Interfaces\FileNameGeneratorInterface;
 use App\Services\ImageProcessing\ImageProcessing;
 use App\Services\ImageProcessing\Interfaces\ImageProcessingInterface;
 use App\Services\TestHelpers\GetModelQueryBuilder;
@@ -21,5 +23,6 @@ class AppServiceProvider extends ServiceProvider
 
         // IMAGE PROCESSING
         ImageProcessingInterface::class => ImageProcessing::class,
+        FileNameGeneratorInterface::class => FileNameGenerator::class,
     ];
 }

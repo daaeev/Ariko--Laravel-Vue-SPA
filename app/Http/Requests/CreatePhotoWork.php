@@ -14,7 +14,7 @@ class CreatePhotoWork extends ValidationWithFailedValidationMethod
         return [
             'name' => 'required|string|max:30',
             'subject' => 'required|string|max:50',
-            'year' => 'required|string|max:10',
+            'year' => 'required|max:10',
             'client' => 'nullable|string|max:50',
             'website' => 'nullable|string|url|max:255',
             'title' => 'nullable|string|max:255',

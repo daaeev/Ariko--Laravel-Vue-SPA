@@ -2,14 +2,12 @@
 
 namespace Tests\Feature\Controllers;
 
+use App\Http\Requests\PaginationData;
 use App\Models\Post;
-use App\Models\PostTag;
-use App\Models\Tag;
 use App\Services\TestHelpers\GetModelQueryBuilder;
 use App\Services\TestHelpers\interfaces\GetModelQueryBuilderInterface;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
-use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
 class PostControllerTest extends TestCase
@@ -50,6 +48,21 @@ class PostControllerTest extends TestCase
         $this->app->instance(
             GetModelQueryBuilderInterface::class,
             $query_helper_mock
+        );
+
+        $request_mock = $this->getMockBuilder(PaginationData::class)
+            ->disableOriginalConstructor()
+            ->onlyMethods(['validated'])
+            ->getMock();
+
+        $request_mock->expects($this->once())
+            ->method('validated')
+            ->with('_limit')
+            ->willReturn(null);
+
+        $this->app->instance(
+            PaginationData::class,
+            $request_mock
         );
 
         $this->get(route('posts.all'))
@@ -94,6 +107,21 @@ class PostControllerTest extends TestCase
         $this->app->instance(
             GetModelQueryBuilderInterface::class,
             $query_helper_mock
+        );
+
+        $request_mock = $this->getMockBuilder(PaginationData::class)
+            ->disableOriginalConstructor()
+            ->onlyMethods(['validated'])
+            ->getMock();
+
+        $request_mock->expects($this->once())
+            ->method('validated')
+            ->with('_limit')
+            ->willReturn($perPage);
+
+        $this->app->instance(
+            PaginationData::class,
+            $request_mock
         );
 
         $this->get(route('posts.all', ['_limit' => $perPage]))
@@ -235,6 +263,21 @@ class PostControllerTest extends TestCase
             $query_helper_mock
         );
 
+        $request_mock = $this->getMockBuilder(PaginationData::class)
+            ->disableOriginalConstructor()
+            ->onlyMethods(['validated'])
+            ->getMock();
+
+        $request_mock->expects($this->once())
+            ->method('validated')
+            ->with('_limit')
+            ->willReturn(null);
+
+        $this->app->instance(
+            PaginationData::class,
+            $request_mock
+        );
+
         $this->get(route('posts.by-tag', ['tag' => $tag]))
             ->assertOk()
             ->assertJson($result);
@@ -283,6 +326,21 @@ class PostControllerTest extends TestCase
         $this->app->instance(
             GetModelQueryBuilderInterface::class,
             $query_helper_mock
+        );
+
+        $request_mock = $this->getMockBuilder(PaginationData::class)
+            ->disableOriginalConstructor()
+            ->onlyMethods(['validated'])
+            ->getMock();
+
+        $request_mock->expects($this->once())
+            ->method('validated')
+            ->with('_limit')
+            ->willReturn($perPage);
+
+        $this->app->instance(
+            PaginationData::class,
+            $request_mock
         );
 
         $this->get(route('posts.by-tag', ['tag' => $tag, '_limit' => $perPage]))

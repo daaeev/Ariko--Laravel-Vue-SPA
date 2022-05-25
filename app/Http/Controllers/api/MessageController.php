@@ -18,7 +18,7 @@ class MessageController extends Controller
      */
     public function create(Message $model, CreateMessage $validate)
     {
-        $model->setRawAttributes($validate->validated());
+        $model->fill($validate->validated());
 
         if ($model->save()) {
             return response()->json($model);

@@ -3,6 +3,7 @@
 namespace Tests\Feature\Controllers;
 
 use App\Http\Middleware\AuthWithToken;
+use App\Http\Requests\CreateUser;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
 use Tests\TestCase;
@@ -21,11 +22,11 @@ class AdminUserControllerTest extends TestCase
 
         $model_mock = $this->getMockBuilder(User::class)
             ->disableOriginalConstructor()
-            ->onlyMethods(['setRawAttributes', 'save'])
+            ->onlyMethods(['fill', 'save'])
             ->getMock();
 
         $model_mock->expects($this->once())
-            ->method('setRawAttributes')
+            ->method('fill')
             ->with(['email' => $req_data['email'], 'password' => $hashed_pass]);
 
         $model_mock->email = $req_data['email'];
@@ -38,6 +39,20 @@ class AdminUserControllerTest extends TestCase
         $this->app->instance(
             User::class,
             $model_mock
+        );
+
+        $request_mock = $this->getMockBuilder(CreateUser::class)
+            ->disableOriginalConstructor()
+            ->onlyMethods(['validated'])
+            ->getMock();
+
+        $request_mock->expects($this->once())
+            ->method('validated')
+            ->willReturn($req_data);
+
+        $this->app->instance(
+            CreateUser::class,
+            $request_mock
         );
 
         $this->withoutMiddleware(AuthWithToken::class)
@@ -57,11 +72,11 @@ class AdminUserControllerTest extends TestCase
 
         $model_mock = $this->getMockBuilder(User::class)
             ->disableOriginalConstructor()
-            ->onlyMethods(['setRawAttributes', 'save'])
+            ->onlyMethods(['fill', 'save'])
             ->getMock();
 
         $model_mock->expects($this->once())
-            ->method('setRawAttributes')
+            ->method('fill')
             ->with(['email' => $req_data['email'], 'password' => $hashed_pass]);
 
         $model_mock->email = $req_data['email'];
@@ -74,6 +89,20 @@ class AdminUserControllerTest extends TestCase
         $this->app->instance(
             User::class,
             $model_mock
+        );
+
+        $request_mock = $this->getMockBuilder(CreateUser::class)
+            ->disableOriginalConstructor()
+            ->onlyMethods(['validated'])
+            ->getMock();
+
+        $request_mock->expects($this->once())
+            ->method('validated')
+            ->willReturn($req_data);
+
+        $this->app->instance(
+            CreateUser::class,
+            $request_mock
         );
 
         $this->withoutMiddleware(AuthWithToken::class)

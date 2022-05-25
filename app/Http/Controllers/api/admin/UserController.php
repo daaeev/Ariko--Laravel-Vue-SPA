@@ -23,7 +23,7 @@ class UserController extends Controller
         $data = $validate->validated();
         $data['password'] = Hash::make($data['password']);
 
-        $model->setRawAttributes($data);
+        $model->fill($data);
 
         if ($model->save()) {
             return response()->json($model);
