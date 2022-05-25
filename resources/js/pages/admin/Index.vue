@@ -12,6 +12,10 @@
             <div class="col-md-2">
                 <dialog-button v-model:show="addImagesToWorkShow">Add photos to work</dialog-button>
             </div>
+
+            <div class="col-md-2">
+                <dialog-button v-model:show="createPostShow">Create post</dialog-button>
+            </div>
         </div>
     </div>
 
@@ -33,6 +37,12 @@
             <alert v-if="addImagesFailed" :type="'danger'">{{addImagesFailed}}</alert>
             <add-images-to-work-form @submit="submitAddImagesToWorkForm"></add-images-to-work-form>
         </my-dialog>
+
+        <my-dialog v-model:show="createPostShow">
+            <alert v-if="createPostSuccess" :type="'success'">{{createPostSuccess}}</alert>
+            <alert v-if="createPostFailed" :type="'danger'">{{createPostFailed}}</alert>
+            <create-post-form @submit="submitCreatePostForm"></create-post-form>
+        </my-dialog>
     <!-- Dialogs -->
 </template>
 
@@ -42,9 +52,11 @@ import MyDialog from '../../components/admin/UI/Dialog.vue'
 import CreateUserForm from '../../components/admin/crudforms/CreateUserForm.vue'
 import Alert from '../../components/UI/Alert.vue';
 import axiosUserAPI from '../../logic/api/crud/User';
+import axiosPostAPI from '../../logic/api/crud/Post';
 import axiosPhotoWorkAPI from '../../logic/api/crud/PhotoWork';
 import CreatePhotoWorkForm from '../../components/admin/crudforms/CreatePhotoWorkForm.vue';
 import AddImagesToWorkForm from '../../components/admin/crudforms/AddImagesToWorkForm.vue';
+import CreatePostForm from '../../components/admin/crudforms/CreatePostForm.vue'
 
 export default {
     components: {
@@ -53,7 +65,8 @@ export default {
         CreateUserForm, 
         Alert, 
         CreatePhotoWorkForm, 
-        AddImagesToWorkForm
+        AddImagesToWorkForm,
+        CreatePostForm
     },
 
     data() {
@@ -68,14 +81,20 @@ export default {
             createPhotoWorkSuccess: '',
             createPhotoWorkFailed: '',
 
-            // ADD IMAGES TO WORK
+            // ADD IMAGES TO WORK FORM
             addImagesToWorkShow: false,
             addImagesSuccess: '',
             addImagesFailed: '',
+
+            // CREATE POST FORM
+            createPostShow: false,
+            createPostSuccess: '',
+            createPostFailed: '',
         };
     },
 
     methods: {
+        // Форма создание пользователя
         async submitCreateUserForm(formData)
         {
             this.createUserSuccess = '';
@@ -93,6 +112,7 @@ export default {
             }, 5000);
         },
 
+        // Форма создания работы (фотографии)
         async submitCreatePhotoWorkForm(formData)
         {
             this.createPhotoWorkSuccess = '';
@@ -110,6 +130,7 @@ export default {
             }, 5000);
         },
 
+        // Форма для добавления фотографий к работе
         async submitAddImagesToWorkForm(formData)
         {
             this.addImagesSuccess = '';
@@ -124,6 +145,24 @@ export default {
             setTimeout(() => {
                 this.addImagesSuccess = '';
                 this.addImagesFailed = '';
+            }, 5000);
+        },
+
+        // Форма создания поста
+        async submitCreatePostForm(formData)
+        {
+            this.createPostSuccess = '';
+            this.createPostFailed = '';
+
+            await axiosPostAPI.createPost(
+                formData,
+                () => this.createPostSuccess = 'Photos added success',
+                axiosError => this.createPostFailed = axiosError.response?.data.message ?? 'Photos add failed',
+            );
+
+            setTimeout(() => {
+                this.createPostSuccess = '';
+                this.createPostFailed = '';
             }, 5000);
         }
     },

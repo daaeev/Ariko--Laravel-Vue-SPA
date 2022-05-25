@@ -9,6 +9,8 @@ class Comment extends Model
 {
     use HasFactory;
 
+    protected $guarded = ['checked'];
+
     public $casts = [
         'checked' => 'boolean',
     ];
