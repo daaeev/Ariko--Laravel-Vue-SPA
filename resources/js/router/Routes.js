@@ -8,6 +8,7 @@ import About from "../pages/About";
 import Blog from '../pages/Blog';
 import SinglePost from '../pages/SinglePost';
 import AdminIndex from '../pages/admin/Index.vue'
+import VideosList from "../pages/VideosList";
 
 export default [
 
@@ -16,6 +17,11 @@ export default [
         path: '/',
         component: Index,
         name: 'works.photos'
+    },
+    {
+        path: '/videos',
+        component: VideosList,
+        name: 'works.videos'
     },
     {
         path: '/test',

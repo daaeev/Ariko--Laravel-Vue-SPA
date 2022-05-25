@@ -58,6 +58,7 @@ export default {
     ],
 
     photosPerPage: 6,
+    videosPerPage: 3,
     blogPerPage: 10,
 
     copyright: '© 2018 PxlSolutions Media, Inc',

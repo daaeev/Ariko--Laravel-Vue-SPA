@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Services\ImageProcessing\FileNameGenerators;
+namespace App\Services\FileProcessing\FileNameGenerators;
 
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Str;

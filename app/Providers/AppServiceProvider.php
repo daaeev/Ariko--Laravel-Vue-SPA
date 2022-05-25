@@ -2,10 +2,10 @@
 
 namespace App\Providers;
 
-use App\Services\ImageProcessing\FileNameGenerators\FileNameGenerator;
-use App\Services\ImageProcessing\FileNameGenerators\Interfaces\FileNameGeneratorInterface;
-use App\Services\ImageProcessing\ImageProcessing;
-use App\Services\ImageProcessing\Interfaces\ImageProcessingInterface;
+use App\Services\FileProcessing\FileNameGenerators\FileNameGenerator;
+use App\Services\FileProcessing\FileNameGenerators\Interfaces\FileNameGeneratorInterface;
+use App\Services\FileProcessing\FileProcessing;
+use App\Services\FileProcessing\Interfaces\FileProcessingInterface;
 use App\Services\TestHelpers\GetModelQueryBuilder;
 use App\Services\TestHelpers\interfaces\GetModelQueryBuilderInterface;
 use App\Services\TokenValidators\CryptTokenValidator;
@@ -22,7 +22,7 @@ class AppServiceProvider extends ServiceProvider
         AuthTokenValidatorInterface::class => CryptTokenValidator::class,
 
         // IMAGE PROCESSING
-        ImageProcessingInterface::class => ImageProcessing::class,
+        FileProcessingInterface::class => FileProcessing::class,
         FileNameGeneratorInterface::class => FileNameGenerator::class,
     ];
 }

@@ -1,22 +1,22 @@
 <?php
 
-namespace Tests\Feature\Services\ImageProcessing;
+namespace Tests\Feature\Services\FileProcessing;
 
-use App\Services\ImageProcessing\FileNameGenerators\FileNameGenerator;
-use App\Services\ImageProcessing\ImageProcessing;
+use App\Services\FileProcessing\FileNameGenerators\FileNameGenerator;
+use App\Services\FileProcessing\FileProcessing;
 use Illuminate\Filesystem\Filesystem;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Storage;
 use Tests\TestCase;
 
-class DefaultImageProcessingTest extends TestCase
+class DefaultFileProcessingTest extends TestCase
 {
     public function testSaveImageSuccess()
     {
         $image_dir = 'images';
         $disk = 'public';
 
-        $instance = app(ImageProcessing::class);
+        $instance = app(FileProcessing::class);
         $instance->directory($image_dir);
         $instance->disk($disk);
 
@@ -49,7 +49,7 @@ class DefaultImageProcessingTest extends TestCase
     {
         $disk = 'public';
 
-        $instance = app(ImageProcessing::class);
+        $instance = app(FileProcessing::class);
         $instance->disk($disk);
 
         $fnGen_mock = $this->getMockBuilder(FileNameGenerator::class)
@@ -67,7 +67,7 @@ class DefaultImageProcessingTest extends TestCase
     {
         $dir = 'images';
 
-        $instance = app(ImageProcessing::class);
+        $instance = app(FileProcessing::class);
         $instance->directory($dir);
 
         $fnGen_mock = $this->getMockBuilder(FileNameGenerator::class)
@@ -86,7 +86,7 @@ class DefaultImageProcessingTest extends TestCase
         $image_dir = 'images';
         $disk = 'public';
 
-        $instance = app(ImageProcessing::class);
+        $instance = app(FileProcessing::class);
         $instance->directory($image_dir);
         $instance->disk($disk);
 
@@ -121,7 +121,7 @@ class DefaultImageProcessingTest extends TestCase
         $disk = 'public';
         $image_name = 'image.png';
 
-        $instance = app(ImageProcessing::class);
+        $instance = app(FileProcessing::class);
         $instance->directory($image_dir);
         $instance->disk($disk);
 
@@ -154,7 +154,7 @@ class DefaultImageProcessingTest extends TestCase
         $disk = 'public';
         $image = 'image.png';
 
-        $instance = app(ImageProcessing::class);
+        $instance = app(FileProcessing::class);
         $instance->disk($disk);
 
         $this->expectException(\Exception::class);
@@ -166,7 +166,7 @@ class DefaultImageProcessingTest extends TestCase
         $dir = 'images';
         $image = 'image.png';
 
-        $instance = app(ImageProcessing::class);
+        $instance = app(FileProcessing::class);
         $instance->directory($dir);
 
         $this->expectException(\Exception::class);
@@ -179,7 +179,7 @@ class DefaultImageProcessingTest extends TestCase
         $disk = 'public';
         $image_name = 'image.png';
 
-        $instance = app(ImageProcessing::class);
+        $instance = app(FileProcessing::class);
         $instance->directory($image_dir);
         $instance->disk($disk);
 
@@ -208,7 +208,7 @@ class DefaultImageProcessingTest extends TestCase
         $disk = 'public';
         $image_name = '';
 
-        $instance = app(ImageProcessing::class);
+        $instance = app(FileProcessing::class);
         $instance->directory($image_dir);
         $instance->disk($disk);
 
@@ -222,7 +222,7 @@ class DefaultImageProcessingTest extends TestCase
         $disk = 'public';
         $image_name = 'image.png';
 
-        $instance = app(ImageProcessing::class);
+        $instance = app(FileProcessing::class);
         $instance->directory($image_dir);
         $instance->disk($disk);
 

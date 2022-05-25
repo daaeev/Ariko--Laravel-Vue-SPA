@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Services\ImageProcessing\Interfaces;
+namespace App\Services\FileProcessing\Interfaces;
 
-use App\Services\ImageProcessing\FileNameGenerators\Interfaces\FileNameGeneratorInterface;
+use App\Services\FileProcessing\FileNameGenerators\Interfaces\FileNameGeneratorInterface;
 use Illuminate\Http\UploadedFile;
 
-interface ImageProcessingInterface
+interface FileProcessingInterface
 {
     /**
      * Сохранение переданного файла-изображения

@@ -7,10 +7,10 @@ use App\Http\Requests\AddImagesToWork;
 use App\Http\Requests\CreatePhotoWork;
 use App\Models\Image;
 use App\Models\PhotoWork;
-use App\Services\ImageProcessing\FileNameGenerators\FileNameGenerator;
-use App\Services\ImageProcessing\FileNameGenerators\Interfaces\FileNameGeneratorInterface;
-use App\Services\ImageProcessing\ImageProcessing;
-use App\Services\ImageProcessing\Interfaces\ImageProcessingInterface;
+use App\Services\FileProcessing\FileNameGenerators\FileNameGenerator;
+use App\Services\FileProcessing\FileNameGenerators\Interfaces\FileNameGeneratorInterface;
+use App\Services\FileProcessing\FileProcessing;
+use App\Services\FileProcessing\Interfaces\FileProcessingInterface;
 use Illuminate\Http\UploadedFile;
 use Tests\TestCase;
 
@@ -149,7 +149,7 @@ class AdminPhotoControllerTest extends TestCase
             $request_mock
         );
 
-        $imgProc_mock = $this->getMockBuilder(ImageProcessing::class)
+        $imgProc_mock = $this->getMockBuilder(FileProcessing::class)
             ->onlyMethods(['disk', 'directory', 'saveImage'])
             ->getMock();
 
@@ -164,7 +164,7 @@ class AdminPhotoControllerTest extends TestCase
             ->willReturnSelf();
 
         $this->app->instance(
-            ImageProcessingInterface::class,
+            FileProcessingInterface::class,
             $imgProc_mock
         );
 
@@ -251,7 +251,7 @@ class AdminPhotoControllerTest extends TestCase
             $request_mock
         );
 
-        $imgProc_mock = $this->getMockBuilder(ImageProcessing::class)
+        $imgProc_mock = $this->getMockBuilder(FileProcessing::class)
             ->onlyMethods(['disk', 'directory', 'saveImage', 'deleteImage'])
             ->getMock();
 
@@ -266,7 +266,7 @@ class AdminPhotoControllerTest extends TestCase
             ->willReturnSelf();
 
         $this->app->instance(
-            ImageProcessingInterface::class,
+            FileProcessingInterface::class,
             $imgProc_mock
         );
 
@@ -324,7 +324,7 @@ class AdminPhotoControllerTest extends TestCase
             $request_mock
         );
 
-        $imgProc_mock = $this->getMockBuilder(ImageProcessing::class)
+        $imgProc_mock = $this->getMockBuilder(FileProcessing::class)
             ->onlyMethods(['disk', 'directory', 'saveImage'])
             ->getMock();
 
@@ -339,7 +339,7 @@ class AdminPhotoControllerTest extends TestCase
             ->willReturnSelf();
 
         $this->app->instance(
-            ImageProcessingInterface::class,
+            FileProcessingInterface::class,
             $imgProc_mock
         );
 

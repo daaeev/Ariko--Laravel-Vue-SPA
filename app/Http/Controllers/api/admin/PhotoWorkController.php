@@ -7,8 +7,8 @@ use App\Http\Requests\AddImagesToWork;
 use App\Http\Requests\CreatePhotoWork;
 use App\Models\Image;
 use App\Models\PhotoWork;
-use App\Services\ImageProcessing\FileNameGenerators\Interfaces\FileNameGeneratorInterface;
-use App\Services\ImageProcessing\Interfaces\ImageProcessingInterface;
+use App\Services\FileProcessing\FileNameGenerators\Interfaces\FileNameGeneratorInterface;
+use App\Services\FileProcessing\Interfaces\FileProcessingInterface;
 use Symfony\Component\HttpKernel\Exception\HttpException;
 
 class PhotoWorkController extends Controller
@@ -39,13 +39,13 @@ class PhotoWorkController extends Controller
     /**
      * Добавление изображений для работы
      *
-     * @param ImageProcessingInterface $imgProcess
+     * @param FileProcessingInterface $imgProcess
      * @param AddImagesToWork $validate
      * @return \Illuminate\Http\JsonResponse
      */
     public function addImagesToWork(
-        ImageProcessingInterface $imgProcess,
-        AddImagesToWork $validate
+        FileProcessingInterface $imgProcess,
+        AddImagesToWork         $validate
     ) {
         $data = $validate->validated();
         $imgProcess->disk('public')->directory('photos');
@@ -73,12 +73,12 @@ class PhotoWorkController extends Controller
      * Сохранение изображений в локальном хранилище
      *
      * @param array $images
-     * @param ImageProcessingInterface $imgProcess
+     * @param FileProcessingInterface $imgProcess
      * @return array|bool
      */
     protected function saveImagesInLocalStorage(
         array $images,
-        ImageProcessingInterface $imgProcess
+        FileProcessingInterface $imgProcess
     ): array|bool {
         $savedImages = [];
         $fnGenService = app(FileNameGeneratorInterface::class);

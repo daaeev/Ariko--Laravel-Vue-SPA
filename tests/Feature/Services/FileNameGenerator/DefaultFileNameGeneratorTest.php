@@ -2,7 +2,7 @@
 
 namespace Tests\Feature\Services\FileNameGenerator;
 
-use App\Services\ImageProcessing\FileNameGenerators\FileNameGenerator;
+use App\Services\FileProcessing\FileNameGenerators\FileNameGenerator;
 use Illuminate\Http\UploadedFile;
 use Tests\TestCase;
 
