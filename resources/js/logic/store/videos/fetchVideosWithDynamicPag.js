@@ -3,7 +3,7 @@ import SiteSettings from "../../../SiteSettings";
 
 export default {
     state: {
-        pageSize: SiteSettings.photosPerPage,
+        pageSize: SiteSettings.videosPerPage,
         isWorksLoading: false,
         pagPage: 0,
         totalPagesCount: null,

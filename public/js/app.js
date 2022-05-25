@@ -26518,7 +26518,7 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   state: {
-    pageSize: _SiteSettings__WEBPACK_IMPORTED_MODULE_2__["default"].photosPerPage,
+    pageSize: _SiteSettings__WEBPACK_IMPORTED_MODULE_2__["default"].videosPerPage,
     isWorksLoading: false,
     pagPage: 0,
     totalPagesCount: null
