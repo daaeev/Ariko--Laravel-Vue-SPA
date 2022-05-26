@@ -23,7 +23,7 @@ class FileProcessing implements FileProcessingInterface
     /**
      * @inheritDoc
      */
-    public function saveImage(UploadedFile $file, FileNameGeneratorInterface $fnGen): string|false
+    public function saveFile(UploadedFile $file, FileNameGeneratorInterface $fnGen): string|false
     {
         if (!isset($this->file_store_dir) || !isset($this->storage_disk)) {
             throw new Exception("Two methods 'directory' and 'disk' must be called");
@@ -41,7 +41,7 @@ class FileProcessing implements FileProcessingInterface
     /**
      * @inheritDoc
      */
-    public function deleteImage(string $file_name): bool
+    public function deleteFile(string $file_name): bool
     {
         if (!isset($this->file_store_dir) || !isset($this->storage_disk)) {
             throw new Exception("Two methods 'directory' and 'disk' must be called");

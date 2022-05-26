@@ -150,7 +150,7 @@ class AdminPhotoControllerTest extends TestCase
         );
 
         $imgProc_mock = $this->getMockBuilder(FileProcessing::class)
-            ->onlyMethods(['disk', 'directory', 'saveImage'])
+            ->onlyMethods(['disk', 'directory', 'saveFile'])
             ->getMock();
 
         $imgProc_mock->expects($this->once())
@@ -177,7 +177,7 @@ class AdminPhotoControllerTest extends TestCase
         );
 
         $imgProc_mock->expects($this->exactly(2))
-            ->method('saveImage')
+            ->method('saveFile')
             ->with($image, $fnGen_mock)
             ->willReturn('saved_image.png');
 
@@ -252,7 +252,7 @@ class AdminPhotoControllerTest extends TestCase
         );
 
         $imgProc_mock = $this->getMockBuilder(FileProcessing::class)
-            ->onlyMethods(['disk', 'directory', 'saveImage', 'deleteImage'])
+            ->onlyMethods(['disk', 'directory', 'saveFile', 'deleteFile'])
             ->getMock();
 
         $imgProc_mock->expects($this->once())
@@ -279,17 +279,17 @@ class AdminPhotoControllerTest extends TestCase
         );
 
         $imgProc_mock->expects($this->at(2))
-            ->method('saveImage')
+            ->method('saveFile')
             ->with($image, $fnGen_mock)
             ->willReturn('saved_image1.png');
 
         $imgProc_mock->expects($this->at(3))
-            ->method('saveImage')
+            ->method('saveFile')
             ->with($image, $fnGen_mock)
             ->willReturn(false);
 
         $imgProc_mock->expects($this->once())
-            ->method('deleteImage')
+            ->method('deleteFile')
             ->with('saved_image1.png');
 
         $this->withoutMiddleware(AuthWithToken::class)
@@ -325,7 +325,7 @@ class AdminPhotoControllerTest extends TestCase
         );
 
         $imgProc_mock = $this->getMockBuilder(FileProcessing::class)
-            ->onlyMethods(['disk', 'directory', 'saveImage'])
+            ->onlyMethods(['disk', 'directory', 'saveFile'])
             ->getMock();
 
         $imgProc_mock->expects($this->once())
@@ -352,12 +352,12 @@ class AdminPhotoControllerTest extends TestCase
         );
 
         $imgProc_mock->expects($this->at(2))
-            ->method('saveImage')
+            ->method('saveFile')
             ->with($image, $fnGen_mock)
             ->willReturn('saved_image1.png');
 
         $imgProc_mock->expects($this->at(3))
-            ->method('saveImage')
+            ->method('saveFile')
             ->with($image, $fnGen_mock)
             ->willReturn('saved_image2.png');
 

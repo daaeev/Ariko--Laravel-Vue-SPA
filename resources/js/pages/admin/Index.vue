@@ -16,6 +16,10 @@
             <div class="col-md-2">
                 <dialog-button v-model:show="createPostShow">Create post</dialog-button>
             </div>
+
+            <div class="col-md-2">
+                <dialog-button v-model:show="createVideoWorkShow">Create video work</dialog-button>
+            </div>
         </div>
     </div>
 
@@ -43,6 +47,12 @@
             <alert v-if="createPostFailed" :type="'danger'">{{createPostFailed}}</alert>
             <create-post-form @submit="submitCreatePostForm"></create-post-form>
         </my-dialog>
+
+        <my-dialog v-model:show="createVideoWorkShow">
+            <alert v-if="createVideoWorkSuccess" :type="'success'">{{createVideoWorkSuccess}}</alert>
+            <alert v-if="createVideoWorkFailed" :type="'danger'">{{createVideoWorkFailed}}</alert>
+            <create-video-work-form @submit="submitCreateVideoWorkForm"></create-video-work-form>
+        </my-dialog>
     <!-- Dialogs -->
 </template>
 
@@ -57,16 +67,19 @@ import axiosPhotoWorkAPI from '../../logic/api/crud/PhotoWork';
 import CreatePhotoWorkForm from '../../components/admin/crudforms/CreatePhotoWorkForm.vue';
 import AddImagesToWorkForm from '../../components/admin/crudforms/AddImagesToWorkForm.vue';
 import CreatePostForm from '../../components/admin/crudforms/CreatePostForm.vue'
+import axiosVideoWorkAPI from '../../logic/api/crud/VideoWork';
+import CreateVideoWorkForm from '../../components/admin/crudforms/CreateVideoWorkForm.vue';
 
 export default {
     components: {
-        DialogButton, 
-        MyDialog, 
-        CreateUserForm, 
-        Alert, 
-        CreatePhotoWorkForm, 
+        DialogButton,
+        MyDialog,
+        CreateUserForm,
+        Alert,
+        CreatePhotoWorkForm,
         AddImagesToWorkForm,
-        CreatePostForm
+        CreatePostForm,
+        CreateVideoWorkForm
     },
 
     data() {
@@ -90,6 +103,11 @@ export default {
             createPostShow: false,
             createPostSuccess: '',
             createPostFailed: '',
+
+            // CREATE VIDEO WORK FORM
+            createVideoWorkShow: false,
+            createVideoWorkSuccess: '',
+            createVideoWorkFailed: '',
         };
     },
 
@@ -164,7 +182,25 @@ export default {
                 this.createPostSuccess = '';
                 this.createPostFailed = '';
             }, 5000);
-        }
+        },
+
+        // Форма создания работы (видео)
+        async submitCreateVideoWorkForm(formData)
+        {
+            this.createVideoWorkSuccess = '';
+            this.createVideoWorkFailed = '';
+
+            await axiosVideoWorkAPI.createVideoWork(
+                formData,
+                () => this.createVideoWorkSuccess = 'Work create success',
+                axiosError => this.createVideoWorkFailed = axiosError.response?.data.message ?? 'Work create failed',
+            );
+
+            setTimeout(() => {
+                this.createVideoWorkSuccess = '';
+                this.createVideoWorkFailed = '';
+            }, 5000);
+        },
     },
 }
 </script>

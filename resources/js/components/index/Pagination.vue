@@ -3,9 +3,15 @@
     <div class="text-center load-more">
         <!-- load more button -->
         <div class="load-more-block" v-if="(pagPage != totalPagesCount)">
-            <button @click="this.$emit('loadmore')" v-if="!isWorksLoading">
-                <i class="icon ion-md-arrow-down"></i>
-            </button>
+            <div v-if="!isWorksLoading">
+                <small>Load more</small>
+
+                <div>
+                    <button @click="this.$emit('loadmore')">
+                        <i class="icon ion-md-arrow-down"></i>
+                    </button>
+                </div>
+            </div>
 
             <img v-else src="/images/ajax-loader.gif">
         </div>

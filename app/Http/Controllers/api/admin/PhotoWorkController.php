@@ -60,7 +60,7 @@ class PhotoWorkController extends Controller
 
         if (!$imagesModels) {
             foreach ($lsImages as $savedName) {
-                $imgProcess->deleteImage($savedName);
+                $imgProcess->deleteFile($savedName);
             }
 
             throw new HttpException(500, 'Save images in db failed');
@@ -84,14 +84,14 @@ class PhotoWorkController extends Controller
         $fnGenService = app(FileNameGeneratorInterface::class);
 
         foreach ($images as $image) {
-            $name = $imgProcess->saveImage($image, $fnGenService);
+            $name = $imgProcess->saveFile($image, $fnGenService);
 
             // Если сохранение изображения прошло неуспешно
             if (!$name) {
 
                 // Удалить уже сохраненные изображения
                 foreach ($savedImages as $savedName) {
-                    $imgProcess->deleteImage($savedName);
+                    $imgProcess->deleteFile($savedName);
                 }
 
                 return false;

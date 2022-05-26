@@ -41,7 +41,7 @@ class DefaultFileProcessingTest extends TestCase
             ->with($image_dir, $generated_name, $disk)
             ->willReturn(true);
 
-        $result = $instance->saveImage($image, $fnGen_mock);
+        $result = $instance->saveFile($image, $fnGen_mock);
         $this->assertEquals($generated_name, $result);
     }
 
@@ -60,7 +60,7 @@ class DefaultFileProcessingTest extends TestCase
             ->getMock();
 
         $this->expectException(\Exception::class);
-        $instance->saveImage($image, $fnGen_mock);
+        $instance->saveFile($image, $fnGen_mock);
     }
 
     public function testSaveImageFailedNotSetDisk()
@@ -78,7 +78,7 @@ class DefaultFileProcessingTest extends TestCase
             ->getMock();
 
         $this->expectException(\Exception::class);
-        $instance->saveImage($image, $fnGen_mock);
+        $instance->saveFile($image, $fnGen_mock);
     }
 
     public function testSaveImageFailedImageStoreFiled()
@@ -111,7 +111,7 @@ class DefaultFileProcessingTest extends TestCase
             ->with($image_dir, $generated_name, $disk)
             ->willReturn(false);
 
-        $result = $instance->saveImage($image, $fnGen_mock);
+        $result = $instance->saveFile($image, $fnGen_mock);
         $this->assertFalse($result);
     }
 
@@ -145,7 +145,7 @@ class DefaultFileProcessingTest extends TestCase
             ->with($disk)
             ->andReturn($filesystem_mock);
 
-        $result = $instance->deleteImage($image_name);
+        $result = $instance->deleteFile($image_name);
         $this->assertTrue($result);
     }
 
@@ -158,7 +158,7 @@ class DefaultFileProcessingTest extends TestCase
         $instance->disk($disk);
 
         $this->expectException(\Exception::class);
-        $instance->deleteImage($image);
+        $instance->deleteFile($image);
     }
 
     public function testDeleteImageFailedNotSetDisk()
@@ -170,7 +170,7 @@ class DefaultFileProcessingTest extends TestCase
         $instance->directory($dir);
 
         $this->expectException(\Exception::class);
-        $instance->deleteImage($image);
+        $instance->deleteFile($image);
     }
 
     public function testDeleteImageIfNotExistsSuccess()
@@ -198,7 +198,7 @@ class DefaultFileProcessingTest extends TestCase
             ->with($disk)
             ->andReturn($filesystem_mock);
 
-        $result = $instance->deleteImage($image_name);
+        $result = $instance->deleteFile($image_name);
         $this->assertTrue($result);
     }
 
@@ -212,7 +212,7 @@ class DefaultFileProcessingTest extends TestCase
         $instance->directory($image_dir);
         $instance->disk($disk);
 
-        $result = $instance->deleteImage($image_name);
+        $result = $instance->deleteFile($image_name);
         $this->assertFalse($result);
     }
 
@@ -246,7 +246,7 @@ class DefaultFileProcessingTest extends TestCase
             ->with($disk)
             ->andReturn($filesystem_mock);
 
-        $result = $instance->deleteImage($image_name);
+        $result = $instance->deleteFile($image_name);
         $this->assertFalse($result);
     }
 }

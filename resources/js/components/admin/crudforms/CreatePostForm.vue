@@ -1,5 +1,5 @@
 <template>
-  <form @submit.prevent="submit" id="create-post-form">
+  <form @submit.prevent="submit" id="create-post-form" enctype="multipart/form-data">
     <div class="form-group">
       <label>Title</label>
       <input
@@ -29,6 +29,7 @@
         type="file"
         required
         name="main_image"
+        accept="image/*"
       />
     </div>
     <div class="form-group mt-3">
@@ -36,6 +37,7 @@
       <input
         type="file"
         name="preview_image"
+        accept="image/*"
       />
     </div>
 

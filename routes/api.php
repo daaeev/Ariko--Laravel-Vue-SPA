@@ -10,6 +10,7 @@ use App\Http\Controllers\api\MessageController;
 use App\Http\Controllers\api\PostController;
 use App\Http\Controllers\api\admin\PhotoWorkController as AdminPhotoController;
 use App\Http\Controllers\api\admin\PostController as AdminPostController;
+use App\Http\Controllers\api\admin\VideoWorkController as AdminVideoWorkController;
 
 // ---WORKS---
 
@@ -69,23 +70,28 @@ Route::middleware('auth')->group(function () {
 
     // ---USER---
 
-    Route::post('/user', [UserController::class, 'create'])->name('user.create');
+        Route::post('/user', [UserController::class, 'create'])->name('user.create');
 
     // !!!USER!!!
 
     // ---PHOTOS WORK---
 
-    Route::post('/works/photos', [AdminPhotoController::class, 'createWork'])->name('works.photos.create');
-    Route::post('/works/photos/images', [AdminPhotoController::class, 'addImagesToWork'])->name('works.photos.images.add');
+        Route::post('/works/photos', [AdminPhotoController::class, 'createWork'])->name('works.photos.create');
+        Route::post('/works/photos/images', [AdminPhotoController::class, 'addImagesToWork'])->name('works.photos.images.add');
 
     // !!!PHOTOS WORK!!!
 
     // ---POST---
 
-    Route::post('/post', [AdminPostController::class, 'createPost'])->name('post.create');
+        Route::post('/post', [AdminPostController::class, 'createPost'])->name('post.create');
 
     // !!!POST!!!
 
+    // ---VIDEOS WORK---
+
+        Route::post('/works/video', [AdminVideoWorkController::class, 'createWork'])->name('works.videos.create');
+
+    // !!!VIDEOS WORK!!!
 });
 
 // !!!ADMIN ROUTES!!!

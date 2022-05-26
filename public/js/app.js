@@ -19977,6 +19977,98 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/admin/crudforms/CreateVideoWorkForm.vue?vue&type=script&lang=js":
+/*!*****************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/admin/crudforms/CreateVideoWorkForm.vue?vue&type=script&lang=js ***!
+  \*****************************************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  data: function data() {
+    return {
+      name: "",
+      subject: "",
+      year: String(new Date().getFullYear()),
+      client: "",
+      website: "",
+      title: "",
+      description: ""
+    };
+  },
+  emits: ["submit"],
+  methods: {
+    submitForm: function submitForm() {
+      var hasErrors = false;
+      document.querySelector(".name-errors").innerHTML = "";
+      document.querySelector(".subject-errors").innerHTML = "";
+      document.querySelector(".year-errors").innerHTML = "";
+      document.querySelector(".client-errors").innerHTML = "";
+      document.querySelector(".website-errors").innerHTML = "";
+      document.querySelector(".title-errors").innerHTML = "";
+      document.querySelector(".description-errors").innerHTML = "";
+
+      if (!this.name) {
+        document.querySelector(".name-errors").append("Name is required");
+        hasErrors = true;
+      } else if (this.name.length > 30) {
+        document.querySelector(".name-errors").append("Name length must not exceed 30");
+        hasErrors = true;
+      }
+
+      if (!this.subject) {
+        document.querySelector(".subject-errors").append("Subject is required");
+        hasErrors = true;
+      } else if (this.subject.length > 50) {
+        document.querySelector(".subject-errors").append("Subject length must not exceed 50");
+        hasErrors = true;
+      }
+
+      if (!this.year) {
+        document.querySelector(".year-errors").append("Year is required");
+        hasErrors = true;
+      } else if (this.year.length > 10) {
+        document.querySelector(".year-errors").append("Year length must not exceed 10");
+        hasErrors = true;
+      }
+
+      if (this.client.length > 50) {
+        document.querySelector(".client-errors").append("Client length must not exceed 50");
+        hasErrors = true;
+      }
+
+      if (this.website.length > 255) {
+        document.querySelector(".website-errors").append("Website length must not exceed 255");
+        hasErrors = true;
+      }
+
+      if (this.title.length > 255) {
+        document.querySelector(".title-errors").append("Title length must not exceed 255");
+        hasErrors = true;
+      }
+
+      if (hasErrors) {
+        return;
+      }
+
+      var result = new FormData(document.querySelector('#create-video-work-form'));
+      this.$emit("submit", result);
+      this.name = '';
+      this.subject = '';
+      this.client = '';
+      this.website = '';
+      this.title = '';
+      this.description = '';
+    }
+  }
+});
+
+/***/ }),
+
 /***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/admin/login/loginForm.vue?vue&type=script&lang=js":
 /*!***************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/admin/login/loginForm.vue?vue&type=script&lang=js ***!
@@ -21366,11 +21458,15 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _components_admin_crudforms_CreatePhotoWorkForm_vue__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../../components/admin/crudforms/CreatePhotoWorkForm.vue */ "./resources/js/components/admin/crudforms/CreatePhotoWorkForm.vue");
 /* harmony import */ var _components_admin_crudforms_AddImagesToWorkForm_vue__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../../components/admin/crudforms/AddImagesToWorkForm.vue */ "./resources/js/components/admin/crudforms/AddImagesToWorkForm.vue");
 /* harmony import */ var _components_admin_crudforms_CreatePostForm_vue__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ../../components/admin/crudforms/CreatePostForm.vue */ "./resources/js/components/admin/crudforms/CreatePostForm.vue");
+/* harmony import */ var _logic_api_crud_VideoWork__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ../../logic/api/crud/VideoWork */ "./resources/js/logic/api/crud/VideoWork.js");
+/* harmony import */ var _components_admin_crudforms_CreateVideoWorkForm_vue__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ../../components/admin/crudforms/CreateVideoWorkForm.vue */ "./resources/js/components/admin/crudforms/CreateVideoWorkForm.vue");
 
 
 function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
 
 function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+
+
 
 
 
@@ -21390,7 +21486,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     Alert: _components_UI_Alert_vue__WEBPACK_IMPORTED_MODULE_4__["default"],
     CreatePhotoWorkForm: _components_admin_crudforms_CreatePhotoWorkForm_vue__WEBPACK_IMPORTED_MODULE_8__["default"],
     AddImagesToWorkForm: _components_admin_crudforms_AddImagesToWorkForm_vue__WEBPACK_IMPORTED_MODULE_9__["default"],
-    CreatePostForm: _components_admin_crudforms_CreatePostForm_vue__WEBPACK_IMPORTED_MODULE_10__["default"]
+    CreatePostForm: _components_admin_crudforms_CreatePostForm_vue__WEBPACK_IMPORTED_MODULE_10__["default"],
+    CreateVideoWorkForm: _components_admin_crudforms_CreateVideoWorkForm_vue__WEBPACK_IMPORTED_MODULE_12__["default"]
   },
   data: function data() {
     return {
@@ -21409,7 +21506,11 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       // CREATE POST FORM
       createPostShow: false,
       createPostSuccess: '',
-      createPostFailed: ''
+      createPostFailed: '',
+      // CREATE VIDEO WORK FORM
+      createVideoWorkShow: false,
+      createVideoWorkSuccess: '',
+      createVideoWorkFailed: ''
     };
   },
   methods: {
@@ -21547,6 +21648,40 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
             }
           }
         }, _callee4);
+      }))();
+    },
+    // Форма создания работы (видео)
+    submitCreateVideoWorkForm: function submitCreateVideoWorkForm(formData) {
+      var _this5 = this;
+
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee5() {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee5$(_context5) {
+          while (1) {
+            switch (_context5.prev = _context5.next) {
+              case 0:
+                _this5.createVideoWorkSuccess = '';
+                _this5.createVideoWorkFailed = '';
+                _context5.next = 4;
+                return _logic_api_crud_VideoWork__WEBPACK_IMPORTED_MODULE_11__["default"].createVideoWork(formData, function () {
+                  return _this5.createVideoWorkSuccess = 'Work create success';
+                }, function (axiosError) {
+                  var _axiosError$response$5, _axiosError$response5;
+
+                  return _this5.createVideoWorkFailed = (_axiosError$response$5 = (_axiosError$response5 = axiosError.response) === null || _axiosError$response5 === void 0 ? void 0 : _axiosError$response5.data.message) !== null && _axiosError$response$5 !== void 0 ? _axiosError$response$5 : 'Work create failed';
+                });
+
+              case 4:
+                setTimeout(function () {
+                  _this5.createVideoWorkSuccess = '';
+                  _this5.createVideoWorkFailed = '';
+                }, 5000);
+
+              case 5:
+              case "end":
+                return _context5.stop();
+            }
+          }
+        }, _callee5);
       }))();
     }
   }
@@ -21796,7 +21931,8 @@ var _hoisted_1 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementV
   type: "file",
   required: "",
   name: "images[]",
-  multiple: ""
+  multiple: "",
+  accept: "image/*"
 })], -1
 /* HOISTED */
 );
@@ -21827,7 +21963,8 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     onSubmit: _cache[1] || (_cache[1] = (0,vue__WEBPACK_IMPORTED_MODULE_0__.withModifiers)(function () {
       return $options.submitForm && $options.submitForm.apply($options, arguments);
     }, ["prevent"])),
-    id: "add-images-to-work-form"
+    id: "add-images-to-work-form",
+    enctype: "multipart/form-data"
   }, [_hoisted_1, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_2, [_hoisted_3, (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
     type: "numeric",
     "class": "form-control",
@@ -22096,14 +22233,15 @@ var _hoisted_6 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementV
 /* HOISTED */
 );
 
-var _hoisted_7 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createStaticVNode)("<div class=\"form-group mt-3\"><p>Main image</p><input type=\"file\" required name=\"main_image\"></div><div class=\"form-group mt-3\"><p>Preview image</p><input type=\"file\" name=\"preview_image\"></div><button type=\"submit\" class=\"btn btn-primary\">Submit</button>", 3);
+var _hoisted_7 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createStaticVNode)("<div class=\"form-group mt-3\"><p>Main image</p><input type=\"file\" required name=\"main_image\" accept=\"image/*\"></div><div class=\"form-group mt-3\"><p>Preview image</p><input type=\"file\" name=\"preview_image\" accept=\"image/*\"></div><button type=\"submit\" class=\"btn btn-primary\">Submit</button>", 3);
 
 function render(_ctx, _cache, $props, $setup, $data, $options) {
   return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("form", {
     onSubmit: _cache[2] || (_cache[2] = (0,vue__WEBPACK_IMPORTED_MODULE_0__.withModifiers)(function () {
       return $options.submit && $options.submit.apply($options, arguments);
     }, ["prevent"])),
-    id: "create-post-form"
+    id: "create-post-form",
+    enctype: "multipart/form-data"
   }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_1, [_hoisted_2, (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
     type: "text",
     "class": "form-control",
@@ -22214,6 +22352,227 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
   }, null, 512
   /* NEED_PATCH */
   ), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, $data.password]]), _hoisted_6]), _hoisted_7], 32
+  /* HYDRATE_EVENTS */
+  );
+}
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/admin/crudforms/CreateVideoWorkForm.vue?vue&type=template&id=54eb6f8a":
+/*!*********************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/admin/crudforms/CreateVideoWorkForm.vue?vue&type=template&id=54eb6f8a ***!
+  \*********************************************************************************************************************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "render": () => (/* binding */ render)
+/* harmony export */ });
+/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm-bundler.js");
+
+var _hoisted_1 = {
+  "class": "form-group"
+};
+
+var _hoisted_2 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", null, "Name", -1
+/* HOISTED */
+);
+
+var _hoisted_3 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+  "class": "text-danger help-block name-errors"
+}, null, -1
+/* HOISTED */
+);
+
+var _hoisted_4 = {
+  "class": "form-group mt-3"
+};
+
+var _hoisted_5 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", null, "Subject", -1
+/* HOISTED */
+);
+
+var _hoisted_6 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+  "class": "text-danger help-block subject-errors"
+}, null, -1
+/* HOISTED */
+);
+
+var _hoisted_7 = {
+  "class": "form-group mt-3"
+};
+
+var _hoisted_8 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", null, "Year", -1
+/* HOISTED */
+);
+
+var _hoisted_9 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+  "class": "text-danger help-block year-errors"
+}, null, -1
+/* HOISTED */
+);
+
+var _hoisted_10 = {
+  "class": "form-group mt-3"
+};
+
+var _hoisted_11 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", null, "Client", -1
+/* HOISTED */
+);
+
+var _hoisted_12 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+  "class": "text-danger help-block client-errors"
+}, null, -1
+/* HOISTED */
+);
+
+var _hoisted_13 = {
+  "class": "form-group mt-3"
+};
+
+var _hoisted_14 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", null, "Website", -1
+/* HOISTED */
+);
+
+var _hoisted_15 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+  "class": "text-danger help-block website-errors"
+}, null, -1
+/* HOISTED */
+);
+
+var _hoisted_16 = {
+  "class": "form-group mt-3"
+};
+
+var _hoisted_17 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", null, "Title", -1
+/* HOISTED */
+);
+
+var _hoisted_18 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+  "class": "text-danger help-block title-errors"
+}, null, -1
+/* HOISTED */
+);
+
+var _hoisted_19 = {
+  "class": "form-group mt-3"
+};
+
+var _hoisted_20 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", null, "Description", -1
+/* HOISTED */
+);
+
+var _hoisted_21 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+  "class": "text-danger help-block description-errors"
+}, null, -1
+/* HOISTED */
+);
+
+var _hoisted_22 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+  "class": "form-group mt-3"
+}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("p", null, "Video"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
+  type: "file",
+  accept: "video/*",
+  name: "video",
+  required: ""
+})], -1
+/* HOISTED */
+);
+
+var _hoisted_23 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
+  type: "submit",
+  "class": "btn btn-primary"
+}, "Submit", -1
+/* HOISTED */
+);
+
+function render(_ctx, _cache, $props, $setup, $data, $options) {
+  return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("form", {
+    onSubmit: _cache[7] || (_cache[7] = (0,vue__WEBPACK_IMPORTED_MODULE_0__.withModifiers)(function () {
+      return $options.submitForm && $options.submitForm.apply($options, arguments);
+    }, ["prevent"])),
+    id: "create-video-work-form",
+    enctype: "multipart/form-data"
+  }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_1, [_hoisted_2, (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
+    type: "text",
+    "class": "form-control",
+    placeholder: "Work name",
+    maxlength: "30",
+    "onUpdate:modelValue": _cache[0] || (_cache[0] = function ($event) {
+      return $data.name = $event;
+    }),
+    required: "",
+    name: "name"
+  }, null, 512
+  /* NEED_PATCH */
+  ), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, $data.name]]), _hoisted_3]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_4, [_hoisted_5, (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
+    type: "text",
+    "class": "form-control",
+    placeholder: "Work subject",
+    maxlength: "50",
+    "onUpdate:modelValue": _cache[1] || (_cache[1] = function ($event) {
+      return $data.subject = $event;
+    }),
+    required: "",
+    name: "subject"
+  }, null, 512
+  /* NEED_PATCH */
+  ), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, $data.subject]]), _hoisted_6]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_7, [_hoisted_8, (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
+    type: "text",
+    "class": "form-control",
+    placeholder: "Year of creation",
+    maxlength: "10",
+    "onUpdate:modelValue": _cache[2] || (_cache[2] = function ($event) {
+      return $data.year = $event;
+    }),
+    required: "",
+    name: "year"
+  }, null, 512
+  /* NEED_PATCH */
+  ), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, $data.year]]), _hoisted_9]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_10, [_hoisted_11, (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
+    type: "text",
+    "class": "form-control",
+    placeholder: "Client name",
+    maxlength: "50",
+    "onUpdate:modelValue": _cache[3] || (_cache[3] = function ($event) {
+      return $data.client = $event;
+    }),
+    name: "client"
+  }, null, 512
+  /* NEED_PATCH */
+  ), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, $data.client]]), _hoisted_12]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_13, [_hoisted_14, (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
+    type: "text",
+    "class": "form-control",
+    placeholder: "Work done for",
+    maxlength: "255",
+    "onUpdate:modelValue": _cache[4] || (_cache[4] = function ($event) {
+      return $data.website = $event;
+    }),
+    name: "website"
+  }, null, 512
+  /* NEED_PATCH */
+  ), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, $data.website]]), _hoisted_15]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_16, [_hoisted_17, (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
+    type: "text",
+    "class": "form-control",
+    placeholder: "Title (about)",
+    maxlength: "255",
+    "onUpdate:modelValue": _cache[5] || (_cache[5] = function ($event) {
+      return $data.title = $event;
+    }),
+    name: "title"
+  }, null, 512
+  /* NEED_PATCH */
+  ), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, $data.title]]), _hoisted_18]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_19, [_hoisted_20, (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("textarea", {
+    "class": "form-control",
+    placeholder: "Description (about)",
+    "onUpdate:modelValue": _cache[6] || (_cache[6] = function ($event) {
+      return $data.description = $event;
+    }),
+    name: "description"
+  }, null, 512
+  /* NEED_PATCH */
+  ), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, $data.description]]), _hoisted_21]), _hoisted_22, _hoisted_23], 32
   /* HYDRATE_EVENTS */
   );
 }
@@ -23322,30 +23681,36 @@ var _hoisted_2 = {
   key: 0,
   "class": "load-more-block"
 };
+var _hoisted_3 = {
+  key: 0
+};
 
-var _hoisted_3 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("i", {
+var _hoisted_4 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("small", null, "Load more", -1
+/* HOISTED */
+);
+
+var _hoisted_5 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("i", {
   "class": "icon ion-md-arrow-down"
 }, null, -1
 /* HOISTED */
 );
 
-var _hoisted_4 = [_hoisted_3];
-var _hoisted_5 = {
+var _hoisted_6 = [_hoisted_5];
+var _hoisted_7 = {
   key: 1,
   src: "/images/ajax-loader.gif"
 };
-var _hoisted_6 = {
+var _hoisted_8 = {
   key: 1
 };
 function render(_ctx, _cache, $props, $setup, $data, $options) {
   var _this = this;
 
-  return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" pagination "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_1, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" load more button "), $props.pagPage != $props.totalPagesCount ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_2, [!$props.isWorksLoading ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("button", {
-    key: 0,
+  return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" pagination "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_1, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" load more button "), $props.pagPage != $props.totalPagesCount ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_2, [!$props.isWorksLoading ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_3, [_hoisted_4, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
     onClick: _cache[0] || (_cache[0] = function ($event) {
       return _this.$emit('loadmore');
     })
-  }, _hoisted_4)) : ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("img", _hoisted_5))])) : ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("span", _hoisted_6, "No more works..."))])], 2112
+  }, _hoisted_6)])])) : ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("img", _hoisted_7))])) : ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("span", _hoisted_8, "No more works..."))])], 2112
   /* STABLE_FRAGMENT, DEV_ROOT_FRAGMENT */
   );
 }
@@ -24579,6 +24944,12 @@ var _hoisted_9 = {
 
 var _hoisted_10 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)("Create post");
 
+var _hoisted_11 = {
+  "class": "col-md-2"
+};
+
+var _hoisted_12 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)("Create video work");
+
 function render(_ctx, _cache, $props, $setup, $data, $options) {
   var _component_dialog_button = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("dialog-button");
 
@@ -24593,6 +24964,8 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
   var _component_add_images_to_work_form = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("add-images-to-work-form");
 
   var _component_create_post_form = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("create-post-form");
+
+  var _component_create_video_work_form = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("create-video-work-form");
 
   return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_1, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_2, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_3, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_dialog_button, {
     show: $data.createUserShow,
@@ -24650,9 +25023,23 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
 
   }, 8
   /* PROPS */
+  , ["show"])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_11, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_dialog_button, {
+    show: $data.createVideoWorkShow,
+    "onUpdate:show": _cache[4] || (_cache[4] = function ($event) {
+      return $data.createVideoWorkShow = $event;
+    })
+  }, {
+    "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
+      return [_hoisted_12];
+    }),
+    _: 1
+    /* STABLE */
+
+  }, 8
+  /* PROPS */
   , ["show"])])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" Dialogs "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_my_dialog, {
     show: $data.createUserShow,
-    "onUpdate:show": _cache[4] || (_cache[4] = function ($event) {
+    "onUpdate:show": _cache[5] || (_cache[5] = function ($event) {
       return $data.createUserShow = $event;
     })
   }, {
@@ -24694,7 +25081,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
   /* PROPS */
   , ["show"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_my_dialog, {
     show: $data.createPhotoWorkShow,
-    "onUpdate:show": _cache[5] || (_cache[5] = function ($event) {
+    "onUpdate:show": _cache[6] || (_cache[6] = function ($event) {
       return $data.createPhotoWorkShow = $event;
     })
   }, {
@@ -24736,7 +25123,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
   /* PROPS */
   , ["show"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_my_dialog, {
     show: $data.addImagesToWorkShow,
-    "onUpdate:show": _cache[6] || (_cache[6] = function ($event) {
+    "onUpdate:show": _cache[7] || (_cache[7] = function ($event) {
       return $data.addImagesToWorkShow = $event;
     })
   }, {
@@ -24778,7 +25165,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
   /* PROPS */
   , ["show"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_my_dialog, {
     show: $data.createPostShow,
-    "onUpdate:show": _cache[7] || (_cache[7] = function ($event) {
+    "onUpdate:show": _cache[8] || (_cache[8] = function ($event) {
       return $data.createPostShow = $event;
     })
   }, {
@@ -24809,6 +25196,48 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
 
       })) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_create_post_form, {
         onSubmit: $options.submitCreatePostForm
+      }, null, 8
+      /* PROPS */
+      , ["onSubmit"])];
+    }),
+    _: 1
+    /* STABLE */
+
+  }, 8
+  /* PROPS */
+  , ["show"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_my_dialog, {
+    show: $data.createVideoWorkShow,
+    "onUpdate:show": _cache[9] || (_cache[9] = function ($event) {
+      return $data.createVideoWorkShow = $event;
+    })
+  }, {
+    "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
+      return [$data.createVideoWorkSuccess ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_alert, {
+        key: 0,
+        type: 'success'
+      }, {
+        "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
+          return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)((0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.createVideoWorkSuccess), 1
+          /* TEXT */
+          )];
+        }),
+        _: 1
+        /* STABLE */
+
+      })) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), $data.createVideoWorkFailed ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_alert, {
+        key: 1,
+        type: 'danger'
+      }, {
+        "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
+          return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)((0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.createVideoWorkFailed), 1
+          /* TEXT */
+          )];
+        }),
+        _: 1
+        /* STABLE */
+
+      })) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_create_video_work_form, {
+        onSubmit: $options.submitCreateVideoWorkForm
       }, null, 8
       /* PROPS */
       , ["onSubmit"])];
@@ -25752,10 +26181,10 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   /**
    * Отправка запроса на создание поста
-   * 
-   * @param formData 
-   * @param thenHandler 
-   * @param catchHandler 
+   *
+   * @param formData
+   * @param thenHandler
+   * @param catchHandler
    */
   createPost: function createPost(formData) {
     var _arguments = arguments;
@@ -25767,9 +26196,10 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
             case 0:
               thenHandler = _arguments.length > 1 && _arguments[1] !== undefined ? _arguments[1] : null;
               catchHandler = _arguments.length > 2 && _arguments[2] !== undefined ? _arguments[2] : null;
-              _axios_axiosWithAuthToken__WEBPACK_IMPORTED_MODULE_1__["default"].post('/post', formData).then(thenHandler)["catch"](catchHandler);
+              _context.next = 4;
+              return _axios_axiosWithAuthToken__WEBPACK_IMPORTED_MODULE_1__["default"].post('/post', formData).then(thenHandler)["catch"](catchHandler);
 
-            case 3:
+            case 4:
             case "end":
               return _context.stop();
           }
@@ -25822,6 +26252,61 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
               catchHandler = _arguments.length > 2 && _arguments[2] !== undefined ? _arguments[2] : null;
               _context.next = 4;
               return _axios_axiosWithAuthToken__WEBPACK_IMPORTED_MODULE_1__["default"].post('/user', formData).then(thenHandler)["catch"](catchHandler);
+
+            case 4:
+            case "end":
+              return _context.stop();
+          }
+        }
+      }, _callee);
+    }))();
+  }
+});
+
+/***/ }),
+
+/***/ "./resources/js/logic/api/crud/VideoWork.js":
+/*!**************************************************!*\
+  !*** ./resources/js/logic/api/crud/VideoWork.js ***!
+  \**************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _axios_axiosWithAuthToken__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../../axios/axiosWithAuthToken */ "./resources/js/axios/axiosWithAuthToken.js");
+
+
+function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+
+function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  /**
+   * Отправка запроса на создание работы (видео)
+   *
+   * @param formData
+   * @param thenHandler
+   * @param catchHandler
+   * @returns {Promise<void>}
+   */
+  createVideoWork: function createVideoWork(formData) {
+    var _arguments = arguments;
+    return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee() {
+      var thenHandler, catchHandler;
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee$(_context) {
+        while (1) {
+          switch (_context.prev = _context.next) {
+            case 0:
+              thenHandler = _arguments.length > 1 && _arguments[1] !== undefined ? _arguments[1] : null;
+              catchHandler = _arguments.length > 2 && _arguments[2] !== undefined ? _arguments[2] : null;
+              _context.next = 4;
+              return _axios_axiosWithAuthToken__WEBPACK_IMPORTED_MODULE_1__["default"].post('/works/video', formData).then(thenHandler)["catch"](catchHandler);
 
             case 4:
             case "end":
@@ -46760,6 +47245,34 @@ if (false) {}
 
 /***/ }),
 
+/***/ "./resources/js/components/admin/crudforms/CreateVideoWorkForm.vue":
+/*!*************************************************************************!*\
+  !*** ./resources/js/components/admin/crudforms/CreateVideoWorkForm.vue ***!
+  \*************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _CreateVideoWorkForm_vue_vue_type_template_id_54eb6f8a__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./CreateVideoWorkForm.vue?vue&type=template&id=54eb6f8a */ "./resources/js/components/admin/crudforms/CreateVideoWorkForm.vue?vue&type=template&id=54eb6f8a");
+/* harmony import */ var _CreateVideoWorkForm_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./CreateVideoWorkForm.vue?vue&type=script&lang=js */ "./resources/js/components/admin/crudforms/CreateVideoWorkForm.vue?vue&type=script&lang=js");
+/* harmony import */ var C_OpenServer_domains_laravel_vue_ariko_node_modules_vue_loader_dist_exportHelper_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./node_modules/vue-loader/dist/exportHelper.js */ "./node_modules/vue-loader/dist/exportHelper.js");
+
+
+
+
+;
+const __exports__ = /*#__PURE__*/(0,C_OpenServer_domains_laravel_vue_ariko_node_modules_vue_loader_dist_exportHelper_js__WEBPACK_IMPORTED_MODULE_2__["default"])(_CreateVideoWorkForm_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__["default"], [['render',_CreateVideoWorkForm_vue_vue_type_template_id_54eb6f8a__WEBPACK_IMPORTED_MODULE_0__.render],['__file',"resources/js/components/admin/crudforms/CreateVideoWorkForm.vue"]])
+/* hot reload */
+if (false) {}
+
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (__exports__);
+
+/***/ }),
+
 /***/ "./resources/js/components/admin/login/loginForm.vue":
 /*!***********************************************************!*\
   !*** ./resources/js/components/admin/login/loginForm.vue ***!
@@ -47930,6 +48443,22 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./resources/js/components/admin/crudforms/CreateVideoWorkForm.vue?vue&type=script&lang=js":
+/*!*************************************************************************************************!*\
+  !*** ./resources/js/components/admin/crudforms/CreateVideoWorkForm.vue?vue&type=script&lang=js ***!
+  \*************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (/* reexport safe */ _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_CreateVideoWorkForm_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_0__["default"])
+/* harmony export */ });
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_CreateVideoWorkForm_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!../../../../../node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./CreateVideoWorkForm.vue?vue&type=script&lang=js */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/admin/crudforms/CreateVideoWorkForm.vue?vue&type=script&lang=js");
+ 
+
+/***/ }),
+
 /***/ "./resources/js/components/admin/login/loginForm.vue?vue&type=script&lang=js":
 /*!***********************************************************************************!*\
   !*** ./resources/js/components/admin/login/loginForm.vue?vue&type=script&lang=js ***!
@@ -48646,6 +49175,22 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "render": () => (/* reexport safe */ _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_dist_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_CreateUserForm_vue_vue_type_template_id_10c349d4__WEBPACK_IMPORTED_MODULE_0__.render)
 /* harmony export */ });
 /* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_dist_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_CreateUserForm_vue_vue_type_template_id_10c349d4__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!../../../../../node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!../../../../../node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./CreateUserForm.vue?vue&type=template&id=10c349d4 */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/admin/crudforms/CreateUserForm.vue?vue&type=template&id=10c349d4");
+
+
+/***/ }),
+
+/***/ "./resources/js/components/admin/crudforms/CreateVideoWorkForm.vue?vue&type=template&id=54eb6f8a":
+/*!*******************************************************************************************************!*\
+  !*** ./resources/js/components/admin/crudforms/CreateVideoWorkForm.vue?vue&type=template&id=54eb6f8a ***!
+  \*******************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "render": () => (/* reexport safe */ _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_dist_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_CreateVideoWorkForm_vue_vue_type_template_id_54eb6f8a__WEBPACK_IMPORTED_MODULE_0__.render)
+/* harmony export */ });
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_dist_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_CreateVideoWorkForm_vue_vue_type_template_id_54eb6f8a__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!../../../../../node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!../../../../../node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./CreateVideoWorkForm.vue?vue&type=template&id=54eb6f8a */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/admin/crudforms/CreateVideoWorkForm.vue?vue&type=template&id=54eb6f8a");
 
 
 /***/ }),

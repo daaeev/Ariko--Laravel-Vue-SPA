@@ -49,21 +49,21 @@ class AdminPostControllerTest extends TestCase
         );
 
         $fp_mock = $this->getMockBuilder(FileProcessing::class)
-            ->onlyMethods(['saveImage', 'disk', 'directory'])
+            ->onlyMethods(['saveFile', 'disk', 'directory'])
             ->getMock();
 
         $fp_mock->expects($this->once())
             ->method('disk')
             ->with('public')
             ->willReturnSelf();
-        
+
         $fp_mock->expects($this->once())
             ->method('directory')
             ->with('posts_previews')
             ->willReturnSelf();
 
         $fp_mock->expects($this->once())
-            ->method('saveImage')
+            ->method('saveFile')
             ->with($image, $fngen_mock)
             ->willReturn('saved_image.png');
 
@@ -76,7 +76,7 @@ class AdminPostControllerTest extends TestCase
             ->onlyMethods(['fill', 'save'])
             ->disableOriginalConstructor()
             ->getMock();
-        
+
         $model_mock->expects($this->once())
             ->method('fill')
             ->with([
@@ -145,21 +145,21 @@ class AdminPostControllerTest extends TestCase
         );
 
         $fp_mock = $this->getMockBuilder(FileProcessing::class)
-            ->onlyMethods(['saveImage', 'disk', 'directory'])
+            ->onlyMethods(['saveFile', 'disk', 'directory'])
             ->getMock();
 
         $fp_mock->expects($this->once())
             ->method('disk')
             ->with('public')
             ->willReturnSelf();
-        
+
         $fp_mock->expects($this->once())
             ->method('directory')
             ->with('posts_previews')
             ->willReturnSelf();
 
         $fp_mock->expects($this->once())
-            ->method('saveImage')
+            ->method('saveFile')
             ->with($image, $fngen_mock)
             ->willReturn(false);
 
@@ -208,26 +208,26 @@ class AdminPostControllerTest extends TestCase
         );
 
         $fp_mock = $this->getMockBuilder(FileProcessing::class)
-            ->onlyMethods(['saveImage', 'deleteImage', 'disk', 'directory'])
+            ->onlyMethods(['saveFile', 'deleteFile', 'disk', 'directory'])
             ->getMock();
 
         $fp_mock->expects($this->once())
             ->method('disk')
             ->with('public')
             ->willReturnSelf();
-        
+
         $fp_mock->expects($this->once())
             ->method('directory')
             ->with('posts_previews')
             ->willReturnSelf();
 
         $fp_mock->expects($this->once())
-            ->method('saveImage')
+            ->method('saveFile')
             ->with($image, $fngen_mock)
             ->willReturn('saved_image.png');
 
         $fp_mock->expects($this->once())
-            ->method('deleteImage')
+            ->method('deleteFile')
             ->with('saved_image.png')
             ->willReturn(true);
 
@@ -240,7 +240,7 @@ class AdminPostControllerTest extends TestCase
             ->onlyMethods(['fill', 'save'])
             ->disableOriginalConstructor()
             ->getMock();
-        
+
         $model_mock->expects($this->once())
             ->method('fill')
             ->with([
@@ -308,26 +308,26 @@ class AdminPostControllerTest extends TestCase
         );
 
         $fp_mock = $this->getMockBuilder(FileProcessing::class)
-            ->onlyMethods(['saveImage', 'disk', 'directory'])
+            ->onlyMethods(['saveFile', 'disk', 'directory'])
             ->getMock();
 
         $fp_mock->expects($this->once())
             ->method('disk')
             ->with('public')
             ->willReturnSelf();
-        
+
         $fp_mock->expects($this->once())
             ->method('directory')
             ->with('posts_previews')
             ->willReturnSelf();
 
         $fp_mock->expects($this->at(2))
-            ->method('saveImage')
+            ->method('saveFile')
             ->with($image1, $fngen_mock)
             ->willReturn('saved_image1.png');
 
         $fp_mock->expects($this->at(3))
-            ->method('saveImage')
+            ->method('saveFile')
             ->with($image2, $fngen_mock)
             ->willReturn('saved_image2.png');
 
@@ -340,7 +340,7 @@ class AdminPostControllerTest extends TestCase
             ->onlyMethods(['fill', 'save'])
             ->disableOriginalConstructor()
             ->getMock();
-        
+
         $model_mock->expects($this->once())
             ->method('fill')
             ->with([
@@ -417,31 +417,31 @@ class AdminPostControllerTest extends TestCase
         );
 
         $fp_mock = $this->getMockBuilder(FileProcessing::class)
-            ->onlyMethods(['saveImage', 'disk', 'directory', 'deleteImage'])
+            ->onlyMethods(['saveFile', 'disk', 'directory', 'deleteFile'])
             ->getMock();
 
         $fp_mock->expects($this->once())
             ->method('disk')
             ->with('public')
             ->willReturnSelf();
-        
+
         $fp_mock->expects($this->once())
             ->method('directory')
             ->with('posts_previews')
             ->willReturnSelf();
 
         $fp_mock->expects($this->at(2))
-            ->method('saveImage')
+            ->method('saveFile')
             ->with($image1, $fngen_mock)
             ->willReturn('saved_image1.png');
 
         $fp_mock->expects($this->at(3))
-            ->method('saveImage')
+            ->method('saveFile')
             ->with($image2, $fngen_mock)
             ->willReturn(false);
 
         $fp_mock->expects($this->once())
-            ->method('deleteImage')
+            ->method('deleteFile')
             ->with('saved_image1.png')
             ->willReturn(true);
 
@@ -495,35 +495,35 @@ class AdminPostControllerTest extends TestCase
         );
 
         $fp_mock = $this->getMockBuilder(FileProcessing::class)
-            ->onlyMethods(['saveImage', 'disk', 'directory', 'deleteImage'])
+            ->onlyMethods(['saveFile', 'disk', 'directory', 'deleteFile'])
             ->getMock();
 
         $fp_mock->expects($this->once())
             ->method('disk')
             ->with('public')
             ->willReturnSelf();
-        
+
         $fp_mock->expects($this->once())
             ->method('directory')
             ->with('posts_previews')
             ->willReturnSelf();
 
         $fp_mock->expects($this->at(2))
-            ->method('saveImage')
+            ->method('saveFile')
             ->with($image1, $fngen_mock)
             ->willReturn('saved_image1.png');
 
         $fp_mock->expects($this->at(3))
-            ->method('saveImage')
+            ->method('saveFile')
             ->with($image2, $fngen_mock)
             ->willReturn('saved_image2.png');
 
         $fp_mock->expects($this->at(4))
-            ->method('deleteImage')
+            ->method('deleteFile')
             ->with('saved_image1.png');
 
         $fp_mock->expects($this->at(5))
-            ->method('deleteImage')
+            ->method('deleteFile')
             ->with('saved_image2.png');
 
         $this->app->instance(
@@ -535,7 +535,7 @@ class AdminPostControllerTest extends TestCase
             ->onlyMethods(['fill', 'save'])
             ->disableOriginalConstructor()
             ->getMock();
-        
+
         $model_mock->expects($this->once())
             ->method('fill')
             ->with([

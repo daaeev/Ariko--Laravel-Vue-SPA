@@ -1,5 +1,5 @@
 <template>
-    <form @submit.prevent="submitForm" id="add-images-to-work-form">
+    <form @submit.prevent="submitForm" id="add-images-to-work-form" enctype="multipart/form-data">
     <div class="form-group">
       <p>Images</p>
       <input
@@ -7,6 +7,7 @@
         required
         name="images[]"
         multiple
+        accept="image/*"
       />
     </div>
     <div class="form-group mt-3">

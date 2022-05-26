@@ -33,17 +33,17 @@ class PostController extends Controller
         $fnGen = app(FileNameGeneratorInterface::class);
 
         // Сохранение изображений в локальном хранилищи
-        $main_name = $fileProc->saveImage($main_image, $fnGen);
+        $main_name = $fileProc->saveFile($main_image, $fnGen);
 
         if (!$main_name) {
             throw new HttpException(500, 'Main image save in LS failed');
         }
 
         if ($preview_image) {
-            $preview_name = $fileProc->saveImage($preview_image, $fnGen);
+            $preview_name = $fileProc->saveFile($preview_image, $fnGen);
 
             if (!$preview_name) {
-                $fileProc->deleteImage($main_name);
+                $fileProc->deleteFile($main_name);
 
                 throw new HttpException(500, 'Preview image save in LS failed');
             }
@@ -59,12 +59,12 @@ class PostController extends Controller
         // Сохранение модели
         $model->fill($data);
 
-        // Если сохранение неуспешно - удалить сохраненные изображения 
+        // Если сохранение неуспешно - удалить сохраненные изображения
         if (!$model->save()) {
-            $fileProc->deleteImage($main_name);
+            $fileProc->deleteFile($main_name);
 
             if ($preview_image) {
-                $fileProc->deleteImage($preview_name);
+                $fileProc->deleteFile($preview_name);
             }
 
             throw new HttpException(500, 'Model save in db failed');
