@@ -20949,13 +20949,55 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
+/* harmony import */ var _components_index_PhotosList__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../components/index/PhotosList */ "./resources/js/components/index/PhotosList.vue");
+/* harmony import */ var _components_index_Pagination__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../components/index/Pagination */ "./resources/js/components/index/Pagination.vue");
+/* harmony import */ var _components_global_divided_EmailSection__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../components/global/divided/EmailSection */ "./resources/js/components/global/divided/EmailSection.vue");
+/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm-bundler.js");
+/* harmony import */ var _SiteSettings__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../SiteSettings */ "./resources/js/SiteSettings.js");
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); enumerableOnly && (symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? ownKeys(Object(source), !0).forEach(function (key) { _defineProperty(target, key, source[key]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)) : ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } return target; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+
+
+
+
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  components: {
+    EmailSection: _components_global_divided_EmailSection__WEBPACK_IMPORTED_MODULE_2__["default"],
+    Pagination: _components_index_Pagination__WEBPACK_IMPORTED_MODULE_1__["default"],
+    PhotosList: _components_index_PhotosList__WEBPACK_IMPORTED_MODULE_0__["default"]
+  },
+  computed: _objectSpread(_objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_4__.mapGetters)('photos', ['works', 'pagPage', 'totalPagesCount', 'isWorksLoading'])), {}, {
+    email: function email() {
+      return _SiteSettings__WEBPACK_IMPORTED_MODULE_3__["default"].email;
+    }
+  }),
+  methods: _objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_4__.mapActions)('photos', ['fetchWorks']))
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/pages/SinglePhoto.vue?vue&type=script&lang=js":
+/*!************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/pages/SinglePhoto.vue?vue&type=script&lang=js ***!
+  \************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
 /* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
 /* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _components_index_PhotosList__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../components/index/PhotosList */ "./resources/js/components/index/PhotosList.vue");
-/* harmony import */ var _components_index_Pagination__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../components/index/Pagination */ "./resources/js/components/index/Pagination.vue");
-/* harmony import */ var _components_global_divided_EmailSection__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../components/global/divided/EmailSection */ "./resources/js/components/global/divided/EmailSection.vue");
-/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm-bundler.js");
-/* harmony import */ var _SiteSettings__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../SiteSettings */ "./resources/js/SiteSettings.js");
+/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm-bundler.js");
+/* harmony import */ var _components_singleP_ImageSlider__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../components/singleP/ImageSlider */ "./resources/js/components/singleP/ImageSlider.vue");
+/* harmony import */ var _components_singleP_PortfolioInfo__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../components/singleP/PortfolioInfo */ "./resources/js/components/singleP/PortfolioInfo.vue");
+/* harmony import */ var _components_singleP_ProjectsPagination__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../components/singleP/ProjectsPagination */ "./resources/js/components/singleP/ProjectsPagination.vue");
 function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); enumerableOnly && (symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
 
 function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? ownKeys(Object(source), !0).forEach(function (key) { _defineProperty(target, key, source[key]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)) : ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } return target; }
@@ -20972,12 +21014,11 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
 
 
-
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   components: {
-    EmailSection: _components_global_divided_EmailSection__WEBPACK_IMPORTED_MODULE_3__["default"],
-    Pagination: _components_index_Pagination__WEBPACK_IMPORTED_MODULE_2__["default"],
-    PhotosList: _components_index_PhotosList__WEBPACK_IMPORTED_MODULE_1__["default"]
+    ProjectsPagination: _components_singleP_ProjectsPagination__WEBPACK_IMPORTED_MODULE_3__["default"],
+    PortfolioInfo: _components_singleP_PortfolioInfo__WEBPACK_IMPORTED_MODULE_2__["default"],
+    ImageSlider: _components_singleP_ImageSlider__WEBPACK_IMPORTED_MODULE_1__["default"]
   },
   created: function created() {
     var _this = this;
@@ -20987,13 +21028,12 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         while (1) {
           switch (_context.prev = _context.next) {
             case 0:
-              if (!(_this.works.length == 0)) {
-                _context.next = 3;
-                break;
-              }
-
+              // Scroll to top of body
+              $("body,html").animate({
+                scrollTop: 0
+              }, 500);
               _context.next = 3;
-              return _this.fetchWorks();
+              return _this.fetchWorkById(_this.$route.params.id);
 
             case 3:
             case "end":
@@ -21003,58 +21043,30 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       }, _callee);
     }))();
   },
-  computed: _objectSpread(_objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_5__.mapGetters)('photos', ['works', 'pagPage', 'totalPagesCount', 'isWorksLoading'])), {}, {
-    email: function email() {
-      return _SiteSettings__WEBPACK_IMPORTED_MODULE_4__["default"].email;
-    }
-  }),
-  methods: _objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_5__.mapActions)('photos', ['fetchWorks']))
-});
-
-/***/ }),
-
-/***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/pages/SinglePhoto.vue?vue&type=script&lang=js":
-/*!************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/pages/SinglePhoto.vue?vue&type=script&lang=js ***!
-  \************************************************************************************************************************************************************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
-/* harmony export */ });
-/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm-bundler.js");
-/* harmony import */ var _components_singleP_ImageSlider__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../components/singleP/ImageSlider */ "./resources/js/components/singleP/ImageSlider.vue");
-/* harmony import */ var _components_singleP_PortfolioInfo__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../components/singleP/PortfolioInfo */ "./resources/js/components/singleP/PortfolioInfo.vue");
-/* harmony import */ var _components_singleP_ProjectsPagination__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../components/singleP/ProjectsPagination */ "./resources/js/components/singleP/ProjectsPagination.vue");
-function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); enumerableOnly && (symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
-
-function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? ownKeys(Object(source), !0).forEach(function (key) { _defineProperty(target, key, source[key]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)) : ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } return target; }
-
-function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-
-
-
-
-
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
-  components: {
-    ProjectsPagination: _components_singleP_ProjectsPagination__WEBPACK_IMPORTED_MODULE_2__["default"],
-    PortfolioInfo: _components_singleP_PortfolioInfo__WEBPACK_IMPORTED_MODULE_1__["default"],
-    ImageSlider: _components_singleP_ImageSlider__WEBPACK_IMPORTED_MODULE_0__["default"]
-  },
-  created: function created() {
-    this.fetchWorkById(this.$route.params.id);
-  },
-  computed: _objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_3__.mapGetters)('photos', ['single', 'singlePagination'])),
-  methods: _objectSpread(_objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_3__.mapActions)('photos', ['fetchWorkById'])), {}, {
+  computed: _objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_4__.mapGetters)("photos", ["single", "singlePagination"])),
+  methods: _objectSpread(_objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_4__.mapActions)("photos", ["fetchWorkById"])), {}, {
     fetchSingleByPagination: function fetchSingleByPagination(work_id) {
-      this.fetchWorkById(work_id); // Scroll to top of body
+      var _this2 = this;
 
-      $('body,html').animate({
-        scrollTop: 0
-      }, 500);
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee2() {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee2$(_context2) {
+          while (1) {
+            switch (_context2.prev = _context2.next) {
+              case 0:
+                // Scroll to top of body
+                $("body,html").animate({
+                  scrollTop: 0
+                }, 500);
+                _context2.next = 3;
+                return _this2.fetchWorkById(work_id);
+
+              case 3:
+              case "end":
+                return _context2.stop();
+            }
+          }
+        }, _callee2);
+      }))();
     }
   })
 });
@@ -21138,7 +21150,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
                   return _this.CreateCommentSuccess = "Your comment has been create successfully";
                 })["catch"](function (error) {
                   if (error.response.status == 429) {
-                    _this.CreateCommentFailed = "Comment create limit exceeded. Wait " + error.response.headers['retry-after'] + ' seconds';
+                    _this.CreateCommentFailed = "Comment create limit exceeded. Wait " + error.response.headers["retry-after"] + " seconds";
                   } else {
                     _this.CreateCommentFailed = "Oops, something wrong";
                   }
@@ -21161,10 +21173,14 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         while (1) {
           switch (_context2.prev = _context2.next) {
             case 0:
-              _context2.next = 2;
+              // Scroll to top of body
+              $("body,html").animate({
+                scrollTop: 0
+              }, 500);
+              _context2.next = 3;
               return _this2.fetchPostById(_this2.$route.params.id);
 
-            case 2:
+            case 3:
             case "end":
               return _context2.stop();
           }
@@ -21223,10 +21239,14 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         while (1) {
           switch (_context.prev = _context.next) {
             case 0:
-              _context.next = 2;
+              // Scroll to top of body
+              $("body,html").animate({
+                scrollTop: 0
+              }, 500);
+              _context.next = 3;
               return _this.fetchWorkById(_this.$route.params.id);
 
-            case 2:
+            case 3:
             case "end":
               return _context.stop();
           }
@@ -21234,14 +21254,30 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       }, _callee);
     }))();
   },
-  computed: _objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_4__.mapGetters)('videos', ['single', 'singlePagination'])),
-  methods: _objectSpread(_objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_4__.mapActions)('videos', ['fetchWorkById'])), {}, {
+  computed: _objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_4__.mapGetters)("videos", ["single", "singlePagination"])),
+  methods: _objectSpread(_objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_4__.mapActions)("videos", ["fetchWorkById"])), {}, {
     fetchSingleByPagination: function fetchSingleByPagination(work_id) {
-      this.fetchWorkById(work_id); // Scroll to top of body
+      var _this2 = this;
 
-      $('body,html').animate({
-        scrollTop: 0
-      }, 500);
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee2() {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee2$(_context2) {
+          while (1) {
+            switch (_context2.prev = _context2.next) {
+              case 0:
+                // Scroll to top of body
+                $("body,html").animate({
+                  scrollTop: 0
+                }, 500);
+                _context2.next = 3;
+                return _this2.fetchWorkById(work_id);
+
+              case 3:
+              case "end":
+                return _context2.stop();
+            }
+          }
+        }, _callee2);
+      }))();
     }
   })
 });
@@ -21275,13 +21311,11 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
-/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _components_videosP_VideosList__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../components/videosP/VideosList */ "./resources/js/components/videosP/VideosList.vue");
-/* harmony import */ var _components_index_Pagination__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../components/index/Pagination */ "./resources/js/components/index/Pagination.vue");
-/* harmony import */ var _components_global_divided_EmailSection__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../components/global/divided/EmailSection */ "./resources/js/components/global/divided/EmailSection.vue");
-/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm-bundler.js");
-/* harmony import */ var _SiteSettings__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../SiteSettings */ "./resources/js/SiteSettings.js");
+/* harmony import */ var _components_videosP_VideosList__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../components/videosP/VideosList */ "./resources/js/components/videosP/VideosList.vue");
+/* harmony import */ var _components_index_Pagination__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../components/index/Pagination */ "./resources/js/components/index/Pagination.vue");
+/* harmony import */ var _components_global_divided_EmailSection__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../components/global/divided/EmailSection */ "./resources/js/components/global/divided/EmailSection.vue");
+/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm-bundler.js");
+/* harmony import */ var _SiteSettings__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../SiteSettings */ "./resources/js/SiteSettings.js");
 function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); enumerableOnly && (symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
 
 function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? ownKeys(Object(source), !0).forEach(function (key) { _defineProperty(target, key, source[key]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)) : ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } return target; }
@@ -21290,51 +21324,21 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
 
 
-function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
-
-function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
-
-
-
 
 
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   components: {
-    EmailSection: _components_global_divided_EmailSection__WEBPACK_IMPORTED_MODULE_3__["default"],
-    Pagination: _components_index_Pagination__WEBPACK_IMPORTED_MODULE_2__["default"],
-    VideosList: _components_videosP_VideosList__WEBPACK_IMPORTED_MODULE_1__["default"]
+    EmailSection: _components_global_divided_EmailSection__WEBPACK_IMPORTED_MODULE_2__["default"],
+    Pagination: _components_index_Pagination__WEBPACK_IMPORTED_MODULE_1__["default"],
+    VideosList: _components_videosP_VideosList__WEBPACK_IMPORTED_MODULE_0__["default"]
   },
-  created: function created() {
-    var _this = this;
-
-    return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee() {
-      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee$(_context) {
-        while (1) {
-          switch (_context.prev = _context.next) {
-            case 0:
-              if (!(_this.works.length == 0)) {
-                _context.next = 3;
-                break;
-              }
-
-              _context.next = 3;
-              return _this.fetchWorks();
-
-            case 3:
-            case "end":
-              return _context.stop();
-          }
-        }
-      }, _callee);
-    }))();
-  },
-  computed: _objectSpread(_objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_5__.mapGetters)('videos', ['works', 'pagPage', 'totalPagesCount', 'isWorksLoading'])), {}, {
+  computed: _objectSpread(_objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_4__.mapGetters)('videos', ['works', 'pagPage', 'totalPagesCount', 'isWorksLoading'])), {}, {
     email: function email() {
-      return _SiteSettings__WEBPACK_IMPORTED_MODULE_4__["default"].email;
+      return _SiteSettings__WEBPACK_IMPORTED_MODULE_3__["default"].email;
     }
   }),
-  methods: _objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_5__.mapActions)('videos', ['fetchWorks']))
+  methods: _objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_4__.mapActions)('videos', ['fetchWorks']))
 });
 
 /***/ }),

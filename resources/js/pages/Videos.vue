@@ -33,12 +33,6 @@ import siteSettings from "../SiteSettings";
 export default {
     components: {EmailSection, Pagination, VideosList},
 
-    async created() {
-        if (this.works.length == 0) {
-            await this.fetchWorks();
-        }
-    },
-
     computed: {
         ...mapGetters('videos', ['works', 'pagPage', 'totalPagesCount', 'isWorksLoading']),
 

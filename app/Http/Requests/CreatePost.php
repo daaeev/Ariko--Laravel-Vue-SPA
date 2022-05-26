@@ -15,7 +15,7 @@ class CreatePost extends ValidationWithFailedValidationMethod
             'title' => 'required|string|max:255',
             'content' => 'required|string',
             'main_image' => 'required|image',
-            'preview_image' => 'image',
+            'preview_image' => 'nullable|image',
         ];
     }
 }

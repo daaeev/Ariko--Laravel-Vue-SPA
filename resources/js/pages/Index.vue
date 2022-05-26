@@ -33,12 +33,6 @@ import siteSettings from "../SiteSettings";
 export default {
     components: {EmailSection, Pagination, PhotosList},
 
-    async created() {
-        if (this.works.length == 0) {
-            await this.fetchWorks();
-        }
-    },
-
     computed: {
         ...mapGetters('photos', ['works', 'pagPage', 'totalPagesCount', 'isWorksLoading']),
 

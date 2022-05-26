@@ -28,7 +28,7 @@ class PostController extends Controller
         $fileProc->disk('public')->directory('posts_previews');
 
         $main_image = $data['main_image'];
-        $preview_image = $validate->validated('preview_image');
+        $preview_image = $data['preview_image'] ?? false;
 
         $fnGen = app(FileNameGeneratorInterface::class);
 
@@ -43,6 +43,8 @@ class PostController extends Controller
             $preview_name = $fileProc->saveImage($preview_image, $fnGen);
 
             if (!$preview_name) {
+                $fileProc->deleteImage($main_name);
+
                 throw new HttpException(500, 'Preview image save in LS failed');
             }
         }
