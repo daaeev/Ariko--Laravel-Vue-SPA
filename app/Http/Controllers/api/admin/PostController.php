@@ -72,4 +72,34 @@ class PostController extends Controller
 
         return response()->json($model);
     }
+
+    /**
+     * Удаление поста
+     *
+     * @param Post $model
+     * @param FileProcessingInterface $fileProc
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function deletePost(Post $model, FileProcessingInterface $fileProc)
+    {
+        $model_id = $model->id;
+        $main_image = $model->main_image;
+        $preview_image = $model->preview_image;
+
+        $fileProc->disk('public')->directory('posts_previews');
+
+        if (!$fileProc->deleteFile($main_image)) {
+            throw new HttpException(500, 'Main image delete failed');
+        }
+
+        if (!empty($preview_image) && !$fileProc->deleteFile($preview_image)) {
+            throw new HttpException(500, 'Preview image delete failed');
+        }
+
+        if (!$model->delete()) {
+            throw new HttpException(500, 'Previews deleted, but model delete failed');
+        }
+
+        return response()->json(['id' => $model_id]);
+    }
 }

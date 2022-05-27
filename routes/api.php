@@ -71,6 +71,7 @@ Route::middleware('auth')->group(function () {
     // ---USER---
 
         Route::post('/user', [UserController::class, 'create'])->name('user.create');
+        Route::delete('/user/{model}', [UserController::class, 'deleteUser'])->name('user.delete');
 
     // !!!USER!!!
 
@@ -78,18 +79,21 @@ Route::middleware('auth')->group(function () {
 
         Route::post('/works/photos', [AdminPhotoController::class, 'createWork'])->name('works.photos.create');
         Route::post('/works/photos/images', [AdminPhotoController::class, 'addImagesToWork'])->name('works.photos.images.add');
+        Route::delete('/works/photos/{model}', [AdminPhotoController::class, 'deleteWork'])->name('works.photos.delete');
 
     // !!!PHOTOS WORK!!!
 
     // ---POST---
 
         Route::post('/post', [AdminPostController::class, 'createPost'])->name('post.create');
+        Route::delete('/post/{model}', [AdminPostController::class, 'deletePost'])->name('post.delete');
 
     // !!!POST!!!
 
     // ---VIDEOS WORK---
 
         Route::post('/works/video', [AdminVideoWorkController::class, 'createWork'])->name('works.videos.create');
+        Route::delete('/works/videos/{model}', [AdminVideoWorkController::class, 'deleteWork'])->name('works.videos.delete');
 
     // !!!VIDEOS WORK!!!
 });

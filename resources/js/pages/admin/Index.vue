@@ -20,6 +20,25 @@
             <div class="col-md-2">
                 <dialog-button v-model:show="createVideoWorkShow">Create video work</dialog-button>
             </div>
+
+            <div class="col-md-2">
+                <dialog-button v-model:show="deletePhotoWorkShow">Delete photo work</dialog-button>
+            </div>
+
+        </div>
+
+        <div class="row mt-5">
+            <div class="col-md-2">
+                <dialog-button v-model:show="deleteVideoWorkShow">Delete video work</dialog-button>
+            </div>
+
+            <div class="col-md-2">
+                <dialog-button v-model:show="deletePostShow">Delete post</dialog-button>
+            </div>
+
+            <div class="col-md-2">
+                <dialog-button v-model:show="deleteUserShow">Delete user</dialog-button>
+            </div>
         </div>
     </div>
 
@@ -53,6 +72,30 @@
             <alert v-if="createVideoWorkFailed" :type="'danger'">{{createVideoWorkFailed}}</alert>
             <create-video-work-form @submit="submitCreateVideoWorkForm"></create-video-work-form>
         </my-dialog>
+
+        <my-dialog v-model:show="deletePhotoWorkShow">
+            <alert v-if="deletePhotoWorkSuccess" :type="'success'">{{deletePhotoWorkSuccess}}</alert>
+            <alert v-if="deletePhotoWorkFailed" :type="'danger'">{{deletePhotoWorkFailed}}</alert>
+            <delete-form @submit="submitDeletePhotoWorkForm"></delete-form>
+        </my-dialog>
+
+        <my-dialog v-model:show="deletePostShow">
+            <alert v-if="deletePostSuccess" :type="'success'">{{deletePostSuccess}}</alert>
+            <alert v-if="deletePostFailed" :type="'danger'">{{deletePostFailed}}</alert>
+            <delete-form @submit="submitDeletePostForm"></delete-form>
+        </my-dialog>
+
+        <my-dialog v-model:show="deleteVideoWorkShow">
+            <alert v-if="deleteVideoWorkSuccess" :type="'success'">{{deleteVideoWorkSuccess}}</alert>
+            <alert v-if="deleteVideoWorkFailed" :type="'danger'">{{deleteVideoWorkFailed}}</alert>
+            <delete-form @submit="submitDeleteVideoWorkForm"></delete-form>
+        </my-dialog>
+
+        <my-dialog v-model:show="deleteUserShow">
+            <alert v-if="deleteUserSuccess" :type="'success'">{{deleteUserSuccess}}</alert>
+            <alert v-if="deleteUserFailed" :type="'danger'">{{deleteUserFailed}}</alert>
+            <delete-form @submit="submitDeleteUserForm"></delete-form>
+        </my-dialog>
     <!-- Dialogs -->
 </template>
 
@@ -69,6 +112,7 @@ import AddImagesToWorkForm from '../../components/admin/crudforms/AddImagesToWor
 import CreatePostForm from '../../components/admin/crudforms/CreatePostForm.vue'
 import axiosVideoWorkAPI from '../../logic/api/crud/VideoWork';
 import CreateVideoWorkForm from '../../components/admin/crudforms/CreateVideoWorkForm.vue';
+import DeleteForm from '../../components/admin/crudforms/DeleteByIdForm.vue';
 
 export default {
     components: {
@@ -79,7 +123,8 @@ export default {
         CreatePhotoWorkForm,
         AddImagesToWorkForm,
         CreatePostForm,
-        CreateVideoWorkForm
+        CreateVideoWorkForm,
+        DeleteForm
     },
 
     data() {
@@ -108,10 +153,106 @@ export default {
             createVideoWorkShow: false,
             createVideoWorkSuccess: '',
             createVideoWorkFailed: '',
+
+            // DELETE PHOTO WORK FORM
+            deletePhotoWorkShow: false,
+            deletePhotoWorkSuccess: '',
+            deletePhotoWorkFailed: '',
+
+            // DELETE POST FORM
+            deletePostShow: false,
+            deletePostSuccess: '',
+            deletePostFailed: '',
+
+            // DELETE VIDEO WORK FORM
+            deleteVideoWorkShow: false,
+            deleteVideoWorkSuccess: '',
+            deleteVideoWorkFailed: '',
+
+            // DELETE USER FORM
+            deleteUserShow: false,
+            deleteUserSuccess: '',
+            deleteUserFailed: '',
         };
     },
 
     methods: {
+        // Форма удаления пользователя
+        async submitDeleteUserForm(formData) {
+            this.deleteUserSuccess = '';
+            this.deleteUserFailed = '';
+
+            const user_id = formData.get('id');
+
+            await axiosUserAPI.deleteUser(
+                user_id,
+                () => this.deleteUserSuccess = 'User deleted success',
+                axiosError => this.deleteUserFailed = axiosError.response?.data.message ?? 'User deleted failed',
+            );
+
+            setTimeout(() => {
+                this.deleteUserSuccess = '';
+                this.deleteUserFailed = '';
+            }, 5000);
+        },
+
+        // Форма удаления поста
+        async submitDeletePostForm(formData) {
+            this.deletePostSuccess = '';
+            this.deletePostFailed = '';
+
+            const post_id = formData.get('id');
+
+            await axiosPostAPI.deletePost(
+                post_id,
+                () => this.deletePostSuccess = 'Post deleted success',
+                axiosError => this.deletePostFailed = axiosError.response?.data.message ?? 'Post deleted failed',
+            );
+
+            setTimeout(() => {
+                this.deletePostSuccess = '';
+                this.deletePostFailed = '';
+            }, 5000);
+        },
+
+        // Форма удаления работы (видео)
+        async submitDeleteVideoWorkForm(formData) {
+            this.deleteVideoWorkSuccess = '';
+            this.deleteVideoWorkFailed = '';
+
+            const work_id = formData.get('id');
+
+            await axiosVideoWorkAPI.deleteWork(
+                work_id,
+                () => this.deleteVideoWorkSuccess = 'Work deleted success',
+                axiosError => this.deleteVideoWorkFailed = axiosError.response?.data.message ?? 'Work deleted failed',
+            );
+
+            setTimeout(() => {
+                this.deleteVideoWorkSuccess = '';
+                this.deleteVideoWorkFailed = '';
+            }, 5000);
+        },
+
+        // Форма удаления работы (фотографии)
+        async submitDeletePhotoWorkForm(formData) {
+            this.deletePhotoWorkSuccess = '';
+            this.deletePhotoWorkFailed = '';
+
+            const work_id = formData.get('id');
+
+            await axiosPhotoWorkAPI.deleteWork(
+                work_id,
+                () => this.deletePhotoWorkSuccess = 'Work deleted success',
+                axiosError => this.deletePhotoWorkFailed = axiosError.response?.data.message ?? 'Work deleted failed',
+            );
+
+            setTimeout(() => {
+                this.deletePhotoWorkSuccess = '';
+                this.deletePhotoWorkFailed = '';
+            }, 5000);
+        },
+
         // Форма создание пользователя
         async submitCreateUserForm(formData)
         {

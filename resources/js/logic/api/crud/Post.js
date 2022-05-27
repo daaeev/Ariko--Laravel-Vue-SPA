@@ -12,5 +12,22 @@ export default {
         await axios.post('/post', formData)
             .then(thenHandler)
             .catch(catchHandler);
+    },
+
+    /**
+     * Отправка запроса на удаление поста
+     * 
+     * @param post_id 
+     * @param thenHandler 
+     * @param catchHandler 
+     */
+    async deletePost(
+        post_id,
+        thenHandler = null,
+        catchHandler = null
+    ) {
+        await axios.delete('/post/' + post_id)
+            .then(thenHandler)
+            .catch(catchHandler);
     }
 };

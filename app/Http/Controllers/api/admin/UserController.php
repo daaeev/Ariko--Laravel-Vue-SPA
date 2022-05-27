@@ -31,4 +31,21 @@ class UserController extends Controller
 
         throw new HttpException(500, 'Save in db failed');
     }
+
+    /**
+     * Удаление пользователя
+     *
+     * @param User $model
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function deleteUser(User $model)
+    {
+        $model_id = $model->id;
+
+        if (!$model->delete()) {
+            throw new HttpException(500, 'Model delete failed');
+        }
+
+        return response()->json(['id' => $model_id]);
+    }
 }

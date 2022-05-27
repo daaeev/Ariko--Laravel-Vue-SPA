@@ -20069,6 +20069,47 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/admin/crudforms/DeleteByIdForm.vue?vue&type=script&lang=js":
+/*!************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/admin/crudforms/DeleteByIdForm.vue?vue&type=script&lang=js ***!
+  \************************************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  data: function data() {
+    return {
+      id: ''
+    };
+  },
+  emits: ['submit'],
+  methods: {
+    submitForm: function submitForm() {
+      var hasErrors = false;
+      document.querySelector('.id-errors').innerHTML = '';
+
+      if (!this.id) {
+        document.querySelector('.id-errors').append('ID field is required');
+        hasErrors = true;
+      }
+
+      if (hasErrors) {
+        return;
+      }
+
+      var formData = new FormData(document.querySelector('#delete-form'));
+      this.$emit('submit', formData);
+      this.id = '';
+    }
+  }
+});
+
+/***/ }),
+
 /***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/admin/login/loginForm.vue?vue&type=script&lang=js":
 /*!***************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/admin/login/loginForm.vue?vue&type=script&lang=js ***!
@@ -21460,11 +21501,13 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _components_admin_crudforms_CreatePostForm_vue__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ../../components/admin/crudforms/CreatePostForm.vue */ "./resources/js/components/admin/crudforms/CreatePostForm.vue");
 /* harmony import */ var _logic_api_crud_VideoWork__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ../../logic/api/crud/VideoWork */ "./resources/js/logic/api/crud/VideoWork.js");
 /* harmony import */ var _components_admin_crudforms_CreateVideoWorkForm_vue__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ../../components/admin/crudforms/CreateVideoWorkForm.vue */ "./resources/js/components/admin/crudforms/CreateVideoWorkForm.vue");
+/* harmony import */ var _components_admin_crudforms_DeleteByIdForm_vue__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ../../components/admin/crudforms/DeleteByIdForm.vue */ "./resources/js/components/admin/crudforms/DeleteByIdForm.vue");
 
 
 function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
 
 function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+
 
 
 
@@ -21487,7 +21530,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     CreatePhotoWorkForm: _components_admin_crudforms_CreatePhotoWorkForm_vue__WEBPACK_IMPORTED_MODULE_8__["default"],
     AddImagesToWorkForm: _components_admin_crudforms_AddImagesToWorkForm_vue__WEBPACK_IMPORTED_MODULE_9__["default"],
     CreatePostForm: _components_admin_crudforms_CreatePostForm_vue__WEBPACK_IMPORTED_MODULE_10__["default"],
-    CreateVideoWorkForm: _components_admin_crudforms_CreateVideoWorkForm_vue__WEBPACK_IMPORTED_MODULE_12__["default"]
+    CreateVideoWorkForm: _components_admin_crudforms_CreateVideoWorkForm_vue__WEBPACK_IMPORTED_MODULE_12__["default"],
+    DeleteForm: _components_admin_crudforms_DeleteByIdForm_vue__WEBPACK_IMPORTED_MODULE_13__["default"]
   },
   data: function data() {
     return {
@@ -21510,37 +21554,55 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       // CREATE VIDEO WORK FORM
       createVideoWorkShow: false,
       createVideoWorkSuccess: '',
-      createVideoWorkFailed: ''
+      createVideoWorkFailed: '',
+      // DELETE PHOTO WORK FORM
+      deletePhotoWorkShow: false,
+      deletePhotoWorkSuccess: '',
+      deletePhotoWorkFailed: '',
+      // DELETE POST FORM
+      deletePostShow: false,
+      deletePostSuccess: '',
+      deletePostFailed: '',
+      // DELETE VIDEO WORK FORM
+      deleteVideoWorkShow: false,
+      deleteVideoWorkSuccess: '',
+      deleteVideoWorkFailed: '',
+      // DELETE USER FORM
+      deleteUserShow: false,
+      deleteUserSuccess: '',
+      deleteUserFailed: ''
     };
   },
   methods: {
-    // Форма создание пользователя
-    submitCreateUserForm: function submitCreateUserForm(formData) {
+    // Форма удаления пользователя
+    submitDeleteUserForm: function submitDeleteUserForm(formData) {
       var _this = this;
 
       return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee() {
+        var user_id;
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee$(_context) {
           while (1) {
             switch (_context.prev = _context.next) {
               case 0:
-                _this.createUserSuccess = '';
-                _this.createUserFailed = '';
-                _context.next = 4;
-                return _logic_api_crud_User__WEBPACK_IMPORTED_MODULE_5__["default"].createUser(formData, function () {
-                  return _this.createUserSuccess = 'User create success';
+                _this.deleteUserSuccess = '';
+                _this.deleteUserFailed = '';
+                user_id = formData.get('id');
+                _context.next = 5;
+                return _logic_api_crud_User__WEBPACK_IMPORTED_MODULE_5__["default"].deleteUser(user_id, function () {
+                  return _this.deleteUserSuccess = 'User deleted success';
                 }, function (axiosError) {
                   var _axiosError$response$, _axiosError$response;
 
-                  return _this.createUserFailed = (_axiosError$response$ = (_axiosError$response = axiosError.response) === null || _axiosError$response === void 0 ? void 0 : _axiosError$response.data.message) !== null && _axiosError$response$ !== void 0 ? _axiosError$response$ : 'User create failed';
+                  return _this.deleteUserFailed = (_axiosError$response$ = (_axiosError$response = axiosError.response) === null || _axiosError$response === void 0 ? void 0 : _axiosError$response.data.message) !== null && _axiosError$response$ !== void 0 ? _axiosError$response$ : 'User deleted failed';
                 });
 
-              case 4:
+              case 5:
                 setTimeout(function () {
-                  _this.createUserSuccess = '';
-                  _this.createUserFailed = '';
+                  _this.deleteUserSuccess = '';
+                  _this.deleteUserFailed = '';
                 }, 5000);
 
-              case 5:
+              case 6:
               case "end":
                 return _context.stop();
             }
@@ -21548,33 +21610,35 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         }, _callee);
       }))();
     },
-    // Форма создания работы (фотографии)
-    submitCreatePhotoWorkForm: function submitCreatePhotoWorkForm(formData) {
+    // Форма удаления поста
+    submitDeletePostForm: function submitDeletePostForm(formData) {
       var _this2 = this;
 
       return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee2() {
+        var post_id;
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee2$(_context2) {
           while (1) {
             switch (_context2.prev = _context2.next) {
               case 0:
-                _this2.createPhotoWorkSuccess = '';
-                _this2.createPhotoWorkFailed = '';
-                _context2.next = 4;
-                return _logic_api_crud_PhotoWork__WEBPACK_IMPORTED_MODULE_7__["default"].createPhotoWork(formData, function (axiosRes) {
-                  return _this2.createPhotoWorkSuccess = 'Work create success (id: ' + axiosRes.data.id + ')';
+                _this2.deletePostSuccess = '';
+                _this2.deletePostFailed = '';
+                post_id = formData.get('id');
+                _context2.next = 5;
+                return _logic_api_crud_Post__WEBPACK_IMPORTED_MODULE_6__["default"].deletePost(post_id, function () {
+                  return _this2.deletePostSuccess = 'Post deleted success';
                 }, function (axiosError) {
                   var _axiosError$response$2, _axiosError$response2;
 
-                  return _this2.createPhotoWorkFailed = (_axiosError$response$2 = (_axiosError$response2 = axiosError.response) === null || _axiosError$response2 === void 0 ? void 0 : _axiosError$response2.data.message) !== null && _axiosError$response$2 !== void 0 ? _axiosError$response$2 : 'Work create failed';
+                  return _this2.deletePostFailed = (_axiosError$response$2 = (_axiosError$response2 = axiosError.response) === null || _axiosError$response2 === void 0 ? void 0 : _axiosError$response2.data.message) !== null && _axiosError$response$2 !== void 0 ? _axiosError$response$2 : 'Post deleted failed';
                 });
 
-              case 4:
+              case 5:
                 setTimeout(function () {
-                  _this2.createPhotoWorkSuccess = '';
-                  _this2.createPhotoWorkFailed = '';
+                  _this2.deletePostSuccess = '';
+                  _this2.deletePostFailed = '';
                 }, 5000);
 
-              case 5:
+              case 6:
               case "end":
                 return _context2.stop();
             }
@@ -21582,33 +21646,35 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         }, _callee2);
       }))();
     },
-    // Форма для добавления фотографий к работе
-    submitAddImagesToWorkForm: function submitAddImagesToWorkForm(formData) {
+    // Форма удаления работы (видео)
+    submitDeleteVideoWorkForm: function submitDeleteVideoWorkForm(formData) {
       var _this3 = this;
 
       return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee3() {
+        var work_id;
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee3$(_context3) {
           while (1) {
             switch (_context3.prev = _context3.next) {
               case 0:
-                _this3.addImagesSuccess = '';
-                _this3.addImagesFailed = '';
-                _context3.next = 4;
-                return _logic_api_crud_PhotoWork__WEBPACK_IMPORTED_MODULE_7__["default"].addImagesToWork(formData, function () {
-                  return _this3.addImagesSuccess = 'Photos added success';
+                _this3.deleteVideoWorkSuccess = '';
+                _this3.deleteVideoWorkFailed = '';
+                work_id = formData.get('id');
+                _context3.next = 5;
+                return _logic_api_crud_VideoWork__WEBPACK_IMPORTED_MODULE_11__["default"].deleteWork(work_id, function () {
+                  return _this3.deleteVideoWorkSuccess = 'Work deleted success';
                 }, function (axiosError) {
                   var _axiosError$response$3, _axiosError$response3;
 
-                  return _this3.addImagesFailed = (_axiosError$response$3 = (_axiosError$response3 = axiosError.response) === null || _axiosError$response3 === void 0 ? void 0 : _axiosError$response3.data.message) !== null && _axiosError$response$3 !== void 0 ? _axiosError$response$3 : 'Photos add failed';
+                  return _this3.deleteVideoWorkFailed = (_axiosError$response$3 = (_axiosError$response3 = axiosError.response) === null || _axiosError$response3 === void 0 ? void 0 : _axiosError$response3.data.message) !== null && _axiosError$response$3 !== void 0 ? _axiosError$response$3 : 'Work deleted failed';
                 });
 
-              case 4:
+              case 5:
                 setTimeout(function () {
-                  _this3.addImagesSuccess = '';
-                  _this3.addImagesFailed = '';
+                  _this3.deleteVideoWorkSuccess = '';
+                  _this3.deleteVideoWorkFailed = '';
                 }, 5000);
 
-              case 5:
+              case 6:
               case "end":
                 return _context3.stop();
             }
@@ -21616,33 +21682,35 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         }, _callee3);
       }))();
     },
-    // Форма создания поста
-    submitCreatePostForm: function submitCreatePostForm(formData) {
+    // Форма удаления работы (фотографии)
+    submitDeletePhotoWorkForm: function submitDeletePhotoWorkForm(formData) {
       var _this4 = this;
 
       return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee4() {
+        var work_id;
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee4$(_context4) {
           while (1) {
             switch (_context4.prev = _context4.next) {
               case 0:
-                _this4.createPostSuccess = '';
-                _this4.createPostFailed = '';
-                _context4.next = 4;
-                return _logic_api_crud_Post__WEBPACK_IMPORTED_MODULE_6__["default"].createPost(formData, function () {
-                  return _this4.createPostSuccess = 'Photos added success';
+                _this4.deletePhotoWorkSuccess = '';
+                _this4.deletePhotoWorkFailed = '';
+                work_id = formData.get('id');
+                _context4.next = 5;
+                return _logic_api_crud_PhotoWork__WEBPACK_IMPORTED_MODULE_7__["default"].deleteWork(work_id, function () {
+                  return _this4.deletePhotoWorkSuccess = 'Work deleted success';
                 }, function (axiosError) {
                   var _axiosError$response$4, _axiosError$response4;
 
-                  return _this4.createPostFailed = (_axiosError$response$4 = (_axiosError$response4 = axiosError.response) === null || _axiosError$response4 === void 0 ? void 0 : _axiosError$response4.data.message) !== null && _axiosError$response$4 !== void 0 ? _axiosError$response$4 : 'Photos add failed';
+                  return _this4.deletePhotoWorkFailed = (_axiosError$response$4 = (_axiosError$response4 = axiosError.response) === null || _axiosError$response4 === void 0 ? void 0 : _axiosError$response4.data.message) !== null && _axiosError$response$4 !== void 0 ? _axiosError$response$4 : 'Work deleted failed';
                 });
 
-              case 4:
+              case 5:
                 setTimeout(function () {
-                  _this4.createPostSuccess = '';
-                  _this4.createPostFailed = '';
+                  _this4.deletePhotoWorkSuccess = '';
+                  _this4.deletePhotoWorkFailed = '';
                 }, 5000);
 
-              case 5:
+              case 6:
               case "end":
                 return _context4.stop();
             }
@@ -21650,8 +21718,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         }, _callee4);
       }))();
     },
-    // Форма создания работы (видео)
-    submitCreateVideoWorkForm: function submitCreateVideoWorkForm(formData) {
+    // Форма создание пользователя
+    submitCreateUserForm: function submitCreateUserForm(formData) {
       var _this5 = this;
 
       return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee5() {
@@ -21659,21 +21727,21 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
           while (1) {
             switch (_context5.prev = _context5.next) {
               case 0:
-                _this5.createVideoWorkSuccess = '';
-                _this5.createVideoWorkFailed = '';
+                _this5.createUserSuccess = '';
+                _this5.createUserFailed = '';
                 _context5.next = 4;
-                return _logic_api_crud_VideoWork__WEBPACK_IMPORTED_MODULE_11__["default"].createVideoWork(formData, function () {
-                  return _this5.createVideoWorkSuccess = 'Work create success';
+                return _logic_api_crud_User__WEBPACK_IMPORTED_MODULE_5__["default"].createUser(formData, function () {
+                  return _this5.createUserSuccess = 'User create success';
                 }, function (axiosError) {
                   var _axiosError$response$5, _axiosError$response5;
 
-                  return _this5.createVideoWorkFailed = (_axiosError$response$5 = (_axiosError$response5 = axiosError.response) === null || _axiosError$response5 === void 0 ? void 0 : _axiosError$response5.data.message) !== null && _axiosError$response$5 !== void 0 ? _axiosError$response$5 : 'Work create failed';
+                  return _this5.createUserFailed = (_axiosError$response$5 = (_axiosError$response5 = axiosError.response) === null || _axiosError$response5 === void 0 ? void 0 : _axiosError$response5.data.message) !== null && _axiosError$response$5 !== void 0 ? _axiosError$response$5 : 'User create failed';
                 });
 
               case 4:
                 setTimeout(function () {
-                  _this5.createVideoWorkSuccess = '';
-                  _this5.createVideoWorkFailed = '';
+                  _this5.createUserSuccess = '';
+                  _this5.createUserFailed = '';
                 }, 5000);
 
               case 5:
@@ -21682,6 +21750,142 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
             }
           }
         }, _callee5);
+      }))();
+    },
+    // Форма создания работы (фотографии)
+    submitCreatePhotoWorkForm: function submitCreatePhotoWorkForm(formData) {
+      var _this6 = this;
+
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee6() {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee6$(_context6) {
+          while (1) {
+            switch (_context6.prev = _context6.next) {
+              case 0:
+                _this6.createPhotoWorkSuccess = '';
+                _this6.createPhotoWorkFailed = '';
+                _context6.next = 4;
+                return _logic_api_crud_PhotoWork__WEBPACK_IMPORTED_MODULE_7__["default"].createPhotoWork(formData, function (axiosRes) {
+                  return _this6.createPhotoWorkSuccess = 'Work create success (id: ' + axiosRes.data.id + ')';
+                }, function (axiosError) {
+                  var _axiosError$response$6, _axiosError$response6;
+
+                  return _this6.createPhotoWorkFailed = (_axiosError$response$6 = (_axiosError$response6 = axiosError.response) === null || _axiosError$response6 === void 0 ? void 0 : _axiosError$response6.data.message) !== null && _axiosError$response$6 !== void 0 ? _axiosError$response$6 : 'Work create failed';
+                });
+
+              case 4:
+                setTimeout(function () {
+                  _this6.createPhotoWorkSuccess = '';
+                  _this6.createPhotoWorkFailed = '';
+                }, 5000);
+
+              case 5:
+              case "end":
+                return _context6.stop();
+            }
+          }
+        }, _callee6);
+      }))();
+    },
+    // Форма для добавления фотографий к работе
+    submitAddImagesToWorkForm: function submitAddImagesToWorkForm(formData) {
+      var _this7 = this;
+
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee7() {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee7$(_context7) {
+          while (1) {
+            switch (_context7.prev = _context7.next) {
+              case 0:
+                _this7.addImagesSuccess = '';
+                _this7.addImagesFailed = '';
+                _context7.next = 4;
+                return _logic_api_crud_PhotoWork__WEBPACK_IMPORTED_MODULE_7__["default"].addImagesToWork(formData, function () {
+                  return _this7.addImagesSuccess = 'Photos added success';
+                }, function (axiosError) {
+                  var _axiosError$response$7, _axiosError$response7;
+
+                  return _this7.addImagesFailed = (_axiosError$response$7 = (_axiosError$response7 = axiosError.response) === null || _axiosError$response7 === void 0 ? void 0 : _axiosError$response7.data.message) !== null && _axiosError$response$7 !== void 0 ? _axiosError$response$7 : 'Photos add failed';
+                });
+
+              case 4:
+                setTimeout(function () {
+                  _this7.addImagesSuccess = '';
+                  _this7.addImagesFailed = '';
+                }, 5000);
+
+              case 5:
+              case "end":
+                return _context7.stop();
+            }
+          }
+        }, _callee7);
+      }))();
+    },
+    // Форма создания поста
+    submitCreatePostForm: function submitCreatePostForm(formData) {
+      var _this8 = this;
+
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee8() {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee8$(_context8) {
+          while (1) {
+            switch (_context8.prev = _context8.next) {
+              case 0:
+                _this8.createPostSuccess = '';
+                _this8.createPostFailed = '';
+                _context8.next = 4;
+                return _logic_api_crud_Post__WEBPACK_IMPORTED_MODULE_6__["default"].createPost(formData, function () {
+                  return _this8.createPostSuccess = 'Photos added success';
+                }, function (axiosError) {
+                  var _axiosError$response$8, _axiosError$response8;
+
+                  return _this8.createPostFailed = (_axiosError$response$8 = (_axiosError$response8 = axiosError.response) === null || _axiosError$response8 === void 0 ? void 0 : _axiosError$response8.data.message) !== null && _axiosError$response$8 !== void 0 ? _axiosError$response$8 : 'Photos add failed';
+                });
+
+              case 4:
+                setTimeout(function () {
+                  _this8.createPostSuccess = '';
+                  _this8.createPostFailed = '';
+                }, 5000);
+
+              case 5:
+              case "end":
+                return _context8.stop();
+            }
+          }
+        }, _callee8);
+      }))();
+    },
+    // Форма создания работы (видео)
+    submitCreateVideoWorkForm: function submitCreateVideoWorkForm(formData) {
+      var _this9 = this;
+
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee9() {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee9$(_context9) {
+          while (1) {
+            switch (_context9.prev = _context9.next) {
+              case 0:
+                _this9.createVideoWorkSuccess = '';
+                _this9.createVideoWorkFailed = '';
+                _context9.next = 4;
+                return _logic_api_crud_VideoWork__WEBPACK_IMPORTED_MODULE_11__["default"].createVideoWork(formData, function () {
+                  return _this9.createVideoWorkSuccess = 'Work create success';
+                }, function (axiosError) {
+                  var _axiosError$response$9, _axiosError$response9;
+
+                  return _this9.createVideoWorkFailed = (_axiosError$response$9 = (_axiosError$response9 = axiosError.response) === null || _axiosError$response9 === void 0 ? void 0 : _axiosError$response9.data.message) !== null && _axiosError$response$9 !== void 0 ? _axiosError$response$9 : 'Work create failed';
+                });
+
+              case 4:
+                setTimeout(function () {
+                  _this9.createVideoWorkSuccess = '';
+                  _this9.createVideoWorkFailed = '';
+                }, 5000);
+
+              case 5:
+              case "end":
+                return _context9.stop();
+            }
+          }
+        }, _callee9);
       }))();
     }
   }
@@ -22573,6 +22777,64 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
   }, null, 512
   /* NEED_PATCH */
   ), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, $data.description]]), _hoisted_21]), _hoisted_22, _hoisted_23], 32
+  /* HYDRATE_EVENTS */
+  );
+}
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/admin/crudforms/DeleteByIdForm.vue?vue&type=template&id=6686190a":
+/*!****************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/admin/crudforms/DeleteByIdForm.vue?vue&type=template&id=6686190a ***!
+  \****************************************************************************************************************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "render": () => (/* binding */ render)
+/* harmony export */ });
+/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm-bundler.js");
+
+var _hoisted_1 = {
+  "class": "form-group mt-3"
+};
+
+var _hoisted_2 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", null, "Id", -1
+/* HOISTED */
+);
+
+var _hoisted_3 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+  "class": "text-danger help-block id-errors"
+}, null, -1
+/* HOISTED */
+);
+
+var _hoisted_4 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
+  type: "submit",
+  "class": "btn btn-primary"
+}, "Submit", -1
+/* HOISTED */
+);
+
+function render(_ctx, _cache, $props, $setup, $data, $options) {
+  return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("form", {
+    onSubmit: _cache[1] || (_cache[1] = (0,vue__WEBPACK_IMPORTED_MODULE_0__.withModifiers)(function () {
+      return $options.submitForm && $options.submitForm.apply($options, arguments);
+    }, ["prevent"])),
+    id: "delete-form"
+  }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_1, [_hoisted_2, (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
+    type: "numeric",
+    "class": "form-control",
+    placeholder: "ID",
+    required: "",
+    name: "id",
+    "onUpdate:modelValue": _cache[0] || (_cache[0] = function ($event) {
+      return $data.id = $event;
+    })
+  }, null, 512
+  /* NEED_PATCH */
+  ), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, $data.id]]), _hoisted_3]), _hoisted_4], 32
   /* HYDRATE_EVENTS */
   );
 }
@@ -24950,6 +25212,33 @@ var _hoisted_11 = {
 
 var _hoisted_12 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)("Create video work");
 
+var _hoisted_13 = {
+  "class": "col-md-2"
+};
+
+var _hoisted_14 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)("Delete photo work");
+
+var _hoisted_15 = {
+  "class": "row mt-5"
+};
+var _hoisted_16 = {
+  "class": "col-md-2"
+};
+
+var _hoisted_17 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)("Delete video work");
+
+var _hoisted_18 = {
+  "class": "col-md-2"
+};
+
+var _hoisted_19 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)("Delete post");
+
+var _hoisted_20 = {
+  "class": "col-md-2"
+};
+
+var _hoisted_21 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)("Delete user");
+
 function render(_ctx, _cache, $props, $setup, $data, $options) {
   var _component_dialog_button = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("dialog-button");
 
@@ -24966,6 +25255,8 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
   var _component_create_post_form = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("create-post-form");
 
   var _component_create_video_work_form = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("create-video-work-form");
+
+  var _component_delete_form = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("delete-form");
 
   return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_1, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_2, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_3, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_dialog_button, {
     show: $data.createUserShow,
@@ -25037,9 +25328,65 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
 
   }, 8
   /* PROPS */
+  , ["show"])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_13, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_dialog_button, {
+    show: $data.deletePhotoWorkShow,
+    "onUpdate:show": _cache[5] || (_cache[5] = function ($event) {
+      return $data.deletePhotoWorkShow = $event;
+    })
+  }, {
+    "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
+      return [_hoisted_14];
+    }),
+    _: 1
+    /* STABLE */
+
+  }, 8
+  /* PROPS */
+  , ["show"])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_15, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_16, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_dialog_button, {
+    show: $data.deleteVideoWorkShow,
+    "onUpdate:show": _cache[6] || (_cache[6] = function ($event) {
+      return $data.deleteVideoWorkShow = $event;
+    })
+  }, {
+    "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
+      return [_hoisted_17];
+    }),
+    _: 1
+    /* STABLE */
+
+  }, 8
+  /* PROPS */
+  , ["show"])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_18, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_dialog_button, {
+    show: $data.deletePostShow,
+    "onUpdate:show": _cache[7] || (_cache[7] = function ($event) {
+      return $data.deletePostShow = $event;
+    })
+  }, {
+    "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
+      return [_hoisted_19];
+    }),
+    _: 1
+    /* STABLE */
+
+  }, 8
+  /* PROPS */
+  , ["show"])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_20, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_dialog_button, {
+    show: $data.deleteUserShow,
+    "onUpdate:show": _cache[8] || (_cache[8] = function ($event) {
+      return $data.deleteUserShow = $event;
+    })
+  }, {
+    "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
+      return [_hoisted_21];
+    }),
+    _: 1
+    /* STABLE */
+
+  }, 8
+  /* PROPS */
   , ["show"])])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" Dialogs "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_my_dialog, {
     show: $data.createUserShow,
-    "onUpdate:show": _cache[5] || (_cache[5] = function ($event) {
+    "onUpdate:show": _cache[9] || (_cache[9] = function ($event) {
       return $data.createUserShow = $event;
     })
   }, {
@@ -25081,7 +25428,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
   /* PROPS */
   , ["show"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_my_dialog, {
     show: $data.createPhotoWorkShow,
-    "onUpdate:show": _cache[6] || (_cache[6] = function ($event) {
+    "onUpdate:show": _cache[10] || (_cache[10] = function ($event) {
       return $data.createPhotoWorkShow = $event;
     })
   }, {
@@ -25123,7 +25470,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
   /* PROPS */
   , ["show"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_my_dialog, {
     show: $data.addImagesToWorkShow,
-    "onUpdate:show": _cache[7] || (_cache[7] = function ($event) {
+    "onUpdate:show": _cache[11] || (_cache[11] = function ($event) {
       return $data.addImagesToWorkShow = $event;
     })
   }, {
@@ -25165,7 +25512,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
   /* PROPS */
   , ["show"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_my_dialog, {
     show: $data.createPostShow,
-    "onUpdate:show": _cache[8] || (_cache[8] = function ($event) {
+    "onUpdate:show": _cache[12] || (_cache[12] = function ($event) {
       return $data.createPostShow = $event;
     })
   }, {
@@ -25207,7 +25554,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
   /* PROPS */
   , ["show"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_my_dialog, {
     show: $data.createVideoWorkShow,
-    "onUpdate:show": _cache[9] || (_cache[9] = function ($event) {
+    "onUpdate:show": _cache[13] || (_cache[13] = function ($event) {
       return $data.createVideoWorkShow = $event;
     })
   }, {
@@ -25238,6 +25585,174 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
 
       })) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_create_video_work_form, {
         onSubmit: $options.submitCreateVideoWorkForm
+      }, null, 8
+      /* PROPS */
+      , ["onSubmit"])];
+    }),
+    _: 1
+    /* STABLE */
+
+  }, 8
+  /* PROPS */
+  , ["show"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_my_dialog, {
+    show: $data.deletePhotoWorkShow,
+    "onUpdate:show": _cache[14] || (_cache[14] = function ($event) {
+      return $data.deletePhotoWorkShow = $event;
+    })
+  }, {
+    "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
+      return [$data.deletePhotoWorkSuccess ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_alert, {
+        key: 0,
+        type: 'success'
+      }, {
+        "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
+          return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)((0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.deletePhotoWorkSuccess), 1
+          /* TEXT */
+          )];
+        }),
+        _: 1
+        /* STABLE */
+
+      })) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), $data.deletePhotoWorkFailed ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_alert, {
+        key: 1,
+        type: 'danger'
+      }, {
+        "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
+          return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)((0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.deletePhotoWorkFailed), 1
+          /* TEXT */
+          )];
+        }),
+        _: 1
+        /* STABLE */
+
+      })) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_delete_form, {
+        onSubmit: $options.submitDeletePhotoWorkForm
+      }, null, 8
+      /* PROPS */
+      , ["onSubmit"])];
+    }),
+    _: 1
+    /* STABLE */
+
+  }, 8
+  /* PROPS */
+  , ["show"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_my_dialog, {
+    show: $data.deletePostShow,
+    "onUpdate:show": _cache[15] || (_cache[15] = function ($event) {
+      return $data.deletePostShow = $event;
+    })
+  }, {
+    "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
+      return [$data.deletePostSuccess ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_alert, {
+        key: 0,
+        type: 'success'
+      }, {
+        "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
+          return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)((0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.deletePostSuccess), 1
+          /* TEXT */
+          )];
+        }),
+        _: 1
+        /* STABLE */
+
+      })) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), $data.deletePostFailed ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_alert, {
+        key: 1,
+        type: 'danger'
+      }, {
+        "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
+          return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)((0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.deletePostFailed), 1
+          /* TEXT */
+          )];
+        }),
+        _: 1
+        /* STABLE */
+
+      })) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_delete_form, {
+        onSubmit: $options.submitDeletePostForm
+      }, null, 8
+      /* PROPS */
+      , ["onSubmit"])];
+    }),
+    _: 1
+    /* STABLE */
+
+  }, 8
+  /* PROPS */
+  , ["show"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_my_dialog, {
+    show: $data.deleteVideoWorkShow,
+    "onUpdate:show": _cache[16] || (_cache[16] = function ($event) {
+      return $data.deleteVideoWorkShow = $event;
+    })
+  }, {
+    "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
+      return [$data.deleteVideoWorkSuccess ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_alert, {
+        key: 0,
+        type: 'success'
+      }, {
+        "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
+          return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)((0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.deleteVideoWorkSuccess), 1
+          /* TEXT */
+          )];
+        }),
+        _: 1
+        /* STABLE */
+
+      })) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), $data.deleteVideoWorkFailed ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_alert, {
+        key: 1,
+        type: 'danger'
+      }, {
+        "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
+          return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)((0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.deleteVideoWorkFailed), 1
+          /* TEXT */
+          )];
+        }),
+        _: 1
+        /* STABLE */
+
+      })) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_delete_form, {
+        onSubmit: $options.submitDeleteVideoWorkForm
+      }, null, 8
+      /* PROPS */
+      , ["onSubmit"])];
+    }),
+    _: 1
+    /* STABLE */
+
+  }, 8
+  /* PROPS */
+  , ["show"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_my_dialog, {
+    show: $data.deleteUserShow,
+    "onUpdate:show": _cache[17] || (_cache[17] = function ($event) {
+      return $data.deleteUserShow = $event;
+    })
+  }, {
+    "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
+      return [$data.deleteUserSuccess ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_alert, {
+        key: 0,
+        type: 'success'
+      }, {
+        "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
+          return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)((0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.deleteUserSuccess), 1
+          /* TEXT */
+          )];
+        }),
+        _: 1
+        /* STABLE */
+
+      })) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), $data.deleteUserFailed ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_alert, {
+        key: 1,
+        type: 'danger'
+      }, {
+        "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
+          return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)((0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.deleteUserFailed), 1
+          /* TEXT */
+          )];
+        }),
+        _: 1
+        /* STABLE */
+
+      })) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_delete_form, {
+        onSubmit: $options.submitDeleteUserForm
       }, null, 8
       /* PROPS */
       , ["onSubmit"])];
@@ -26152,6 +26667,35 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         }
       }, _callee2);
     }))();
+  },
+
+  /**
+   * Отправка запроса на удаление работы по id
+   * 
+   * @param work_id 
+   * @param thenHandler 
+   * @param catchHandler 
+   */
+  deleteWork: function deleteWork(work_id) {
+    var _arguments3 = arguments;
+    return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee3() {
+      var thenHandler, catchHandler;
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee3$(_context3) {
+        while (1) {
+          switch (_context3.prev = _context3.next) {
+            case 0:
+              thenHandler = _arguments3.length > 1 && _arguments3[1] !== undefined ? _arguments3[1] : null;
+              catchHandler = _arguments3.length > 2 && _arguments3[2] !== undefined ? _arguments3[2] : null;
+              _context3.next = 4;
+              return _axios_axiosWithAuthToken__WEBPACK_IMPORTED_MODULE_1__["default"]["delete"]('/works/photos/' + work_id).then(thenHandler)["catch"](catchHandler);
+
+            case 4:
+            case "end":
+              return _context3.stop();
+          }
+        }
+      }, _callee3);
+    }))();
   }
 });
 
@@ -26205,6 +26749,35 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
           }
         }
       }, _callee);
+    }))();
+  },
+
+  /**
+   * Отправка запроса на удаление поста
+   * 
+   * @param post_id 
+   * @param thenHandler 
+   * @param catchHandler 
+   */
+  deletePost: function deletePost(post_id) {
+    var _arguments2 = arguments;
+    return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee2() {
+      var thenHandler, catchHandler;
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee2$(_context2) {
+        while (1) {
+          switch (_context2.prev = _context2.next) {
+            case 0:
+              thenHandler = _arguments2.length > 1 && _arguments2[1] !== undefined ? _arguments2[1] : null;
+              catchHandler = _arguments2.length > 2 && _arguments2[2] !== undefined ? _arguments2[2] : null;
+              _context2.next = 4;
+              return _axios_axiosWithAuthToken__WEBPACK_IMPORTED_MODULE_1__["default"]["delete"]('/post/' + post_id).then(thenHandler)["catch"](catchHandler);
+
+            case 4:
+            case "end":
+              return _context2.stop();
+          }
+        }
+      }, _callee2);
     }))();
   }
 });
@@ -26260,6 +26833,35 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         }
       }, _callee);
     }))();
+  },
+
+  /**
+   * Отправка запроса на удаление пользователя
+   * 
+   * @param user_id 
+   * @param thenHandler 
+   * @param catchHandler 
+   */
+  deleteUser: function deleteUser(user_id) {
+    var _arguments2 = arguments;
+    return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee2() {
+      var thenHandler, catchHandler;
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee2$(_context2) {
+        while (1) {
+          switch (_context2.prev = _context2.next) {
+            case 0:
+              thenHandler = _arguments2.length > 1 && _arguments2[1] !== undefined ? _arguments2[1] : null;
+              catchHandler = _arguments2.length > 2 && _arguments2[2] !== undefined ? _arguments2[2] : null;
+              _context2.next = 4;
+              return _axios_axiosWithAuthToken__WEBPACK_IMPORTED_MODULE_1__["default"]["delete"]('/user/' + user_id).then(thenHandler)["catch"](catchHandler);
+
+            case 4:
+            case "end":
+              return _context2.stop();
+          }
+        }
+      }, _callee2);
+    }))();
   }
 });
 
@@ -26314,6 +26916,35 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
           }
         }
       }, _callee);
+    }))();
+  },
+
+  /**
+   * Отправка запроса на удаление работы (видео)
+   * 
+   * @param work_id 
+   * @param thenHandler 
+   * @param catchHandler 
+   */
+  deleteWork: function deleteWork(work_id) {
+    var _arguments2 = arguments;
+    return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee2() {
+      var thenHandler, catchHandler;
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee2$(_context2) {
+        while (1) {
+          switch (_context2.prev = _context2.next) {
+            case 0:
+              thenHandler = _arguments2.length > 1 && _arguments2[1] !== undefined ? _arguments2[1] : null;
+              catchHandler = _arguments2.length > 2 && _arguments2[2] !== undefined ? _arguments2[2] : null;
+              _context2.next = 4;
+              return _axios_axiosWithAuthToken__WEBPACK_IMPORTED_MODULE_1__["default"]["delete"]('/works/videos/' + work_id).then(thenHandler)["catch"](catchHandler);
+
+            case 4:
+            case "end":
+              return _context2.stop();
+          }
+        }
+      }, _callee2);
     }))();
   }
 });
@@ -47273,6 +47904,34 @@ if (false) {}
 
 /***/ }),
 
+/***/ "./resources/js/components/admin/crudforms/DeleteByIdForm.vue":
+/*!********************************************************************!*\
+  !*** ./resources/js/components/admin/crudforms/DeleteByIdForm.vue ***!
+  \********************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _DeleteByIdForm_vue_vue_type_template_id_6686190a__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./DeleteByIdForm.vue?vue&type=template&id=6686190a */ "./resources/js/components/admin/crudforms/DeleteByIdForm.vue?vue&type=template&id=6686190a");
+/* harmony import */ var _DeleteByIdForm_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./DeleteByIdForm.vue?vue&type=script&lang=js */ "./resources/js/components/admin/crudforms/DeleteByIdForm.vue?vue&type=script&lang=js");
+/* harmony import */ var C_OpenServer_domains_laravel_vue_ariko_node_modules_vue_loader_dist_exportHelper_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./node_modules/vue-loader/dist/exportHelper.js */ "./node_modules/vue-loader/dist/exportHelper.js");
+
+
+
+
+;
+const __exports__ = /*#__PURE__*/(0,C_OpenServer_domains_laravel_vue_ariko_node_modules_vue_loader_dist_exportHelper_js__WEBPACK_IMPORTED_MODULE_2__["default"])(_DeleteByIdForm_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__["default"], [['render',_DeleteByIdForm_vue_vue_type_template_id_6686190a__WEBPACK_IMPORTED_MODULE_0__.render],['__file',"resources/js/components/admin/crudforms/DeleteByIdForm.vue"]])
+/* hot reload */
+if (false) {}
+
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (__exports__);
+
+/***/ }),
+
 /***/ "./resources/js/components/admin/login/loginForm.vue":
 /*!***********************************************************!*\
   !*** ./resources/js/components/admin/login/loginForm.vue ***!
@@ -48459,6 +49118,22 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./resources/js/components/admin/crudforms/DeleteByIdForm.vue?vue&type=script&lang=js":
+/*!********************************************************************************************!*\
+  !*** ./resources/js/components/admin/crudforms/DeleteByIdForm.vue?vue&type=script&lang=js ***!
+  \********************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (/* reexport safe */ _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_DeleteByIdForm_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_0__["default"])
+/* harmony export */ });
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_DeleteByIdForm_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!../../../../../node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./DeleteByIdForm.vue?vue&type=script&lang=js */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/admin/crudforms/DeleteByIdForm.vue?vue&type=script&lang=js");
+ 
+
+/***/ }),
+
 /***/ "./resources/js/components/admin/login/loginForm.vue?vue&type=script&lang=js":
 /*!***********************************************************************************!*\
   !*** ./resources/js/components/admin/login/loginForm.vue?vue&type=script&lang=js ***!
@@ -49191,6 +49866,22 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "render": () => (/* reexport safe */ _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_dist_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_CreateVideoWorkForm_vue_vue_type_template_id_54eb6f8a__WEBPACK_IMPORTED_MODULE_0__.render)
 /* harmony export */ });
 /* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_dist_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_CreateVideoWorkForm_vue_vue_type_template_id_54eb6f8a__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!../../../../../node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!../../../../../node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./CreateVideoWorkForm.vue?vue&type=template&id=54eb6f8a */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/admin/crudforms/CreateVideoWorkForm.vue?vue&type=template&id=54eb6f8a");
+
+
+/***/ }),
+
+/***/ "./resources/js/components/admin/crudforms/DeleteByIdForm.vue?vue&type=template&id=6686190a":
+/*!**************************************************************************************************!*\
+  !*** ./resources/js/components/admin/crudforms/DeleteByIdForm.vue?vue&type=template&id=6686190a ***!
+  \**************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "render": () => (/* reexport safe */ _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_dist_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_DeleteByIdForm_vue_vue_type_template_id_6686190a__WEBPACK_IMPORTED_MODULE_0__.render)
+/* harmony export */ });
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_dist_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_DeleteByIdForm_vue_vue_type_template_id_6686190a__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!../../../../../node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!../../../../../node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./DeleteByIdForm.vue?vue&type=template&id=6686190a */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/admin/crudforms/DeleteByIdForm.vue?vue&type=template&id=6686190a");
 
 
 /***/ }),

@@ -51,4 +51,28 @@ class VideoWorkController extends Controller
 
         return response()->json($model);
     }
+
+    /**
+     * Удаление работы (видео)
+     *
+     * @param VideoWork $model
+     * @param FileProcessingInterface $fileProcessing
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function deleteWork(VideoWork $model, FileProcessingInterface $fileProcessing)
+    {
+        $model_id = $model->id;
+        $fileProcessing->disk('public')->directory('videos');
+        $video = $model->video;
+
+        if (!$fileProcessing->deleteFile($video)) {
+            throw new HttpException(500, 'Video delete Failed');
+        }
+
+        if (!$model->delete()) {
+            throw new HttpException(500, 'Video deleted, but model delete Failed');
+        }
+
+        return response()->json(['id' => $model_id]);
+    }
 }

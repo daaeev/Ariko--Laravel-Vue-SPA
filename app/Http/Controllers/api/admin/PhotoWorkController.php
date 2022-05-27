@@ -70,6 +70,32 @@ class PhotoWorkController extends Controller
     }
 
     /**
+     * Удаление работы 
+     *
+     * @param PhotoWork $model
+     * @param FileProcessingInterface $fileProcessing
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function deleteWork(PhotoWork $model, FileProcessingInterface $fileProcessing)
+    {
+        $model_id = $model->id;
+        $images = $model->images;
+        $fileProcessing->disk('public')->directory('photos');
+
+        foreach ($images as $item) {
+            if (!$fileProcessing->deleteFile($item->image)) {
+                throw new HttpException(500, 'Images delete failed');
+            }
+        }
+
+        if (!$model->delete()) {
+            throw new HttpException(500, 'Images deleted, but model (id:' . $model_id . ') delete failed');
+        }
+
+        return response()->json(['id' => $model_id]);
+    }
+
+    /**
      * Сохранение изображений в локальном хранилище
      *
      * @param array $images
