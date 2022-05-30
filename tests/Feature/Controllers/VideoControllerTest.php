@@ -227,28 +227,22 @@ class VideoControllerTest extends TestCase
             ->with('id')
             ->willReturn($builder_mock);
 
-        $builder_mock->expects($this->at(1))
+        $builder_mock->expects($this->exactly(2))
             ->method('where')
-            ->with([['id', '>', $work_id]])
-            ->willReturn($builder_mock);
-
-        $builder_mock->expects($this->at(4))
-            ->method('where')
-            ->with([['id', '<', $work_id]])
-            ->willReturn($builder_mock);
+            ->withConsecutive(
+                [[['id', '>', $work_id]]],
+                [[['id', '<', $work_id]]],
+            )
+            ->willReturnSelf();
 
         $builder_mock->expects($this->once())
             ->method('orderBy')
             ->with('id', 'desc')
             ->willReturn($builder_mock);
 
-        $builder_mock->expects($this->at(2))
+        $builder_mock->expects($this->exactly(2))
             ->method('first')
-            ->willReturn($result1);
-
-        $builder_mock->expects($this->at(6))
-            ->method('first')
-            ->willReturn($result2);
+            ->willReturnOnConsecutiveCalls($result1, $result2);
 
         $query_helper_mock = $this->getMockBuilder(GetModelQueryBuilder::class)
             ->onlyMethods(['queryBuilder'])

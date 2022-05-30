@@ -12,6 +12,8 @@ use App\Services\FileProcessing\FileNameGenerators\Interfaces\FileNameGeneratorI
 use App\Services\FileProcessing\FileProcessing;
 use App\Services\FileProcessing\Interfaces\FileProcessingInterface;
 use Illuminate\Http\UploadedFile;
+use Illuminate\Support\Facades\Route;
+use stdClass;
 use Tests\TestCase;
 
 class AdminPhotoControllerTest extends TestCase
@@ -278,15 +280,10 @@ class AdminPhotoControllerTest extends TestCase
             $fnGen_mock
         );
 
-        $imgProc_mock->expects($this->at(2))
-            ->method('saveFile')
-            ->with($image, $fnGen_mock)
-            ->willReturn('saved_image1.png');
-
-        $imgProc_mock->expects($this->at(3))
-            ->method('saveFile')
-            ->with($image, $fnGen_mock)
-            ->willReturn(false);
+        $imgProc_mock->expects($this->exactly(2))
+        ->method('saveFile')
+        ->withConsecutive([$image, $fnGen_mock], [$image, $fnGen_mock])
+        ->willReturnOnConsecutiveCalls('saved_image1.png', false);
 
         $imgProc_mock->expects($this->once())
             ->method('deleteFile')
@@ -351,44 +348,33 @@ class AdminPhotoControllerTest extends TestCase
             $fnGen_mock
         );
 
-        $imgProc_mock->expects($this->at(2))
+        $imgProc_mock->expects($this->exactly(2))
             ->method('saveFile')
-            ->with($image, $fnGen_mock)
-            ->willReturn('saved_image1.png');
-
-        $imgProc_mock->expects($this->at(3))
-            ->method('saveFile')
-            ->with($image, $fnGen_mock)
-            ->willReturn('saved_image2.png');
+            ->withConsecutive([$image, $fnGen_mock], [$image, $fnGen_mock])
+            ->willReturnOnConsecutiveCalls('saved_image1.png', 'saved_image2.png');
 
         $model_mock = $this->getMockBuilder(Image::class)
             ->onlyMethods(['save', 'fill', 'delete'])
             ->disableOriginalConstructor()
             ->getMock();
 
-        $model_mock->expects($this->at(0))
-            ->method('fill')
-            ->with([
-                'image' => 'saved_image1.png',
-                'photo_work_id' => $data['work_id']
-            ])
-            ->willReturnSelf();
-
-        $model_mock->expects($this->at(1))
+        $model_mock->expects($this->exactly(2))
             ->method('save')
-            ->willReturn(true);
+            ->willReturnOnConsecutiveCalls(true, false);
 
-        $model_mock->expects($this->at(2))
+        $model_mock->expects($this->exactly(2))
             ->method('fill')
-            ->with([
-                'image' => 'saved_image2.png',
-                'photo_work_id' => $data['work_id']
-            ])
+            ->withConsecutive(
+                [[
+                    'image' => 'saved_image1.png',
+                    'photo_work_id' => $data['work_id']
+                ]],
+                [[
+                    'image' => 'saved_image2.png',
+                    'photo_work_id' => $data['work_id']
+                ]],
+            )
             ->willReturnSelf();
-
-        $model_mock->expects($this->at(3))
-            ->method('save')
-            ->willReturn(false);
 
         $model_mock->expects($this->once())
             ->method('delete')
@@ -401,6 +387,180 @@ class AdminPhotoControllerTest extends TestCase
 
         $this->withoutMiddleware(AuthWithToken::class)
             ->post(route('works.photos.images.add'), $data)
+            ->assertStatus(500);
+    }
+
+    public function testDeleteWorkSuccess()
+    {
+        $model_mock = $this->getMockBuilder(PhotoWork::class)
+            ->disableOriginalConstructor()
+            ->onlyMethods(['delete'])
+            ->getMock();
+        
+        $model_mock->expects($this->once())
+            ->method('delete')
+            ->willReturn(true);
+
+        $image1 = new stdClass;
+        $image1->image = 'image1.png';
+        $image2 = new stdClass;
+        $image2->image = 'image2.png';
+        $image3 = new stdClass;
+        $image3->image = 'image3.png';
+
+        $model_mock->images = [
+            $image1,
+            $image2,
+            $image3,
+        ];
+        $model_mock->id = 1;
+
+        Route::bind('model', function ($value) use ($model_mock) {
+            return $model_mock;
+        });
+
+        $fp_mock = $this->getMockBuilder(FileProcessing::class)
+            ->disableOriginalConstructor()
+            ->onlyMethods(['disk', 'directory', 'deleteFile'])
+            ->getMock();
+
+        $fp_mock->expects($this->once())
+            ->method('disk')
+            ->with('public')
+            ->willReturnSelf();
+
+        $fp_mock->expects($this->once())
+            ->method('directory')
+            ->with('photos')
+            ->willReturnSelf();
+
+        $fp_mock->expects($this->exactly(3))
+            ->method('deleteFile')
+            ->withConsecutive(['image1.png'], ['image2.png'], ['image3.png'])
+            ->willReturnOnConsecutiveCalls(true, true, true);
+
+        $this->instance(
+            FileProcessingInterface::class,
+            $fp_mock
+        );
+
+        $this->withoutMiddleware(AuthWithToken::class)
+            ->delete(route('works.photos.delete', ['model' => $model_mock->id]))
+            ->assertOk()
+            ->assertJson(['id' => $model_mock->id]);
+    }
+
+    public function testDeleteWorkImageDeleteSuccess()
+    {
+        $model_mock = $this->getMockBuilder(PhotoWork::class)
+            ->disableOriginalConstructor()
+            ->onlyMethods([])
+            ->getMock();
+
+        $image1 = new stdClass;
+        $image1->image = 'image1.png';
+        $image2 = new stdClass;
+        $image2->image = 'image2.png';
+        $image3 = new stdClass;
+        $image3->image = 'image3.png';
+
+        $model_mock->images = [
+            $image1,
+            $image2,
+            $image3,
+        ];
+        $model_mock->id = 1;
+
+        Route::bind('model', function ($value) use ($model_mock) {
+            return $model_mock;
+        });
+
+        $fp_mock = $this->getMockBuilder(FileProcessing::class)
+            ->disableOriginalConstructor()
+            ->onlyMethods(['disk', 'directory', 'deleteFile'])
+            ->getMock();
+
+        $fp_mock->expects($this->once())
+            ->method('disk')
+            ->with('public')
+            ->willReturnSelf();
+
+        $fp_mock->expects($this->once())
+            ->method('directory')
+            ->with('photos')
+            ->willReturnSelf();
+
+        $fp_mock->expects($this->exactly(2))
+            ->method('deleteFile')
+            ->withConsecutive(['image1.png'], ['image2.png'])
+            ->willReturnOnConsecutiveCalls(true, false);
+
+        $this->instance(
+            FileProcessingInterface::class,
+            $fp_mock
+        );
+
+        $this->withoutMiddleware(AuthWithToken::class)
+            ->delete(route('works.photos.delete', ['model' => $model_mock->id]))
+            ->assertStatus(500);
+    }
+
+    public function testDeleteWorkModelDeleteFailed()
+    {
+        $model_mock = $this->getMockBuilder(PhotoWork::class)
+            ->disableOriginalConstructor()
+            ->onlyMethods(['delete'])
+            ->getMock();
+        
+        $model_mock->expects($this->once())
+            ->method('delete')
+            ->willReturn(false);
+
+        $image1 = new stdClass;
+        $image1->image = 'image1.png';
+        $image2 = new stdClass;
+        $image2->image = 'image2.png';
+        $image3 = new stdClass;
+        $image3->image = 'image3.png';
+
+        $model_mock->images = [
+            $image1,
+            $image2,
+            $image3,
+        ];
+        $model_mock->id = 1;
+
+        Route::bind('model', function ($value) use ($model_mock) {
+            return $model_mock;
+        });
+
+        $fp_mock = $this->getMockBuilder(FileProcessing::class)
+            ->disableOriginalConstructor()
+            ->onlyMethods(['disk', 'directory', 'deleteFile'])
+            ->getMock();
+
+        $fp_mock->expects($this->once())
+            ->method('disk')
+            ->with('public')
+            ->willReturnSelf();
+
+        $fp_mock->expects($this->once())
+            ->method('directory')
+            ->with('photos')
+            ->willReturnSelf();
+
+        $fp_mock->expects($this->exactly(3))
+            ->method('deleteFile')
+            ->withConsecutive(['image1.png'], ['image2.png'], ['image3.png'])
+            ->willReturnOnConsecutiveCalls(true, true, true);
+
+        $this->instance(
+            FileProcessingInterface::class,
+            $fp_mock
+        );
+
+        $this->withoutMiddleware(AuthWithToken::class)
+            ->delete(route('works.photos.delete', ['model' => $model_mock->id]))
             ->assertStatus(500);
     }
 }

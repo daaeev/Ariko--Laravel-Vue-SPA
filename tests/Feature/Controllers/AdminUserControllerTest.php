@@ -6,6 +6,7 @@ use App\Http\Middleware\AuthWithToken;
 use App\Http\Requests\CreateUser;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Route;
 use Tests\TestCase;
 
 class AdminUserControllerTest extends TestCase
@@ -107,6 +108,49 @@ class AdminUserControllerTest extends TestCase
 
         $this->withoutMiddleware(AuthWithToken::class)
             ->post(route('user.create'), $req_data)
+            ->assertStatus(500);
+    }
+
+    public function testDeleteSuccess()
+    {
+        $model_mock = $this->getMockBuilder(User::class)
+            ->disableOriginalConstructor()
+            ->onlyMethods(['delete'])
+            ->getMock();
+        
+        $model_mock->expects($this->once())
+            ->method('delete')
+            ->willReturn(true);
+
+        $model_mock->id = 1;
+
+        Route::bind('model', function ($value) use ($model_mock) {
+            return $model_mock;
+        });
+
+        $this->withoutMiddleware(AuthWithToken::class)
+            ->delete(route('user.delete', ['model' => 1]))
+            ->assertOk()
+            ->assertJson(['id' => $model_mock->id]);
+    }
+
+    public function testDeleteModelDeleteFailed()
+    {
+        $model_mock = $this->getMockBuilder(User::class)
+            ->disableOriginalConstructor()
+            ->onlyMethods(['delete'])
+            ->getMock();
+        
+        $model_mock->expects($this->once())
+            ->method('delete')
+            ->willReturn(false);
+
+        Route::bind('model', function ($value) use ($model_mock) {
+            return $model_mock;
+        });
+
+        $this->withoutMiddleware(AuthWithToken::class)
+            ->delete(route('user.delete', ['model' => 1]))
             ->assertStatus(500);
     }
 }

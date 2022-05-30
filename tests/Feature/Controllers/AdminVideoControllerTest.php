@@ -10,6 +10,7 @@ use App\Services\FileProcessing\FileNameGenerators\Interfaces\FileNameGeneratorI
 use App\Services\FileProcessing\FileProcessing;
 use App\Services\FileProcessing\Interfaces\FileProcessingInterface;
 use Illuminate\Http\UploadedFile;
+use Illuminate\Support\Facades\Route;
 use Tests\TestCase;
 
 class AdminVideoControllerTest extends TestCase
@@ -266,6 +267,138 @@ class AdminVideoControllerTest extends TestCase
 
         $this->withoutMiddleware(AuthWithToken::class)
             ->post(route('works.videos.create'), $data)
+            ->assertStatus(500);
+    }
+
+    public function testDeleteWorkSuccess()
+    {
+        $model_mock = $this->getMockBuilder(VideoWork::class)
+            ->disableOriginalConstructor()
+            ->onlyMethods(['delete'])
+            ->getMock();
+
+        $model_mock->expects($this->once())
+            ->method('delete')
+            ->willReturn(true);
+
+        $model_mock->video = 'video.mp4';
+        $model_mock->id = 1;
+
+        Route::bind('model', function ($value) use ($model_mock) {
+            return $model_mock;
+        });
+
+        $fp_mock = $this->getMockBuilder(FileProcessing::class)
+            ->disableOriginalConstructor()
+            ->onlyMethods(['disk', 'directory', 'deleteFile'])
+            ->getMock();
+        
+        $fp_mock->expects($this->once())
+            ->method('disk')
+            ->with('public')
+            ->willReturnSelf();
+
+        $fp_mock->expects($this->once())
+            ->method('directory')
+            ->with('videos')
+            ->willReturnSelf();
+
+        $fp_mock->expects($this->once())
+            ->method('deleteFile')
+            ->with($model_mock->video)
+            ->willReturn(true);
+
+        $this->instance(FileProcessingInterface::class, $fp_mock);
+
+        $this->withoutMiddleware(AuthWithToken::class)
+            ->delete(route('works.videos.delete', ['model' => $model_mock->id]))
+            ->assertOk()
+            ->assertJson(['id' => $model_mock->id]);
+    }
+
+    public function testDeleteWorkVideoDeleteFailed()
+    {
+        $model_mock = $this->getMockBuilder(VideoWork::class)
+            ->disableOriginalConstructor()
+            ->onlyMethods([])
+            ->getMock();
+
+        $model_mock->video = 'video.mp4';
+        $model_mock->id = 1;
+
+        Route::bind('model', function ($value) use ($model_mock) {
+            return $model_mock;
+        });
+
+        $fp_mock = $this->getMockBuilder(FileProcessing::class)
+            ->disableOriginalConstructor()
+            ->onlyMethods(['disk', 'directory', 'deleteFile'])
+            ->getMock();
+        
+        $fp_mock->expects($this->once())
+            ->method('disk')
+            ->with('public')
+            ->willReturnSelf();
+
+        $fp_mock->expects($this->once())
+            ->method('directory')
+            ->with('videos')
+            ->willReturnSelf();
+
+        $fp_mock->expects($this->once())
+            ->method('deleteFile')
+            ->with($model_mock->video)
+            ->willReturn(false);
+
+        $this->instance(FileProcessingInterface::class, $fp_mock);
+
+        $this->withoutMiddleware(AuthWithToken::class)
+            ->delete(route('works.videos.delete', ['model' => $model_mock->id]))
+            ->assertStatus(500);
+    }
+
+    public function testDeleteWorkModelDeleteFailed()
+    {
+        $model_mock = $this->getMockBuilder(VideoWork::class)
+            ->disableOriginalConstructor()
+            ->onlyMethods(['delete'])
+            ->getMock();
+
+        $model_mock->expects($this->once())
+            ->method('delete')
+            ->willReturn(false);
+
+        $model_mock->video = 'video.mp4';
+        $model_mock->id = 1;
+
+        Route::bind('model', function ($value) use ($model_mock) {
+            return $model_mock;
+        });
+
+        $fp_mock = $this->getMockBuilder(FileProcessing::class)
+            ->disableOriginalConstructor()
+            ->onlyMethods(['disk', 'directory', 'deleteFile'])
+            ->getMock();
+        
+        $fp_mock->expects($this->once())
+            ->method('disk')
+            ->with('public')
+            ->willReturnSelf();
+
+        $fp_mock->expects($this->once())
+            ->method('directory')
+            ->with('videos')
+            ->willReturnSelf();
+
+        $fp_mock->expects($this->once())
+            ->method('deleteFile')
+            ->with($model_mock->video)
+            ->willReturn(true);
+
+        $this->instance(FileProcessingInterface::class, $fp_mock);
+
+        $this->withoutMiddleware(AuthWithToken::class)
+            ->delete(route('works.videos.delete', ['model' => $model_mock->id]))
             ->assertStatus(500);
     }
 }

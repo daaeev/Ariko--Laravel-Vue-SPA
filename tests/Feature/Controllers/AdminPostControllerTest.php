@@ -10,6 +10,7 @@ use App\Services\FileProcessing\FileNameGenerators\Interfaces\FileNameGeneratorI
 use App\Services\FileProcessing\FileProcessing;
 use App\Services\FileProcessing\Interfaces\FileProcessingInterface;
 use Illuminate\Http\UploadedFile;
+use Illuminate\Support\Facades\Route;
 use Tests\TestCase;
 
 class AdminPostControllerTest extends TestCase
@@ -321,15 +322,10 @@ class AdminPostControllerTest extends TestCase
             ->with('posts_previews')
             ->willReturnSelf();
 
-        $fp_mock->expects($this->at(2))
+        $fp_mock->expects($this->exactly(2))
             ->method('saveFile')
-            ->with($image1, $fngen_mock)
-            ->willReturn('saved_image1.png');
-
-        $fp_mock->expects($this->at(3))
-            ->method('saveFile')
-            ->with($image2, $fngen_mock)
-            ->willReturn('saved_image2.png');
+            ->withConsecutive([$image1, $fngen_mock], [$image2, $fngen_mock])
+            ->willReturnOnConsecutiveCalls('saved_image1.png', 'saved_image2.png');
 
         $this->app->instance(
             FileProcessingInterface::class,
@@ -430,15 +426,10 @@ class AdminPostControllerTest extends TestCase
             ->with('posts_previews')
             ->willReturnSelf();
 
-        $fp_mock->expects($this->at(2))
+        $fp_mock->expects($this->exactly(2))
             ->method('saveFile')
-            ->with($image1, $fngen_mock)
-            ->willReturn('saved_image1.png');
-
-        $fp_mock->expects($this->at(3))
-            ->method('saveFile')
-            ->with($image2, $fngen_mock)
-            ->willReturn(false);
+            ->withConsecutive([$image1, $fngen_mock], [$image2, $fngen_mock])
+            ->willReturnOnConsecutiveCalls('saved_image1.png', false);
 
         $fp_mock->expects($this->once())
             ->method('deleteFile')
@@ -508,23 +499,14 @@ class AdminPostControllerTest extends TestCase
             ->with('posts_previews')
             ->willReturnSelf();
 
-        $fp_mock->expects($this->at(2))
+        $fp_mock->expects($this->exactly(2))
             ->method('saveFile')
-            ->with($image1, $fngen_mock)
-            ->willReturn('saved_image1.png');
+            ->withConsecutive([$image1, $fngen_mock], [$image2, $fngen_mock])
+            ->willReturnOnConsecutiveCalls('saved_image1.png', 'saved_image2.png');
 
-        $fp_mock->expects($this->at(3))
-            ->method('saveFile')
-            ->with($image2, $fngen_mock)
-            ->willReturn('saved_image2.png');
-
-        $fp_mock->expects($this->at(4))
+        $fp_mock->expects($this->exactly(2))
             ->method('deleteFile')
-            ->with('saved_image1.png');
-
-        $fp_mock->expects($this->at(5))
-            ->method('deleteFile')
-            ->with('saved_image2.png');
+            ->withConsecutive(['saved_image1.png'], ['saved_image2.png']);
 
         $this->app->instance(
             FileProcessingInterface::class,
@@ -562,6 +544,337 @@ class AdminPostControllerTest extends TestCase
 
         $this->withoutMiddleware(AuthWithToken::class)
             ->post(route('post.create'), $data)
+            ->assertStatus(500);
+    }
+
+    public function testDeleteWithMainImageSuccess()
+    {
+        $model_mock = $this->getMockBuilder(Post::class)
+            ->disableOriginalConstructor()
+            ->onlyMethods(['delete'])
+            ->getMock();
+        
+        $model_mock->expects($this->once())
+            ->method('delete')
+        
+            ->willReturn(true);
+
+        $model_mock->main_image = 'image1.png';
+        $model_mock->id = 1;
+        
+        Route::bind('model', function ($value) use ($model_mock) {
+            return $model_mock;
+        });
+
+        $fp_mock = $this->getMockBuilder(FileProcessing::class)
+            ->disableOriginalConstructor()
+            ->onlyMethods(['disk', 'directory', 'deleteFile'])
+            ->getMock();
+        
+        $fp_mock->expects($this->once())
+            ->method('disk')
+            ->with('public')
+            ->willReturnSelf();
+
+        $fp_mock->expects($this->once())
+            ->method('directory')
+            ->with('posts_previews')
+            ->willReturnSelf();
+
+        $fp_mock->expects($this->once())
+            ->method('deleteFile')
+            ->with('image1.png')
+            ->willReturn(true);
+
+        $this->instance(
+            FileProcessingInterface::class,
+            $fp_mock
+        );
+
+        $this->withoutMiddleware(AuthWithToken::class)
+            ->delete(route('post.delete', ['model' => $model_mock->id]))
+            ->assertOk()
+            ->assertJson(['id' => $model_mock->id]);
+    }
+
+    public function testDeleteWithMainImageDeleteFailed()
+    {
+        $model_mock = $this->getMockBuilder(Post::class)
+            ->disableOriginalConstructor()
+            ->onlyMethods([])
+            ->getMock();
+
+        $model_mock->main_image = 'image1.png';
+        $model_mock->id = 1;
+
+        Route::bind('model', function ($value) use ($model_mock) {
+            return $model_mock;
+        });
+
+        $fp_mock = $this->getMockBuilder(FileProcessing::class)
+            ->disableOriginalConstructor()
+            ->onlyMethods(['disk', 'directory', 'deleteFile'])
+            ->getMock();
+        
+        $fp_mock->expects($this->once())
+            ->method('disk')
+            ->with('public')
+            ->willReturnSelf();
+
+        $fp_mock->expects($this->once())
+            ->method('directory')
+            ->with('posts_previews')
+            ->willReturnSelf();
+
+        $fp_mock->expects($this->once())
+            ->method('deleteFile')
+            ->with($model_mock->main_image)
+            ->willReturn(false);
+
+        $this->instance(
+            FileProcessingInterface::class,
+            $fp_mock
+        );
+
+        $this->withoutMiddleware(AuthWithToken::class)
+            ->delete(route('post.delete', ['model' => $model_mock->id]))
+            ->assertStatus(500);
+    }
+
+    public function testDeleteWithMainImageModelDeleteFailed()
+    {
+        $model_mock = $this->getMockBuilder(Post::class)
+            ->disableOriginalConstructor()
+            ->onlyMethods(['delete'])
+            ->getMock();
+        
+        $model_mock->expects($this->once())
+            ->method('delete')
+            ->willReturn(false);
+
+        $model_mock->main_image = 'image1.png';
+        $model_mock->id = 1;
+        
+        Route::bind('model', function ($value) use ($model_mock) {
+            return $model_mock;
+        });
+
+        $fp_mock = $this->getMockBuilder(FileProcessing::class)
+            ->disableOriginalConstructor()
+            ->onlyMethods(['disk', 'directory', 'deleteFile'])
+            ->getMock();
+        
+        $fp_mock->expects($this->once())
+            ->method('disk')
+            ->with('public')
+            ->willReturnSelf();
+
+        $fp_mock->expects($this->once())
+            ->method('directory')
+            ->with('posts_previews')
+            ->willReturnSelf();
+
+        $fp_mock->expects($this->once())
+            ->method('deleteFile')
+            ->with('image1.png')
+            ->willReturn(true);
+
+        $this->instance(
+            FileProcessingInterface::class,
+            $fp_mock
+        );
+
+        $this->withoutMiddleware(AuthWithToken::class)
+            ->delete(route('post.delete', ['model' => $model_mock->id]))
+            ->assertStatus(500);
+    }
+
+    public function testDeleteWithTwoImagesSuccess()
+    {
+        $model_mock = $this->getMockBuilder(Post::class)
+            ->disableOriginalConstructor()
+            ->onlyMethods(['delete'])
+            ->getMock();
+        
+        $model_mock->expects($this->once())
+            ->method('delete')
+            ->willReturn(true);
+
+        $model_mock->main_image = 'image1.png';
+        $model_mock->preview_image = 'image2.png';
+        $model_mock->id = 1;
+
+        Route::bind('model', function ($value) use ($model_mock) {
+            return $model_mock;
+        });
+
+        $fp_mock = $this->getMockBuilder(FileProcessing::class)
+            ->disableOriginalConstructor()
+            ->onlyMethods(['disk', 'directory', 'deleteFile'])
+            ->getMock();
+        
+        $fp_mock->expects($this->once())
+            ->method('disk')
+            ->with('public')
+            ->willReturnSelf();
+
+        $fp_mock->expects($this->once())
+            ->method('directory')
+            ->with('posts_previews')
+            ->willReturnSelf();
+
+        $fp_mock->expects($this->exactly(2))
+            ->method('deleteFile')
+            ->withConsecutive([$model_mock->main_image], [$model_mock->preview_image])
+            ->willReturnOnConsecutiveCalls(true, true);
+
+        $this->instance(
+            FileProcessingInterface::class,
+            $fp_mock
+        );
+
+        $this->withoutMiddleware(AuthWithToken::class)
+            ->delete(route('post.delete', ['model' => $model_mock->id]))
+            ->assertOk()
+            ->assertJson(['id' => $model_mock->id]);
+    }
+
+    public function testDeleteWithTwoImagesMainDeleteFailed()
+    {
+        $model_mock = $this->getMockBuilder(Post::class)
+            ->disableOriginalConstructor()
+            ->onlyMethods([])
+            ->getMock();
+
+        $model_mock->main_image = 'image1.png';
+        $model_mock->preview_image = 'image2.png';
+        $model_mock->id = 1;
+
+        Route::bind('model', function ($value) use ($model_mock) {
+            return $model_mock;
+        });
+
+        $fp_mock = $this->getMockBuilder(FileProcessing::class)
+            ->disableOriginalConstructor()
+            ->onlyMethods(['disk', 'directory', 'deleteFile'])
+            ->getMock();
+        
+        $fp_mock->expects($this->once())
+            ->method('disk')
+            ->with('public')
+            ->willReturnSelf();
+
+        $fp_mock->expects($this->once())
+            ->method('directory')
+            ->with('posts_previews')
+            ->willReturnSelf();
+
+        $fp_mock->expects($this->once())
+            ->method('deleteFile')
+            ->with($model_mock->main_image)
+            ->willReturn(false);
+
+        $this->instance(
+            FileProcessingInterface::class,
+            $fp_mock
+        );
+
+        $this->withoutMiddleware(AuthWithToken::class)
+            ->delete(route('post.delete', ['model' => $model_mock->id]))
+            ->assertStatus(500);
+    }
+
+    public function testDeleteWithTwoImagesPreviewDeleteFailed()
+    {
+        $model_mock = $this->getMockBuilder(Post::class)
+            ->disableOriginalConstructor()
+            ->onlyMethods([])
+            ->getMock();
+
+        $model_mock->main_image = 'image1.png';
+        $model_mock->preview_image = 'image2.png';
+        $model_mock->id = 1;
+
+        Route::bind('model', function ($value) use ($model_mock) {
+            return $model_mock;
+        });
+
+        $fp_mock = $this->getMockBuilder(FileProcessing::class)
+            ->disableOriginalConstructor()
+            ->onlyMethods(['disk', 'directory', 'deleteFile'])
+            ->getMock();
+        
+        $fp_mock->expects($this->once())
+            ->method('disk')
+            ->with('public')
+            ->willReturnSelf();
+
+        $fp_mock->expects($this->once())
+            ->method('directory')
+            ->with('posts_previews')
+            ->willReturnSelf();
+
+        $fp_mock->expects($this->exactly(2))
+            ->method('deleteFile')
+            ->withConsecutive([$model_mock->main_image], [$model_mock->preview_image])
+            ->willReturnOnConsecutiveCalls(true, false);
+
+        $this->instance(
+            FileProcessingInterface::class,
+            $fp_mock
+        );
+
+        $this->withoutMiddleware(AuthWithToken::class)
+            ->delete(route('post.delete', ['model' => $model_mock->id]))
+            ->assertStatus(500);
+    }
+
+    public function testDeleteWithTwoImagesModelDeleteFailed()
+    {
+        $model_mock = $this->getMockBuilder(Post::class)
+            ->disableOriginalConstructor()
+            ->onlyMethods(['delete'])
+            ->getMock();
+
+        $model_mock->expects($this->once())
+            ->method('delete')
+            ->willReturn(false);
+
+        $model_mock->main_image = 'image1.png';
+        $model_mock->preview_image = 'image2.png';
+        $model_mock->id = 1;
+
+        Route::bind('model', function ($value) use ($model_mock) {
+            return $model_mock;
+        });
+
+        $fp_mock = $this->getMockBuilder(FileProcessing::class)
+            ->disableOriginalConstructor()
+            ->onlyMethods(['disk', 'directory', 'deleteFile'])
+            ->getMock();
+        
+        $fp_mock->expects($this->once())
+            ->method('disk')
+            ->with('public')
+            ->willReturnSelf();
+
+        $fp_mock->expects($this->once())
+            ->method('directory')
+            ->with('posts_previews')
+            ->willReturnSelf();
+
+        $fp_mock->expects($this->exactly(2))
+            ->method('deleteFile')
+            ->withConsecutive([$model_mock->main_image], [$model_mock->preview_image])
+            ->willReturnOnConsecutiveCalls(true, true);
+
+        $this->instance(
+            FileProcessingInterface::class,
+            $fp_mock
+        );
+
+        $this->withoutMiddleware(AuthWithToken::class)
+            ->delete(route('post.delete', ['model' => $model_mock->id]))
             ->assertStatus(500);
     }
 }
