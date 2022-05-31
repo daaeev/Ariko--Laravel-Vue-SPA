@@ -15,7 +15,7 @@ class TagsController extends Controller
      *
      * @return \Illuminate\Http\JsonResponse
      */
-    public function tagsList()
+    public function tagsList(): \Illuminate\Http\JsonResponse
     {
         return response()->json(
             $this->query_helper
@@ -31,7 +31,7 @@ class TagsController extends Controller
      * @param AddTagToPost $validate
      * @return \Illuminate\Http\JsonResponse
      */
-    public function addTagToPost(PostTag $model, AddTagToPost $validate)
+    public function addTagToPost(PostTag $model, AddTagToPost $validate): \Illuminate\Http\JsonResponse
     {
         $data = $validate->validated();
 
