@@ -8,8 +8,8 @@ export default {
      * @param thenHandler 
      * @param catchHandler 
      */
-    deleteMessage(id, thenHandler = null, catchHandler = null) {
-        axios.delete('/contact/message/' + id)
+    async deleteMessage(id, thenHandler = null, catchHandler = null) {
+        await axios.delete('/contact/message/' + id)
             .then(thenHandler)
             .catch(catchHandler);
     }

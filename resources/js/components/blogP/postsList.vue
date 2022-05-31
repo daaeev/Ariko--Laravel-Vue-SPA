@@ -11,7 +11,7 @@
       <ul class="meta list-inline">
         <li class="list-inline-item">{{ dateFormat(item.created_at) }}</li>
         <li class="list-inline-item" v-for="tag in item.tags" :key="tag.id">
-          <tag-link :tag="tag.name"></tag-link>
+          <span class="tag-link" @click="tagLinkClick(tag.name)">{{ tag.name }}</span>
         </li>
       </ul>
     </header>
@@ -39,12 +39,20 @@
 </template>
 
 <script>
+import { mapActions } from 'vuex';
 import DateFormat from "../../mixins/DateFormat";
-import TagLink from './UI/tagLink.vue'
 
 export default {
-  components: {TagLink},
   mixins: [DateFormat],
+
+  methods: {
+    ...mapActions('posts', ['fetchPostsByTag']),
+
+    tagLinkClick(tag) {
+      this.$router.push({name: 'blog.by-tag', params: {tag}});
+      this.fetchPostsByTag({tag});
+    }
+  },
 
   props: {
     posts: {
@@ -55,4 +63,7 @@ export default {
 </script>
 
 <style scoped>
+.tag-link {
+  cursor: pointer;
+}
 </style>

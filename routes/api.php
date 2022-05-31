@@ -12,6 +12,7 @@ use App\Http\Controllers\api\admin\PhotoWorkController as AdminPhotoController;
 use App\Http\Controllers\api\admin\PostController as AdminPostController;
 use App\Http\Controllers\api\admin\VideoWorkController as AdminVideoWorkController;
 use App\Http\Controllers\api\admin\MessageController as AdminMessageController;
+use App\Http\Controllers\api\admin\TagsController as AdminTagsController;
 
 // ---WORKS---
 
@@ -104,6 +105,13 @@ Route::middleware('auth')->group(function () {
         Route::delete('/contact/message/{model}', [AdminMessageController::class, 'deleteMessage'])->name('messages.delete');
 
     // !!!MESSAGES!!!
+
+    // ---TAGS---
+
+        Route::get('/tags', [AdminTagsController::class, 'tagsList'])->name('tags.list');
+        Route::post('/add/tag/to/post', [AdminTagsController::class, 'addTagToPost'])->name('tags.add-to-post');
+
+    // !!!TAGS!!!
 });
 
 // !!!ADMIN ROUTES!!!

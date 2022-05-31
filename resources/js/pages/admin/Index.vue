@@ -18,6 +18,10 @@
             </div>
 
             <div class="col-md-2">
+                <dialog-button v-model:show="addTagShow">Add tag to post</dialog-button>
+            </div>
+
+            <div class="col-md-2">
                 <dialog-button v-model:show="createVideoWorkShow">Create video work</dialog-button>
             </div>
 
@@ -100,6 +104,12 @@
             <alert v-if="deleteUserFailed" :type="'danger'">{{deleteUserFailed}}</alert>
             <delete-form @submit="submitDeleteUserForm"></delete-form>
         </my-dialog>
+
+        <my-dialog v-model:show="addTagShow">
+            <alert v-if="addTagSuccess" :type="'success'">{{addTagSuccess}}</alert>
+            <alert v-if="addTagFailed" :type="'danger'">{{addTagFailed}}</alert>
+            <tag-to-post-form @submit="submitAddTagForm"></tag-to-post-form>
+        </my-dialog>
     <!-- Dialogs -->
 </template>
 
@@ -110,6 +120,7 @@ import CreateUserForm from '../../components/admin/crudforms/CreateUserForm.vue'
 import Alert from '../../components/UI/Alert.vue';
 import axiosUserAPI from '../../logic/api/admin/User';
 import axiosPostAPI from '../../logic/api/admin/Post';
+import axiosTagAPI from '../../logic/api/admin/Tag';
 import axiosPhotoWorkAPI from '../../logic/api/admin/PhotoWork';
 import CreatePhotoWorkForm from '../../components/admin/crudforms/CreatePhotoWorkForm.vue';
 import AddImagesToWorkForm from '../../components/admin/crudforms/AddImagesToWorkForm.vue';
@@ -117,6 +128,7 @@ import CreatePostForm from '../../components/admin/crudforms/CreatePostForm.vue'
 import axiosVideoWorkAPI from '../../logic/api/admin/VideoWork';
 import CreateVideoWorkForm from '../../components/admin/crudforms/CreateVideoWorkForm.vue';
 import DeleteForm from '../../components/admin/crudforms/DeleteByIdForm.vue';
+import TagToPostForm from '../../components/admin/crudforms/AddTagToPost.vue';
 
 export default {
     components: {
@@ -128,7 +140,8 @@ export default {
         AddImagesToWorkForm,
         CreatePostForm,
         CreateVideoWorkForm,
-        DeleteForm
+        DeleteForm,
+        TagToPostForm
     },
 
     data() {
@@ -177,10 +190,32 @@ export default {
             deleteUserShow: false,
             deleteUserSuccess: '',
             deleteUserFailed: '',
+
+            // ADD TAG TO POST FORM
+            addTagShow: false,
+            addTagSuccess: '',
+            addTagFailed: '',
         };
     },
 
     methods: {
+        // Форма добавления тега посту
+        async submitAddTagForm(formData) {
+            this.addTagSuccess = '';
+            this.addTagFailed = '';
+
+            await axiosTagAPI.addTagToPost(
+                formData,
+                () => this.addTagSuccess = 'Tag added success',
+                axiosError => this.addTagFailed = axiosError.response?.data.message ?? 'Tag deleted failed',
+            );
+
+            setTimeout(() => {
+                this.addTagSuccess = '';
+                this.addTagFailed = '';
+            }, 5000);
+        },
+
         // Форма удаления пользователя
         async submitDeleteUserForm(formData) {
             this.deleteUserSuccess = '';
@@ -265,7 +300,7 @@ export default {
 
             await axiosUserAPI.createUser(
                 formData,
-                () => this.createUserSuccess = 'User create success',
+                axiosRes => this.createUserSuccess = 'User create success (ID:' + axiosRes.data.id + ')',
                 axiosError => this.createUserFailed = axiosError.response?.data.message ?? 'User create failed',
             );
 
@@ -319,8 +354,8 @@ export default {
 
             await axiosPostAPI.createPost(
                 formData,
-                () => this.createPostSuccess = 'Photos added success',
-                axiosError => this.createPostFailed = axiosError.response?.data.message ?? 'Photos add failed',
+                axiosRes => this.createPostSuccess = 'Post create success (ID:' + axiosRes.data.id + ')',
+                axiosError => this.createPostFailed = axiosError.response?.data.message ?? 'Post create failed',
             );
 
             setTimeout(() => {
@@ -337,7 +372,7 @@ export default {
 
             await axiosVideoWorkAPI.createVideoWork(
                 formData,
-                () => this.createVideoWorkSuccess = 'Work create success',
+                axiosRes => this.createVideoWorkSuccess = 'Work create success (ID:' + axiosRes.data.id + ')',
                 axiosError => this.createVideoWorkFailed = axiosError.response?.data.message ?? 'Work create failed',
             );
 

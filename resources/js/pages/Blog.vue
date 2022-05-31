@@ -51,8 +51,8 @@ export default {
     ...mapActions("posts", ["fetchPosts", "fetchPostsByTag"]),
 
     changePage(page) {
-      if (this.$route.query.tag) {
-        const tag = this.$route.query.tag;
+      if (this.$route.params?.tag) {
+        const tag = this.$route.params.tag;
 
         this.fetchPostsByTag({page, tag});
       } else {
@@ -70,8 +70,8 @@ export default {
   },
 
   created() {
-    if (this.$route.query.tag) {
-      const tag = this.$route.query.tag;
+    if (this.$route.params?.tag) {
+      const tag = this.$route.params.tag;
 
       this.fetchPostsByTag({tag});
     } else {

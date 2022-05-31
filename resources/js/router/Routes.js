@@ -56,6 +56,11 @@ export default [
         name: 'blog',
     },
     {
+        path: '/blog/by/:tag',
+        component: Blog,
+        name: 'blog.by-tag',
+    },
+    {
         path: '/blog/:id',
         component: SinglePost,
         name: 'blog.single'
