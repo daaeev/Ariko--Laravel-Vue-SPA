@@ -28,7 +28,7 @@
 import SiteSettings from "../SiteSettings";
 import EmailSection from "../components/global/divided/EmailSection.vue";
 import PostsList from "../components/blogP/postsList.vue";
-import Pagination from "../components/blogP/pagination.vue";
+import Pagination from "../components/pagination/NumericPagination.vue";
 import { mapActions, mapGetters } from "vuex";
 
 export default {

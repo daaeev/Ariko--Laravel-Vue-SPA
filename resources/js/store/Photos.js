@@ -24,6 +24,10 @@ export default {
     },
 
     mutations: {
+        setSingle(state, work) {
+            state.single = work;
+        },
+        
         ...fetchPhotosWithDynamicPag.mutations,
         ...fetchSingleWithWorkPagination.mutations,
     },

@@ -15,10 +15,6 @@ export default {
     },
 
     mutations: {
-        setSingle(state, work) {
-            state.single = work;
-        },
-
         setSinglePagNext(state, value) {
             state.single_pagination.next_id = value;
         },

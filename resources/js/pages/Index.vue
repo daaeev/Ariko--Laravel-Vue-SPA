@@ -25,7 +25,7 @@
 
 <script>
 import PhotosList from "../components/index/PhotosList";
-import Pagination from "../components/index/Pagination";
+import Pagination from "../components/pagination/DynamicPagination";
 import EmailSection from "../components/global/divided/EmailSection";
 import {mapGetters, mapActions} from "vuex";
 import siteSettings from "../SiteSettings";

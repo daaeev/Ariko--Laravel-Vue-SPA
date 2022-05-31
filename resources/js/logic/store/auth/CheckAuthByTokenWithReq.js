@@ -21,8 +21,8 @@ export default {
 
             await authAxios.checkAuth(
                 token,
-                axiosRes => auth = true,
-                axiosError => {
+                () => auth = true,
+                () => {
                     commit('setToken', '');
                     localStorage.removeItem('token');
                 }

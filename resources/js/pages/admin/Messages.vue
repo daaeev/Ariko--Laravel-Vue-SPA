@@ -23,7 +23,7 @@
 <script>
 import MessagesList from "../../components/admin/messages/MessagesList.vue";
 import { mapGetters, mapActions } from "vuex";
-import pagination from "../../components/blogP/pagination.vue";
+import pagination from "../../components/pagination/NumericPagination.vue";
 import messageAPI from '../../logic/api/admin/Messages';
 import Alert from '../../components/UI/Alert.vue';
 
