@@ -9,13 +9,13 @@ export default {
      * @param thenHandler 
      * @param catchHandler 
      */
-    async allPosts(limit, page, thenHandler = null, catchHandler = null) {
+    async allPosts(limit, page = 1, thenHandler = null, catchHandler = null) {
         await axios.get(
             "/posts",
             {
                 params: {
                     _limit: limit,
-                    page: page ?? 1,
+                    page: page,
                 },
             }
         )

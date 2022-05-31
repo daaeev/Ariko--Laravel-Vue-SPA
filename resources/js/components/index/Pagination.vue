@@ -4,7 +4,7 @@
         <!-- load more button -->
         <div class="load-more-block" v-if="(pagPage != totalPagesCount)">
             <div v-if="!isWorksLoading">
-                <small>Load more</small>
+                <small>Load works</small>
 
                 <div>
                     <button @click="this.$emit('loadmore')">

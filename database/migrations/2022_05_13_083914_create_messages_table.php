@@ -18,7 +18,6 @@ return new class extends Migration
             $table->string('name', 50);
             $table->string('email', 345);
             $table->text('message');
-            $table->boolean('answered')->default(false);
             $table->timestamps();
         });
     }

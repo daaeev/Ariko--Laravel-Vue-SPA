@@ -11,6 +11,7 @@ use App\Http\Controllers\api\PostController;
 use App\Http\Controllers\api\admin\PhotoWorkController as AdminPhotoController;
 use App\Http\Controllers\api\admin\PostController as AdminPostController;
 use App\Http\Controllers\api\admin\VideoWorkController as AdminVideoWorkController;
+use App\Http\Controllers\api\admin\MessageController as AdminMessageController;
 
 // ---WORKS---
 
@@ -96,6 +97,13 @@ Route::middleware('auth')->group(function () {
         Route::delete('/works/videos/{model}', [AdminVideoWorkController::class, 'deleteWork'])->name('works.videos.delete');
 
     // !!!VIDEOS WORK!!!
+
+    // ---MESSAGES---
+
+        Route::get('/contact/messages', [AdminMessageController::class, 'messagesList'])->name('messages.list');
+        Route::delete('/contact/message/{model}', [AdminMessageController::class, 'deleteMessage'])->name('messages.delete');
+
+    // !!!MESSAGES!!!
 });
 
 // !!!ADMIN ROUTES!!!

@@ -23,8 +23,8 @@
 import EmailSection from "../components/global/divided/EmailSection";
 import ContactForm from "../components/contactP/ContactForm";
 import siteSettings from "../SiteSettings";
-import {mapActions} from "vuex";
 import Alert from "../components/UI/Alert";
+import ContactAPI from '../logic/api/ContactMessage';
 export default {
     components: {Alert, EmailSection, ContactForm},
 
@@ -42,22 +42,22 @@ export default {
     },
 
     methods: {
-        ...mapActions('contact', ['sendMessage']),
-
         async form_submit(formData) {
             this.submitSuccessMessage = '';
             this.submitFailedMessage = '';
 
-            await this.sendMessage(formData)
-                .then(() => this.submitSuccessMessage = 'Your message has been sent successfully')
-                .catch((error) => {
+            await ContactAPI.saveMessage(
+                formData,
+                () => this.submitSuccessMessage = 'Your message has been sent successfully',
+                (error) => {
                     if (error.response.status == 429) {
                         this.submitFailedMessage = 'Message sending limit exceeded. Wait ' + error.response.headers['retry-after'] + ' seconds';
                     } else {
                         this.submitFailedMessage = 'Oops, something wrong';
                     }
-                });
-        }
+                }
+            )
+        },
     },
 }
 </script>

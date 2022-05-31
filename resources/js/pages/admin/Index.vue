@@ -40,6 +40,10 @@
                 <dialog-button v-model:show="deleteUserShow">Delete user</dialog-button>
             </div>
         </div>
+
+        <div class="text-center mt-10">
+            <router-link :to="{name: 'admin.messages'}">Go to messages page -></router-link>
+        </div>
     </div>
 
     <!-- Dialogs -->
@@ -104,13 +108,13 @@ import DialogButton from '../../components/admin/UI/DialogButton.vue'
 import MyDialog from '../../components/admin/UI/Dialog.vue'
 import CreateUserForm from '../../components/admin/crudforms/CreateUserForm.vue'
 import Alert from '../../components/UI/Alert.vue';
-import axiosUserAPI from '../../logic/api/crud/User';
-import axiosPostAPI from '../../logic/api/crud/Post';
-import axiosPhotoWorkAPI from '../../logic/api/crud/PhotoWork';
+import axiosUserAPI from '../../logic/api/admin/User';
+import axiosPostAPI from '../../logic/api/admin/Post';
+import axiosPhotoWorkAPI from '../../logic/api/admin/PhotoWork';
 import CreatePhotoWorkForm from '../../components/admin/crudforms/CreatePhotoWorkForm.vue';
 import AddImagesToWorkForm from '../../components/admin/crudforms/AddImagesToWorkForm.vue';
 import CreatePostForm from '../../components/admin/crudforms/CreatePostForm.vue'
-import axiosVideoWorkAPI from '../../logic/api/crud/VideoWork';
+import axiosVideoWorkAPI from '../../logic/api/admin/VideoWork';
 import CreateVideoWorkForm from '../../components/admin/crudforms/CreateVideoWorkForm.vue';
 import DeleteForm from '../../components/admin/crudforms/DeleteByIdForm.vue';
 
