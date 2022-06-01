@@ -1,11 +1,11 @@
 import SiteSettings from '../../../SiteSettings';
-import messagesAPI from '../../api/admin/Messages';
+import commentsAPI from '../../api/admin/Comments';
 
 export default {
     state: {
         pagPage: null,
         totalPagesCount: null,
-        pageSize: SiteSettings.adminMessagesPerPage,
+        pageSize: SiteSettings.adminCommentsPerPage,
     },
 
     getters: {
@@ -34,7 +34,7 @@ export default {
 
     actions: {
         /**
-         * Загрузить письма при помощи АПИ
+         * Загрузить комментарии при помощи АПИ
          *
          * @param commit
          * @param getters
@@ -42,21 +42,21 @@ export default {
          * @param page
          * @returns {Promise<void>}
          */
-         async fetchMessages({ commit, getters, dispatch }, page = 1) {
+         async fetchComments({ commit, getters, dispatch }, page = 1) {
             commit('setPagPage', page);
 
-            await messagesAPI.allMessages(
+            await commentsAPI.fetchComments(
                 getters.pageSize,
                 page,
                 axiosRes => {
-                    commit('setMessages', axiosRes.data.data);
+                    commit('setComments', axiosRes.data.data);
 
                     if (getters.totalPagesCount === null) {
                         commit('setTotalPagesCount', axiosRes.data.last_page);
                     }
                 },
                 axiosError => {
-                    console.log('Fetch messages error; ' + axiosError)
+                    console.log('Fetch comments error; ' + axiosError)
                     dispatch('app/errorPage', null, { root: true });
                 }
             );

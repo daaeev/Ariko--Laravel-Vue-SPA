@@ -4,7 +4,7 @@
     <div class="messages-block">
       <messages-list
         :messages="messages"
-        v-if="messages?.length >= 1"
+        v-if="messages.length >= 1"
         @delete="onClickDeleteButton"
       ></messages-list>
       <div v-else class="text-center">
@@ -15,6 +15,7 @@
         :pagPage="pagPage"
         :totalPagesCount="totalPagesCount"
         @changePage="fetchMessages"
+        v-if="messages.length >= 1"
       ></pagination>
     </div>
   </div>
@@ -38,7 +39,7 @@ export default {
     return {
       removeFailedMessage: '',
     };
-  },  
+  },
 
   computed: {
     ...mapGetters("messages", ["totalPagesCount", "pagPage", "messages"]),
@@ -48,6 +49,8 @@ export default {
     ...mapActions("messages", ["fetchMessages"]),
 
     onClickDeleteButton(messageID) {
+        this.removeFailedMessage = '';
+
       messageAPI.deleteMessage(
         messageID,
         () => document.querySelector('.message-' + messageID).remove(),

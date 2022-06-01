@@ -14,7 +14,7 @@ class PostController extends Controller
      * @param PaginationData $validate
      * @return \Illuminate\Http\JsonResponse
      */
-    public function postsList(PaginationData $validate)
+    public function postsList(PaginationData $validate): \Illuminate\Http\JsonResponse
     {
         $perPage = $validate->validated('_limit');
 
@@ -33,7 +33,7 @@ class PostController extends Controller
      * @return \Illuminate\Http\JsonResponse
      * @throws \Illuminate\Database\Eloquent\ModelNotFoundException
      */
-    public function single($post_id)
+    public function single($post_id): \Illuminate\Http\JsonResponse
     {
         return response()->json(
             $this->query_helper
@@ -50,7 +50,7 @@ class PostController extends Controller
      * @param $tag
      * @return \Illuminate\Http\JsonResponse
      */
-    public function postByTag($tag, PaginationData $validate)
+    public function postByTag($tag, PaginationData $validate): \Illuminate\Http\JsonResponse
     {
         $perPage = $validate->validated('_limit');
 

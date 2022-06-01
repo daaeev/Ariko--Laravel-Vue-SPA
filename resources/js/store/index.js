@@ -5,6 +5,7 @@ import posts from './Posts';
 import auth from './Auth';
 import videos from "./Videos.js";
 import messages from "./Messages.js";
+import comments from "./Comments.js";
 
 export default createStore({
     modules: {
@@ -14,5 +15,6 @@ export default createStore({
         auth,
         videos,
         messages,
+        comments
     },
 });

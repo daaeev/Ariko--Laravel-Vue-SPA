@@ -18,7 +18,7 @@ class UserController extends Controller
      * @return \Illuminate\Http\JsonResponse
      * @throws HttpException
      */
-    public function create(User $model, CreateUser $validate)
+    public function create(User $model, CreateUser $validate): \Illuminate\Http\JsonResponse
     {
         $data = $validate->validated();
         $data['password'] = Hash::make($data['password']);
@@ -38,7 +38,7 @@ class UserController extends Controller
      * @param User $model
      * @return \Illuminate\Http\JsonResponse
      */
-    public function deleteUser(User $model)
+    public function deleteUser(User $model): \Illuminate\Http\JsonResponse
     {
         $model_id = $model->id;
 

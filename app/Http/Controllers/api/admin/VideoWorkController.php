@@ -24,7 +24,7 @@ class VideoWorkController extends Controller
         VideoWork $model,
         FileProcessingInterface $fileProcessing,
         CreateVideoWork $validate
-    ) {
+    ): \Illuminate\Http\JsonResponse {
         $data = $validate->validated();
 
         $video = $data['video'];
@@ -59,7 +59,7 @@ class VideoWorkController extends Controller
      * @param FileProcessingInterface $fileProcessing
      * @return \Illuminate\Http\JsonResponse
      */
-    public function deleteWork(VideoWork $model, FileProcessingInterface $fileProcessing)
+    public function deleteWork(VideoWork $model, FileProcessingInterface $fileProcessing): \Illuminate\Http\JsonResponse
     {
         $model_id = $model->id;
         $fileProcessing->disk('public')->directory('videos');

@@ -14,7 +14,7 @@ class PhotoController extends Controller
      * @param PaginationData $validate
      * @return \Illuminate\Http\JsonResponse
      */
-    public function photosList(PaginationData $validate)
+    public function photosList(PaginationData $validate): \Illuminate\Http\JsonResponse
     {
         $perPage = $validate->validated('_limit');
 

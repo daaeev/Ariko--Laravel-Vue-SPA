@@ -155,7 +155,7 @@ class CommentsControllerTest extends TestCase
             $query_helper_mock
         );
 
-        $this->get(route('comments.by-post', $post_id))
+        $this->get(route('comments.list.by-post', $post_id))
             ->assertOk()
             ->assertJson($result);
     }

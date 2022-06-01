@@ -16,7 +16,7 @@ class MessageController extends Controller
      * @return \Illuminate\Http\JsonResponse
      * @throws HttpException
      */
-    public function create(Message $model, CreateMessage $validate)
+    public function create(Message $model, CreateMessage $validate): \Illuminate\Http\JsonResponse
     {
         $model->fill($validate->validated());
 

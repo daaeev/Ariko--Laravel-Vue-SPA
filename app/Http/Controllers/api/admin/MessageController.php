@@ -5,6 +5,7 @@ namespace App\Http\Controllers\api\admin;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\PaginationData;
 use App\Models\Message;
+use Illuminate\Http\JsonResponse;
 use Symfony\Component\HttpKernel\Exception\HttpException;
 
 class MessageController extends Controller
@@ -13,9 +14,9 @@ class MessageController extends Controller
      * Получение всех писем
      *
      * @param PaginationData $validate
-     * @return \Illuminate\Contracts\Pagination\LengthAwarePaginator
+     * @return JsonResponse
      */
-    public function messagesList(PaginationData $validate)
+    public function messagesList(PaginationData $validate): JsonResponse
     {
         $perPage = $validate->validated('_limit');
 

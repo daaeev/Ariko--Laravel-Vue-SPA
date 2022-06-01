@@ -34,7 +34,7 @@
 <script>
 import { mapActions, mapGetters } from "vuex";
 import PortfolioInfo from "../components/singleP/PortfolioInfo";
-import ProjectsPagination from "../components/singleP/ProjectsPagination";
+import ProjectsPagination from "../components/pagination/ProjectsPagination";
 import VideoPlayer from "../components/videoSingle/VideoPlayer";
 
 export default {

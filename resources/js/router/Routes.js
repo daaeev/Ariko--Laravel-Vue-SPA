@@ -9,6 +9,7 @@ import Blog from '../pages/Blog';
 import SinglePost from '../pages/SinglePost';
 import AdminIndex from '../pages/admin/Index.vue'
 import AdminMessages from '../pages/admin/Messages.vue'
+import AdminComments from '../pages/admin/Comments.vue'
 import Videos from "../pages/Videos";
 import SingleVideo from "../pages/SingleVideo";
 
@@ -84,6 +85,14 @@ export default [
         path: '/admin/messages',
         component: AdminMessages,
         name: 'admin.messages',
+        meta: {
+            requiresAuth: true
+        }
+    },
+    {
+        path: '/admin/comments',
+        component: AdminComments,
+        name: 'admin.comments',
         meta: {
             requiresAuth: true
         }

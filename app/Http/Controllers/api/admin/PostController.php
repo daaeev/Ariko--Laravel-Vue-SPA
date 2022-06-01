@@ -23,7 +23,7 @@ class PostController extends Controller
         FileProcessingInterface $fileProc,
         Post $model,
         CreatePost $validate
-    ) {
+    ): \Illuminate\Http\JsonResponse {
         $data = $validate->validated();
         $fileProc->disk('public')->directory('posts_previews');
 
@@ -80,7 +80,7 @@ class PostController extends Controller
      * @param FileProcessingInterface $fileProc
      * @return \Illuminate\Http\JsonResponse
      */
-    public function deletePost(Post $model, FileProcessingInterface $fileProc)
+    public function deletePost(Post $model, FileProcessingInterface $fileProc): \Illuminate\Http\JsonResponse
     {
         $model_id = $model->id;
         $main_image = $model->main_image;

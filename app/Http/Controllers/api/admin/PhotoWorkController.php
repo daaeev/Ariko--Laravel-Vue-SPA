@@ -23,7 +23,7 @@ class PhotoWorkController extends Controller
     public function createWork(
         PhotoWork $model,
         CreatePhotoWork $validate
-    ) {
+    ): \Illuminate\Http\JsonResponse {
         $data = $validate->validated();
 
         // Занесение данных работы в бд
@@ -46,7 +46,7 @@ class PhotoWorkController extends Controller
     public function addImagesToWork(
         FileProcessingInterface $imgProcess,
         AddImagesToWork         $validate
-    ) {
+    ): \Illuminate\Http\JsonResponse {
         $data = $validate->validated();
         $imgProcess->disk('public')->directory('photos');
 
@@ -70,13 +70,13 @@ class PhotoWorkController extends Controller
     }
 
     /**
-     * Удаление работы 
+     * Удаление работы
      *
      * @param PhotoWork $model
      * @param FileProcessingInterface $fileProcessing
      * @return \Illuminate\Http\JsonResponse
      */
-    public function deleteWork(PhotoWork $model, FileProcessingInterface $fileProcessing)
+    public function deleteWork(PhotoWork $model, FileProcessingInterface $fileProcessing): \Illuminate\Http\JsonResponse
     {
         $model_id = $model->id;
         $images = $model->images;

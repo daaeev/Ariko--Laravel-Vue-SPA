@@ -17,7 +17,7 @@ class CommentController extends Controller
      * @return \Illuminate\Http\JsonResponse
      * @throws \Symfony\Component\HttpKernel\Exception\HttpException
      */
-    public function createComment(Comment $model, CreateComment $validate)
+    public function createComment(Comment $model, CreateComment $validate): \Illuminate\Http\JsonResponse
     {
         $data = $validate->validated();
 
@@ -36,7 +36,7 @@ class CommentController extends Controller
      * @param $post_id
      * @return \Illuminate\Http\JsonResponse
      */
-    public function commentsByPost($post_id)
+    public function commentsByPost($post_id): \Illuminate\Http\JsonResponse
     {
         return response()->json(
             $this->query_helper

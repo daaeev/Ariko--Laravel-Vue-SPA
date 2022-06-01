@@ -33,7 +33,7 @@
 import { mapActions, mapGetters } from "vuex";
 import ImageSlider from "../components/singleP/ImageSlider";
 import PortfolioInfo from "../components/singleP/PortfolioInfo";
-import ProjectsPagination from "../components/singleP/ProjectsPagination";
+import ProjectsPagination from "../components/pagination/ProjectsPagination";
 
 export default {
   components: {

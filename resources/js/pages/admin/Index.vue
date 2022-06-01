@@ -46,68 +46,69 @@
         </div>
 
         <div class="text-center mt-10">
-            <router-link :to="{name: 'admin.messages'}">Go to messages page -></router-link>
+            <router-link :to="{name: 'admin.messages'}">Go to messages page -></router-link><br>
+            <router-link :to="{name: 'admin.comments'}">Go to comments page -></router-link><br>
         </div>
     </div>
 
     <!-- Dialogs -->
         <my-dialog v-model:show="createUserShow">
-            <alert v-if="createUserSuccess" :type="'success'">{{createUserSuccess}}</alert>
-            <alert v-if="createUserFailed" :type="'danger'">{{createUserFailed}}</alert>
+            <alert v-if="APIsuccess" :type="'success'">{{APIsuccess}}</alert>
+            <alert v-if="APIfailed" :type="'danger'">{{APIfailed}}</alert>
             <create-user-form @submit="submitCreateUserForm"></create-user-form>
         </my-dialog>
 
         <my-dialog v-model:show="createPhotoWorkShow">
-            <alert v-if="createPhotoWorkSuccess" :type="'success'">{{createPhotoWorkSuccess}}</alert>
-            <alert v-if="createPhotoWorkFailed" :type="'danger'">{{createPhotoWorkFailed}}</alert>
+            <alert v-if="APIsuccess" :type="'success'">{{APIsuccess}}</alert>
+            <alert v-if="APIfailed" :type="'danger'">{{APIfailed}}</alert>
             <create-photo-work-form @submit="submitCreatePhotoWorkForm"></create-photo-work-form>
         </my-dialog>
 
         <my-dialog v-model:show="addImagesToWorkShow">
-            <alert v-if="addImagesSuccess" :type="'success'">{{addImagesSuccess}}</alert>
-            <alert v-if="addImagesFailed" :type="'danger'">{{addImagesFailed}}</alert>
+            <alert v-if="APIsuccess" :type="'success'">{{APIsuccess}}</alert>
+            <alert v-if="APIfailed" :type="'danger'">{{APIfailed}}</alert>
             <add-images-to-work-form @submit="submitAddImagesToWorkForm"></add-images-to-work-form>
         </my-dialog>
 
         <my-dialog v-model:show="createPostShow">
-            <alert v-if="createPostSuccess" :type="'success'">{{createPostSuccess}}</alert>
-            <alert v-if="createPostFailed" :type="'danger'">{{createPostFailed}}</alert>
+            <alert v-if="APIsuccess" :type="'success'">{{APIsuccess}}</alert>
+            <alert v-if="APIfailed" :type="'danger'">{{APIfailed}}</alert>
             <create-post-form @submit="submitCreatePostForm"></create-post-form>
         </my-dialog>
 
         <my-dialog v-model:show="createVideoWorkShow">
-            <alert v-if="createVideoWorkSuccess" :type="'success'">{{createVideoWorkSuccess}}</alert>
-            <alert v-if="createVideoWorkFailed" :type="'danger'">{{createVideoWorkFailed}}</alert>
+            <alert v-if="APIsuccess" :type="'success'">{{APIsuccess}}</alert>
+            <alert v-if="APIfailed" :type="'danger'">{{APIfailed}}</alert>
             <create-video-work-form @submit="submitCreateVideoWorkForm"></create-video-work-form>
         </my-dialog>
 
         <my-dialog v-model:show="deletePhotoWorkShow">
-            <alert v-if="deletePhotoWorkSuccess" :type="'success'">{{deletePhotoWorkSuccess}}</alert>
-            <alert v-if="deletePhotoWorkFailed" :type="'danger'">{{deletePhotoWorkFailed}}</alert>
+            <alert v-if="APIsuccess" :type="'success'">{{APIsuccess}}</alert>
+            <alert v-if="APIfailed" :type="'danger'">{{APIfailed}}</alert>
             <delete-form @submit="submitDeletePhotoWorkForm"></delete-form>
         </my-dialog>
 
         <my-dialog v-model:show="deletePostShow">
-            <alert v-if="deletePostSuccess" :type="'success'">{{deletePostSuccess}}</alert>
-            <alert v-if="deletePostFailed" :type="'danger'">{{deletePostFailed}}</alert>
+            <alert v-if="APIsuccess" :type="'success'">{{APIsuccess}}</alert>
+            <alert v-if="APIfailed" :type="'danger'">{{APIfailed}}</alert>
             <delete-form @submit="submitDeletePostForm"></delete-form>
         </my-dialog>
 
         <my-dialog v-model:show="deleteVideoWorkShow">
-            <alert v-if="deleteVideoWorkSuccess" :type="'success'">{{deleteVideoWorkSuccess}}</alert>
-            <alert v-if="deleteVideoWorkFailed" :type="'danger'">{{deleteVideoWorkFailed}}</alert>
+            <alert v-if="APIsuccess" :type="'success'">{{APIsuccess}}</alert>
+            <alert v-if="APIfailed" :type="'danger'">{{APIfailed}}</alert>
             <delete-form @submit="submitDeleteVideoWorkForm"></delete-form>
         </my-dialog>
 
         <my-dialog v-model:show="deleteUserShow">
-            <alert v-if="deleteUserSuccess" :type="'success'">{{deleteUserSuccess}}</alert>
-            <alert v-if="deleteUserFailed" :type="'danger'">{{deleteUserFailed}}</alert>
+            <alert v-if="APIsuccess" :type="'success'">{{APIsuccess}}</alert>
+            <alert v-if="APIfailed" :type="'danger'">{{APIfailed}}</alert>
             <delete-form @submit="submitDeleteUserForm"></delete-form>
         </my-dialog>
 
         <my-dialog v-model:show="addTagShow">
-            <alert v-if="addTagSuccess" :type="'success'">{{addTagSuccess}}</alert>
-            <alert v-if="addTagFailed" :type="'danger'">{{addTagFailed}}</alert>
+            <alert v-if="APIsuccess" :type="'success'">{{APIsuccess}}</alert>
+            <alert v-if="APIfailed" :type="'danger'">{{APIfailed}}</alert>
             <tag-to-post-form @submit="submitAddTagForm"></tag-to-post-form>
         </my-dialog>
     <!-- Dialogs -->
@@ -146,239 +147,222 @@ export default {
 
     data() {
         return {
+            APIfailed: '',
+            APIsuccess: '',
+
             // CREATE USER FORM
             createUserShow: false,
-            createUserSuccess: '',
-            createUserFailed: '',
 
             // CREATE PHOTO WORK FORM
             createPhotoWorkShow: false,
-            createPhotoWorkSuccess: '',
-            createPhotoWorkFailed: '',
 
             // ADD IMAGES TO WORK FORM
             addImagesToWorkShow: false,
-            addImagesSuccess: '',
-            addImagesFailed: '',
 
             // CREATE POST FORM
             createPostShow: false,
-            createPostSuccess: '',
-            createPostFailed: '',
 
             // CREATE VIDEO WORK FORM
             createVideoWorkShow: false,
-            createVideoWorkSuccess: '',
-            createVideoWorkFailed: '',
 
             // DELETE PHOTO WORK FORM
             deletePhotoWorkShow: false,
-            deletePhotoWorkSuccess: '',
-            deletePhotoWorkFailed: '',
 
             // DELETE POST FORM
             deletePostShow: false,
-            deletePostSuccess: '',
-            deletePostFailed: '',
 
             // DELETE VIDEO WORK FORM
             deleteVideoWorkShow: false,
-            deleteVideoWorkSuccess: '',
-            deleteVideoWorkFailed: '',
 
             // DELETE USER FORM
             deleteUserShow: false,
-            deleteUserSuccess: '',
-            deleteUserFailed: '',
 
             // ADD TAG TO POST FORM
             addTagShow: false,
-            addTagSuccess: '',
-            addTagFailed: '',
         };
     },
 
     methods: {
         // Форма добавления тега посту
         async submitAddTagForm(formData) {
-            this.addTagSuccess = '';
-            this.addTagFailed = '';
+            this.APIfailed = '';
+            this.APIsuccess = '';
 
             await axiosTagAPI.addTagToPost(
                 formData,
-                () => this.addTagSuccess = 'Tag added success',
-                axiosError => this.addTagFailed = axiosError.response?.data.message ?? 'Tag deleted failed',
+                () => this.APIsuccess = 'Tag added success',
+                axiosError => this.APIfailed = axiosError.response?.data.message ?? 'Tag deleted failed',
             );
 
             setTimeout(() => {
-                this.addTagSuccess = '';
-                this.addTagFailed = '';
+                this.APIfailed = '';
+                this.APIsuccess = '';
             }, 5000);
         },
 
         // Форма удаления пользователя
         async submitDeleteUserForm(formData) {
-            this.deleteUserSuccess = '';
-            this.deleteUserFailed = '';
+            this.APIfailed = '';
+            this.APIsuccess = '';
 
             const user_id = formData.get('id');
 
             await axiosUserAPI.deleteUser(
                 user_id,
-                () => this.deleteUserSuccess = 'User deleted success',
-                axiosError => this.deleteUserFailed = axiosError.response?.data.message ?? 'User deleted failed',
+                () => this.APIsuccess = 'User deleted success',
+                axiosError => this.APIfailed = axiosError.response?.data.message ?? 'User deleted failed',
             );
 
             setTimeout(() => {
-                this.deleteUserSuccess = '';
-                this.deleteUserFailed = '';
+                this.APIfailed = '';
+                this.APIsuccess = '';
             }, 5000);
         },
 
         // Форма удаления поста
         async submitDeletePostForm(formData) {
-            this.deletePostSuccess = '';
-            this.deletePostFailed = '';
+            this.APIfailed = '';
+            this.APIsuccess = '';
 
             const post_id = formData.get('id');
 
             await axiosPostAPI.deletePost(
                 post_id,
-                () => this.deletePostSuccess = 'Post deleted success',
-                axiosError => this.deletePostFailed = axiosError.response?.data.message ?? 'Post deleted failed',
+                () => this.APIsuccess = 'Post deleted success',
+                axiosError => this.APIfailed = axiosError.response?.data.message ?? 'Post deleted failed',
             );
 
             setTimeout(() => {
-                this.deletePostSuccess = '';
-                this.deletePostFailed = '';
+                this.APIfailed = '';
+                this.APIsuccess = '';
             }, 5000);
         },
 
         // Форма удаления работы (видео)
         async submitDeleteVideoWorkForm(formData) {
-            this.deleteVideoWorkSuccess = '';
-            this.deleteVideoWorkFailed = '';
+            this.APIfailed = '';
+            this.APIsuccess = '';
 
             const work_id = formData.get('id');
 
             await axiosVideoWorkAPI.deleteWork(
                 work_id,
-                () => this.deleteVideoWorkSuccess = 'Work deleted success',
-                axiosError => this.deleteVideoWorkFailed = axiosError.response?.data.message ?? 'Work deleted failed',
+                () => this.APIsuccess = 'Work deleted success',
+                axiosError => this.APIfailed = axiosError.response?.data.message ?? 'Work deleted failed',
             );
 
             setTimeout(() => {
-                this.deleteVideoWorkSuccess = '';
-                this.deleteVideoWorkFailed = '';
+                this.APIfailed = '';
+                this.APIsuccess = '';
             }, 5000);
         },
 
         // Форма удаления работы (фотографии)
         async submitDeletePhotoWorkForm(formData) {
-            this.deletePhotoWorkSuccess = '';
-            this.deletePhotoWorkFailed = '';
+            this.APIfailed = '';
+            this.APIsuccess = '';
 
             const work_id = formData.get('id');
 
             await axiosPhotoWorkAPI.deleteWork(
                 work_id,
-                () => this.deletePhotoWorkSuccess = 'Work deleted success',
-                axiosError => this.deletePhotoWorkFailed = axiosError.response?.data.message ?? 'Work deleted failed',
+                () => this.APIsuccess = 'Work deleted success',
+                axiosError => this.APIfailed = axiosError.response?.data.message ?? 'Work deleted failed',
             );
 
             setTimeout(() => {
-                this.deletePhotoWorkSuccess = '';
-                this.deletePhotoWorkFailed = '';
+                this.APIfailed = '';
+                this.APIsuccess = '';
             }, 5000);
         },
 
         // Форма создание пользователя
         async submitCreateUserForm(formData)
         {
-            this.createUserSuccess = '';
-            this.createUserFailed = '';
+            this.APIfailed = '';
+            this.APIsuccess = '';
 
             await axiosUserAPI.createUser(
                 formData,
-                axiosRes => this.createUserSuccess = 'User create success (ID:' + axiosRes.data.id + ')',
-                axiosError => this.createUserFailed = axiosError.response?.data.message ?? 'User create failed',
+                axiosRes => this.APIsuccess = 'User create success (ID:' + axiosRes.data.id + ')',
+                axiosError => this.APIfailed = axiosError.response?.data.message ?? 'User create failed',
             );
 
             setTimeout(() => {
-                this.createUserSuccess = '';
-                this.createUserFailed = '';
+                this.APIfailed = '';
+                this.APIsuccess = '';
             }, 5000);
         },
 
         // Форма создания работы (фотографии)
         async submitCreatePhotoWorkForm(formData)
         {
-            this.createPhotoWorkSuccess = '';
-            this.createPhotoWorkFailed = '';
+            this.APIfailed = '';
+            this.APIsuccess = '';
 
             await axiosPhotoWorkAPI.createPhotoWork(
                 formData,
-                axiosRes => this.createPhotoWorkSuccess = 'Work create success (id: ' + axiosRes.data.id + ')',
-                axiosError => this.createPhotoWorkFailed = axiosError.response?.data.message ?? 'Work create failed',
+                axiosRes => this.APIsuccess = 'Work create success (id: ' + axiosRes.data.id + ')',
+                axiosError => this.APIfailed = axiosError.response?.data.message ?? 'Work create failed',
             );
 
             setTimeout(() => {
-                this.createPhotoWorkSuccess = '';
-                this.createPhotoWorkFailed = '';
+                this.APIfailed = '';
+                this.APIsuccess = '';
             }, 5000);
         },
 
         // Форма для добавления фотографий к работе
         async submitAddImagesToWorkForm(formData)
         {
-            this.addImagesSuccess = '';
-            this.addImagesFailed = '';
+            this.APIfailed = '';
+            this.APIsuccess = '';
 
             await axiosPhotoWorkAPI.addImagesToWork(
                 formData,
-                () => this.addImagesSuccess = 'Photos added success',
-                axiosError => this.addImagesFailed = axiosError.response?.data.message ?? 'Photos add failed',
+                () => this.APIsuccess = 'Photos added success',
+                axiosError => this.APIfailed = axiosError.response?.data.message ?? 'Photos add failed',
             );
 
             setTimeout(() => {
-                this.addImagesSuccess = '';
-                this.addImagesFailed = '';
+                this.APIfailed = '';
+                this.APIsuccess = '';
             }, 5000);
         },
 
         // Форма создания поста
         async submitCreatePostForm(formData)
         {
-            this.createPostSuccess = '';
-            this.createPostFailed = '';
+            this.APIfailed = '';
+            this.APIsuccess = '';
 
             await axiosPostAPI.createPost(
                 formData,
-                axiosRes => this.createPostSuccess = 'Post create success (ID:' + axiosRes.data.id + ')',
-                axiosError => this.createPostFailed = axiosError.response?.data.message ?? 'Post create failed',
+                axiosRes => this.APIsuccess = 'Post create success (ID:' + axiosRes.data.id + ')',
+                axiosError => this.APIfailed = axiosError.response?.data.message ?? 'Post create failed',
             );
 
             setTimeout(() => {
-                this.createPostSuccess = '';
-                this.createPostFailed = '';
+                this.APIfailed = '';
+                this.APIsuccess = '';
             }, 5000);
         },
 
         // Форма создания работы (видео)
         async submitCreateVideoWorkForm(formData)
         {
-            this.createVideoWorkSuccess = '';
-            this.createVideoWorkFailed = '';
+            this.APIfailed = '';
+            this.APIsuccess = '';
 
             await axiosVideoWorkAPI.createVideoWork(
                 formData,
-                axiosRes => this.createVideoWorkSuccess = 'Work create success (ID:' + axiosRes.data.id + ')',
-                axiosError => this.createVideoWorkFailed = axiosError.response?.data.message ?? 'Work create failed',
+                axiosRes => this.APIsuccess = 'Work create success (ID:' + axiosRes.data.id + ')',
+                axiosError => this.APIfailed = axiosError.response?.data.message ?? 'Work create failed',
             );
 
             setTimeout(() => {
-                this.createVideoWorkSuccess = '';
-                this.createVideoWorkFailed = '';
+                this.APIfailed = '';
+                this.APIsuccess = '';
             }, 5000);
         },
     },

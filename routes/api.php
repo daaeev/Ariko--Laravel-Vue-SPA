@@ -13,6 +13,7 @@ use App\Http\Controllers\api\admin\PostController as AdminPostController;
 use App\Http\Controllers\api\admin\VideoWorkController as AdminVideoWorkController;
 use App\Http\Controllers\api\admin\MessageController as AdminMessageController;
 use App\Http\Controllers\api\admin\TagsController as AdminTagsController;
+use App\Http\Controllers\api\admin\CommentsController as AdminCommentsController;
 
 // ---WORKS---
 
@@ -52,7 +53,7 @@ Route::prefix('posts')->group(function () {
 
 Route::prefix('comments')->group(function () {
     Route::post('/', [CommentController::class, 'createComment'])->middleware('throttle:1,5')->name('comment.create');
-    Route::get('/{post_id}', [CommentController::class, 'commentsByPost'])->name('comments.by-post');
+    Route::get('/{post_id}', [CommentController::class, 'commentsByPost'])->name('comments.list.by-post');
 });
 
 // !!!COMMENTS!!!
@@ -112,6 +113,14 @@ Route::middleware('auth')->group(function () {
         Route::post('/add/tag/to/post', [AdminTagsController::class, 'addTagToPost'])->name('tags.add-to-post');
 
     // !!!TAGS!!!
+
+    // ---COMMENTS---
+
+        Route::get('/comments', [AdminCommentsController::class, 'commentsList'])->name('comments.list');
+        Route::delete('/comments/{model}', [AdminCommentsController::class, 'deleteComment'])->name('comment.delete');
+        Route::patch('/comments/checked/{model}', [AdminCommentsController::class, 'setCheckedStatus'])->name('comment.checked');
+
+    // !!!COMMENTS!!!
 });
 
 // !!!ADMIN ROUTES!!!

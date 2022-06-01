@@ -14,7 +14,7 @@ class VideoController extends Controller
      * @param PaginationData $validate
      * @return \Illuminate\Http\JsonResponse
      */
-    public function videosList(PaginationData $validate)
+    public function videosList(PaginationData $validate): \Illuminate\Http\JsonResponse
     {
         $perPage = $validate->validated('_limit');
 
@@ -31,7 +31,7 @@ class VideoController extends Controller
      * @param $work_id
      * @return \Illuminate\Http\JsonResponse
      */
-    public function single($work_id)
+    public function single($work_id): \Illuminate\Http\JsonResponse
     {
         return response()->json(
             $this->query_helper
@@ -47,7 +47,7 @@ class VideoController extends Controller
      * @param $work_id
      * @return \Illuminate\Http\JsonResponse
      */
-    public function videosNextAndPrevIds($work_id)
+    public function videosNextAndPrevIds($work_id): \Illuminate\Http\JsonResponse
     {
         $builder_next = $this->query_helper->queryBuilder(VideoWork::class);
         $builder_prev = $this->query_helper->queryBuilder(VideoWork::class);
