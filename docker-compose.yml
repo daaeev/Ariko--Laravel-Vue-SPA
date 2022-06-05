@@ -49,7 +49,5 @@ services:
     restart: always
     ports:
         - '8081:80'
-    networks:
-        - default
     depends_on:
       - db
