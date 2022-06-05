@@ -1,0 +1,55 @@
+version: "3"
+
+services:
+
+  # PHP + composer + node
+  app:
+    volumes:
+      - ./:/var/www/
+      - ./_docker/php/php.ini:/usr/local/etc/php/php.ini
+    working_dir: /var/www
+    build: 
+      context: .
+      dockerfile: ./_docker/php/Dockerfile
+    depends_on:
+      - db
+    restart: always
+
+  nginx:
+    image: nginx
+    volumes:
+      - ./:/var/www/
+      - ./_docker/nginx/conf.d/:/etc/nginx/conf.d/
+    ports:
+      - 80:80
+    depends_on:
+      - app
+    restart: always
+
+  db:
+    image: mysql:8.0
+    restart: always
+    ports:
+      - 3306:3306
+    volumes:
+      - ./_docker/tmp/db:/var/lib/mysql
+      - ./_docker/mysql/init/:/docker-entrypoint-initdb.d/
+    environment:
+      MYSQL_ALLOW_EMPTY_PASSWORD: 1
+      MYSQL_DATABASE: ariko
+    command: mysqld --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
+    cap_add:
+      - SYS_NICE
+  
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    environment:
+        - PMA_ARBITRARY=1
+        - PMA_HOST=db
+    restart: always
+    ports:
+        - '8081:80'
+    networks:
+        - default
+    depends_on:
+      - db

@@ -64,6 +64,6 @@ export default {
     adminCommentsPerPage: 10,
 
     copyright: '© 2018 PxlSolutions Media, Inc',
-    api_domain: 'http://ariko.vue',
+    api_domain: 'http://127.0.0.1',
     email: 'ariko@ariko.vue',
 };
