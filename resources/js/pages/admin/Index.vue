@@ -25,13 +25,13 @@
                 <dialog-button v-model:show="createVideoWorkShow">Create video work</dialog-button>
             </div>
 
+        </div>
+
+        <div class="row mt-5">
             <div class="col-md-2">
                 <dialog-button v-model:show="deletePhotoWorkShow">Delete photo work</dialog-button>
             </div>
 
-        </div>
-
-        <div class="row mt-5">
             <div class="col-md-2">
                 <dialog-button v-model:show="deleteVideoWorkShow">Delete video work</dialog-button>
             </div>
