@@ -19,8 +19,6 @@
                                     <router-link :to="{name: 'works.photos.single', params: {id: work.id}}" class="more-link">
                                         <i class="ion-md-arrow-forward"></i>
                                     </router-link>
-
-                                    <i class="ion-md-heart-empty favorite"></i>
                                 </div>
                             </div>
 
