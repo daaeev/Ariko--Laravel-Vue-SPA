@@ -46,20 +46,17 @@ export default {
   },
 
   methods: {
-    ...mapActions("messages", ["fetchMessages"]),
+    ...mapActions("messages", ["fetchMessages", 'deleteMessage']),
 
     onClickDeleteButton(messageID) {
         this.removeFailedMessage = '';
 
-      messageAPI.deleteMessage(
-        messageID,
-        () => document.querySelector('.message-' + messageID).remove(),
-        axiosError => {
+      this.deleteMessage(messageID)
+        .catch(axiosError => {
           this.removeFailedMessage = axiosError.response?.data.message ?? 'Message delete failed';
 
           setTimeout(async () => this.removeFailedMessage = '', 7000);
-        }
-      );
+        });
     }
   },
 
@@ -78,3 +75,4 @@ export default {
   border-radius: 5px;
 }
 </style>
+ */

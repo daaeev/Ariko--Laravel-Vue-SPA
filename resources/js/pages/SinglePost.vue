@@ -1,4 +1,4 @@
-<template>
+/* <template>
   <!-- content section -->
   <section class="blog-content">
     <div class="container container-padding">
@@ -41,6 +41,7 @@ import SingleInfo from "../components/blogP/singleInfo.vue";
 import CommentForm from "../components/blogP/commentForm.vue";
 import Alert from "../components/UI/Alert.vue";
 import CommentsList from "../components/blogP/commentsList.vue";
+import commentApi from '../logic/api/Comments';
 
 export default {
   components: { EmailSection, SingleInfo, CommentForm, Alert, CommentsList },
@@ -72,13 +73,9 @@ export default {
       this.CreateCommentFailed = "";
 
       await this.createComment(formData)
-        .then(
-          () =>
-            (this.CreateCommentSuccess =
-              "Your comment has been create successfully")
-        )
+        .then(() => this.CreateCommentSuccess = "Your comment has been create successfully")
         .catch((error) => {
-          if (error.response.status == 429) {
+          if (error?.response?.status == 429) {
             this.CreateCommentFailed =
               "Comment create limit exceeded. Wait " +
               error.response.headers["retry-after"] +
@@ -106,3 +103,4 @@ export default {
 
 <style>
 </style>
+ */

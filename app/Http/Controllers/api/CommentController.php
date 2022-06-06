@@ -23,11 +23,11 @@ class CommentController extends Controller
 
         $model->fill($data);
 
-        if ($model->save()) {
-            return response()->json($model);
+        if (!$model->save()) {
+            throw new HttpException(500, 'Save in database failed');
         }
 
-        throw new HttpException(500, 'Save in database failed');
+        return response()->json($model);
     }
 
     /**

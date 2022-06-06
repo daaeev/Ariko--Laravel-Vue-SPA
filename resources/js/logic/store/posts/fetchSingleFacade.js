@@ -8,17 +8,6 @@ export default {
         },
     },
 
-    mutations: {
-        addCommentToSingle(state, comment) {
-            if (state.single.comments) {
-                state.single.comments[state.single.comments.length] = comment;
-            } else {
-                state.single.comments = [];
-                state.single.comments[0] = comment;
-            }
-        }
-    },
-
     actions: {
         /**
          * Несколько операций для получения поста с идентификатором post_id

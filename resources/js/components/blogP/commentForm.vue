@@ -50,7 +50,7 @@
       </div>
     </div>
 
-      <input type="hidden" name="post_id" :value="this.$route.params.id">
+    <input type="hidden" name="post_id" :value="this.$route.params.id">
 
     <button
       type="submit"

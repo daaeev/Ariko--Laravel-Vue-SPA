@@ -20,10 +20,10 @@ class MessageController extends Controller
     {
         $model->fill($validate->validated());
 
-        if ($model->save()) {
-            return response()->json($model);
+        if (!$model->save()) {
+            throw new HttpException(500, 'Save in database failed');
         }
 
-        throw new HttpException(500, 'Save in database failed');
+        return response()->json($model);
     }
 }

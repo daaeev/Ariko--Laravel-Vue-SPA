@@ -5,7 +5,7 @@ export default {
     state: {
         pagPage: null,
         totalPagesCount: null,
-        pageSize: SiteSettings.adminMessagesPerPage,
+        pageSize: SiteSettings.adminCatalog,
     },
 
     getters: {

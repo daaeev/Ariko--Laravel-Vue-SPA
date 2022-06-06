@@ -12,9 +12,7 @@ export default {
             await FetchComments.createComment(
                 formData,
                 axiosRes => commit('addCommentToSingle', axiosRes.data),
-                axiosError => {
-                    throw axiosError;
-                },
+                axiosError => {throw axiosError},
             );
         },
     }

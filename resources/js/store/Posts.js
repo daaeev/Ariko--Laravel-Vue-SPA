@@ -1,6 +1,6 @@
 import fetchPostsWithSimplePagination from "../logic/store/posts/fetchPostsWithSimplePagination";
 import fetchSingleFacade from "../logic/store/posts/fetchSingleFacade";
-import createComment from '../logic/store/posts/createComment';
+import createComment from '../logic/store/comments/createComment';
 
 export default {
     state: {
@@ -30,6 +30,15 @@ export default {
 
         setSingle(state, post) {
             state.single = post;
+        },
+
+        addCommentToSingle(state, comment) {
+            if (state['single'].comments) {
+                state['single'].comments[state['single'].comments.length] = comment;
+            } else {
+                state['single'].comments = [];
+                state['single'].comments[0] = comment;
+            }
         },
 
         ...fetchPostsWithSimplePagination.mutations,

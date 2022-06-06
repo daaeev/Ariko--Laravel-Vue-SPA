@@ -1,4 +1,6 @@
 import fetchMessagesWithNumericPag from '../logic/store/messages/fetchMessagesWithNumericPag';
+import deleteMessage from '../logic/store/messages/deleteMessage';
+import createMessage from '../logic/store/messages/createMessage';
 
 export default {
     state: {
@@ -21,10 +23,13 @@ export default {
         },
 
         ...fetchMessagesWithNumericPag.mutations,
+        ...deleteMessage.mutations,
     },
 
     actions: {
         ...fetchMessagesWithNumericPag.actions,
+        ...deleteMessage.actions,
+        ...createMessage.actions,
     },
 
     namespaced: true

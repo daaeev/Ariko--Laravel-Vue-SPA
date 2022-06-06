@@ -18,7 +18,7 @@
       <img
         :src="'/storage/posts_previews/' + single.main_image"
         alt="blog-thumb"
-      />
+        v-if="single?.main_image">
     </div>
     <div class="content">
       {{ single.content }}

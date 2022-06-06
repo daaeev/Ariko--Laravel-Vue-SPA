@@ -60,10 +60,9 @@ export default {
     photosPerPage: 6,
     videosPerPage: 3,
     blogPerPage: 10,
-    adminMessagesPerPage: 10,
-    adminCommentsPerPage: 10,
+    adminCatalog: 10,
 
     copyright: '© 2018 PxlSolutions Media, Inc',
-    api_domain: 'http://127.0.0.1',
+    api_domain: 'http://ariko.vue',
     email: 'ariko@ariko.vue',
 };
