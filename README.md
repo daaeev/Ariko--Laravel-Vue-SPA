@@ -1,6 +1,8 @@
 # Сайт-портфолио на laravel в связке с Vue.js 3
 
 ### Для развёртывания проекта следует:
+- В докер контейнере 'app' установлен composer и npm, по этому следующие три команды стоит
+выполнять именно в нём (`docker-compose exec app bash`)
 - Выполнить команду `composer install`
 - Выполнить команду `npm install`
 - Выполнить команду `npm run dev`
@@ -19,7 +21,7 @@
 - Почта - admin@ariko.vue
 - Пароль - password
 
-Админ панель: site.ua/admin
+Админ панель: localhost/admin
 
 ### Я освоил:
 - Написание API при помощи laravel
