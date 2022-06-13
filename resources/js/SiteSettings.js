@@ -1,4 +1,6 @@
 export default {
+
+    // НАСТРОЙКА МЕНЮШКИ
     overlay_menu: [
         {
             title: 'Works',
@@ -31,6 +33,7 @@ export default {
         },
     ],
 
+    // ННАСТРОЙКА ССЫЛОК НА СОЦ. СЕТИ
     social_links: [
         {
             url: '#',
@@ -50,6 +53,7 @@ export default {
         },
     ],
 
+    // БЛОК 'ВОЗМОЖНОСТИ' НА СТРАНИЦЕ 'О НАС'
     capabilities: [
         'Mobile development',
         'WordPress development',
@@ -57,12 +61,24 @@ export default {
         'Branding',
     ],
 
+    // КОЛИЧЕСТВО ФОТОГРАФИЙ НА '1 СТРАНИЦЕ'
     photosPerPage: 6,
+
+    // КОЛИЧЕСТВО ВИДЕО НА '1 СТРАНИЦЕ'
     videosPerPage: 3,
+
+    // КОЛИЧЕСТВО ПОСТОВ НА '1 СТРАНИЦЕ'
     blogPerPage: 10,
+
+    // КОЛИЧЕСТВО ЕЛЕМЕНТОВ В АДМИН ПАНЕЛИ НА '1 СТРАНИЦЕ'
     adminCatalog: 10,
 
+    // АВТОРСКИЕ ПРАВА 
     copyright: '© 2018 PxlSolutions Media, Inc',
+
+    // ДОМЕН ДЛЯ АПИ
     api_domain: 'http://ariko.vue',
+
+    // ПОЧТА ДЛЯ СОТРУДНИЧЕСТВА
     email: 'ariko@ariko.vue',
 };
