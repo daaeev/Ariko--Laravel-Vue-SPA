@@ -51,7 +51,7 @@ export default {
             await this.createMessage(formData)
                 .then(() => this.submitSuccessMessage = 'Your message has been sent successfully')
                 .catch((error) => {
-                    if (error.response.status == 429) {
+                    if (error?.response?.status == 429) {
                         this.submitFailedMessage = 'Message sending limit exceeded. Wait ' + error.response.headers['retry-after'] + ' seconds';
                     } else {
                         this.submitFailedMessage = 'Oops, something wrong';

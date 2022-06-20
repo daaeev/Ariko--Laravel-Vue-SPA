@@ -77,7 +77,12 @@ export default {
     copyright: '© 2018 PxlSolutions Media, Inc',
 
     // ДОМЕН ДЛЯ АПИ
-    api_domain: 'http://ariko.vue',
+    // OS: http://ariko.vue
+    // docker: http://localhost
+    api_domain: 'http://localhost',
+
+    // URI для API
+    api_uri: '/api/v1',
 
     // ПОЧТА ДЛЯ СОТРУДНИЧЕСТВА
     email: 'ariko@ariko.vue',

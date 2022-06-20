@@ -1,5 +1,6 @@
 import authAxios from '../../api/Auth';
 import router from '../../../router/Router';
+import adminAxios from '../../../axios/axiosWithAuthToken';
 
 export default {
     actions: {
@@ -12,14 +13,16 @@ export default {
         async login({commit}, formData) {
             await authAxios.login(
                 formData,
-                axiosRes => {
+                async axiosRes => {
                     const token = axiosRes.data;
 
                     if (formData.get('save')) {
                         localStorage.setItem('token', token);
                     }
 
-                    commit('setToken', token);
+                    await commit('setToken', token);
+                    adminAxios.defaults.headers.common['Authorization'] = token;
+                    
                     router.push({name: 'admin.index'});
                 },
                 axiosError => {

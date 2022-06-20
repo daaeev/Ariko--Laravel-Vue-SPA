@@ -22,12 +22,12 @@ export default {
   methods: {
     ...mapActions("auth", ["login"]),
 
-    submitForm(formData) {
+    async submitForm(formData) {
       this.failedLoginMessage = '';
 
-      this.login(formData)
+      await this.login(formData)
         .catch((error) => {
-            if (error.response.status == 429) {
+            if (error?.response?.status == 429) {
                 this.failedLoginMessage =
                     "Login attempt limit exceeded. Wait " +
                     error.response.headers["retry-after"] +

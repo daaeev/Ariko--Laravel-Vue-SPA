@@ -1,22 +1,24 @@
 <?php
 
-use App\Http\Controllers\api\admin\UserController;
-use App\Http\Controllers\api\auth\AuthController;
-use App\Http\Controllers\api\CommentController;
-use App\Http\Controllers\api\PhotoController;
-use App\Http\Controllers\api\VideoController;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\api\MessageController;
-use App\Http\Controllers\api\PostController;
-use App\Http\Controllers\api\admin\PhotoWorkController as AdminPhotoController;
-use App\Http\Controllers\api\admin\PostController as AdminPostController;
-use App\Http\Controllers\api\admin\VideoWorkController as AdminVideoWorkController;
-use App\Http\Controllers\api\admin\MessageController as AdminMessageController;
-use App\Http\Controllers\api\admin\TagsController as AdminTagsController;
-use App\Http\Controllers\api\admin\CommentsController as AdminCommentsController;
+
+use App\Http\Controllers\api\v1\admin\UserController;
+use App\Http\Controllers\api\v1\auth\AuthController;
+use App\Http\Controllers\api\v1\CommentController;
+use App\Http\Controllers\api\v1\PhotoController;
+use App\Http\Controllers\api\v1\VideoController;
+use App\Http\Controllers\api\v1\MessageController;
+use App\Http\Controllers\api\v1\PostController;
+use App\Http\Controllers\api\v1\admin\PhotoWorkController as AdminPhotoController;
+use App\Http\Controllers\api\v1\admin\PostController as AdminPostController;
+use App\Http\Controllers\api\v1\admin\VideoWorkController as AdminVideoWorkController;
+use App\Http\Controllers\api\v1\admin\MessageController as AdminMessageController;
+use App\Http\Controllers\api\v1\admin\TagsController as AdminTagsController;
+use App\Http\Controllers\api\v1\admin\CommentsController as AdminCommentsController;
+
+Route::prefix('v1')->group(function () {
 
 // ---WORKS---
-
 Route::prefix('works')->group(function () {
     Route::prefix('photos')->group(function () {
         Route::get('/', [PhotoController::class, 'photosList'])->name('works.photos');
@@ -124,3 +126,5 @@ Route::middleware('auth')->group(function () {
 });
 
 // !!!ADMIN ROUTES!!!
+
+});
