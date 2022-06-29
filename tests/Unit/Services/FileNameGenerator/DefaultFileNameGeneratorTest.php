@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Feature\Services\FileNameGenerator;
+namespace Tests\Unit\Services\FileNameGenerator;
 
 use App\Services\FileProcessing\FileNameGenerators\FileNameGenerator;
 use Illuminate\Http\UploadedFile;

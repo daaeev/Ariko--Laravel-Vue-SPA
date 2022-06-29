@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Feature\Middlewares;
+namespace Tests\Unit\Middlewares;
 
 use App\Http\Middleware\AuthWithToken;
 use App\Services\TokenValidators\CryptTokenValidator;

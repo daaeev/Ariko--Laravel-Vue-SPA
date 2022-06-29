@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Feature\Services\FileProcessing;
+namespace Tests\Unit\Services\FileProcessing;
 
 use App\Services\FileProcessing\FileNameGenerators\FileNameGenerator;
 use App\Services\FileProcessing\FileProcessing;

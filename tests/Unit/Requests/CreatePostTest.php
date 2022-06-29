@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Feature\Requests;
+namespace Tests\Unit\Requests;
 
 use App\Http\Requests\CreatePost;
 use Illuminate\Http\UploadedFile;

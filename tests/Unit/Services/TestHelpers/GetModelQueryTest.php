@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Feature\Services\TestHelpers;
+namespace Tests\Unit\Services\TestHelpers;
 
 use App\Services\TestHelpers\GetModelQueryBuilder;
 use Illuminate\Database\Eloquent\Builder;

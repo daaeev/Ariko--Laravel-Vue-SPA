@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Feature\Services\TokenValidators;
+namespace Tests\Unit\Services\TokenValidators;
 
 use App\Models\User;
 use App\Services\TestHelpers\GetModelQueryBuilder;
@@ -18,7 +18,7 @@ class CryptTokenValidatorTest extends TestCase
     public function testValidateSuccess()
     {
         $token = 'token';
-        $token_data = ['email' => 'ariko@ariko.vue', 'password' => 'password'];
+        $token_data = ['email' => 'ariko@ariko.vue', 'password' => 'hashed_pass'];
 
         $user = new \stdClass;
         $user->password = 'hashed_pass';
@@ -27,11 +27,6 @@ class CryptTokenValidatorTest extends TestCase
             ->once()
             ->with($token)
             ->andReturn($token_data);
-
-        Hash::shouldReceive('check')
-            ->once()
-            ->with($token_data['password'], $user->password)
-            ->andReturn(true);
 
         $builder_mock = $this->getMockBuilder(Builder::class)
             ->disableOriginalConstructor()
@@ -102,7 +97,7 @@ class CryptTokenValidatorTest extends TestCase
     public function testValidateFailedUserNotExists()
     {
         $token = 'token';
-        $token_data = ['email' => 'ariko@ariko.vue', 'password' => 'password'];
+        $token_data = ['email' => 'ariko@ariko.vue', 'password' => 'hashed_pass'];
 
         $user = new \stdClass;
         $user->password = '';
@@ -165,11 +160,6 @@ class CryptTokenValidatorTest extends TestCase
             ->once()
             ->with($token)
             ->andReturn($token_data);
-
-        Hash::shouldReceive('check')
-            ->once()
-            ->with($token_data['password'], $user->password)
-            ->andReturn(false);
 
         $builder_mock = $this->getMockBuilder(Builder::class)
             ->disableOriginalConstructor()

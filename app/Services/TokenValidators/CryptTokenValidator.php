@@ -27,7 +27,7 @@ class CryptTokenValidator implements interfaces\AuthTokenValidatorInterface
         }
 
         try {
-            $token_data = Crypt::decrypt($token); // ['email' => email, 'password' => password]
+            $token_data = Crypt::decrypt($token); // ['email' => email, 'password' => encrypted_password]
         } catch (\Throwable) {
             throw new HttpException(401, 'Invalid token');
         }
@@ -43,7 +43,7 @@ class CryptTokenValidator implements interfaces\AuthTokenValidatorInterface
             return false;
         }
 
-        if (!Hash::check($token_data['password'], $userDB_password)) {
+        if ($userDB_password != $token_data['password']) {
             return false;
         }
 

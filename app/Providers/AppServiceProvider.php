@@ -8,6 +8,8 @@ use App\Services\FileProcessing\FileProcessing;
 use App\Services\FileProcessing\Interfaces\FileProcessingInterface;
 use App\Services\TestHelpers\GetModelQueryBuilder;
 use App\Services\TestHelpers\interfaces\GetModelQueryBuilderInterface;
+use App\Services\TokenGenerators\CryptTokenGenerator;
+use App\Services\TokenGenerators\Interfaces\TokenGeneratorInterface;
 use App\Services\TokenValidators\CryptTokenValidator;
 use App\Services\TokenValidators\interfaces\AuthTokenValidatorInterface;
 use Illuminate\Support\ServiceProvider;
@@ -20,6 +22,9 @@ class AppServiceProvider extends ServiceProvider
 
         // TOKEN VALIDATORS
         AuthTokenValidatorInterface::class => CryptTokenValidator::class,
+
+        // TOKEN GENERATORS
+        TokenGeneratorInterface::class => CryptTokenGenerator::class,
 
         // IMAGE PROCESSING
         FileProcessingInterface::class => FileProcessing::class,

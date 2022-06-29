@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\AuthToken;
 use App\Http\Requests\UserLogin;
 use App\Models\User;
+use App\Services\TokenGenerators\Interfaces\TokenGeneratorInterface;
 use App\Services\TokenValidators\interfaces\AuthTokenValidatorInterface;
 use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\Hash;
@@ -21,26 +22,23 @@ class AuthController extends Controller
      * @return \Illuminate\Http\Response
      * @throws HttpException
      */
-    public function login(UserLogin $validate)
-    {
+    public function login(
+        TokenGeneratorInterface $token_gen,
+        UserLogin $validate
+    ) {
         $data = $validate->validated();
 
-        $userDB_password = $this->query_helper
+        $user = $this->query_helper
             ->queryBuilder(User::class)
-            ->select('password')
+            ->select('password', 'email')
             ->where('email', $data['email'])
-            ->first()
-            ->password;
+            ->firstOrFail();
 
-        if (!$userDB_password) {
-            throw new HttpException(401, 'User does not exist');
+        if (!Hash::check($data['password'], $user->password)) {
+            throw new HttpException(404, 'User does not exist');
         }
 
-        if (!Hash::check($data['password'], $userDB_password)) {
-            throw new HttpException(401, 'User does not exist');
-        }
-
-        $encrypted_data = Crypt::encrypt(['email' => $data['email'], 'password' => $data['password']]);
+        $encrypted_data = $token_gen->generate($user);
 
         return response($encrypted_data);
     }
@@ -56,8 +54,7 @@ class AuthController extends Controller
     public function authCheck(
         AuthTokenValidatorInterface $token_validator,
         AuthToken $validate
-    )
-    {
+    ) {
         $token = $validate->validated('token');
 
         if ($token_validator->validate($token)) {

@@ -7,9 +7,12 @@ use App\Http\Requests\UserLogin;
 use App\Models\User;
 use App\Services\TestHelpers\GetModelQueryBuilder;
 use App\Services\TestHelpers\interfaces\GetModelQueryBuilderInterface;
+use App\Services\TokenGenerators\CryptTokenGenerator;
+use App\Services\TokenGenerators\Interfaces\TokenGeneratorInterface;
 use App\Services\TokenValidators\CryptTokenValidator;
 use App\Services\TokenValidators\interfaces\AuthTokenValidatorInterface;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Routing\Middleware\ThrottleRequests;
 use Illuminate\Support\Facades\Crypt;
@@ -20,31 +23,34 @@ class AuthControllerTest extends TestCase
 {
     public function testUserLoginSuccess()
     {
-        $user = new \stdClass;
-        $user->email = 'ariko@ariko.vue';
-        $user->password = 'encrypted_pass';
+        $user_mock = $this->getMockBuilder(User::class)
+            ->disableOriginalConstructor()
+            ->getMock();
 
-        $req_data = ['email' => $user->email, 'password' => $user->password];
+        $user_mock->email = 'ariko@ariko.vue';
+        $user_mock->password = 'encrypted_pass';
+
+        $req_data = ['email' => $user_mock->email, 'password' => $user_mock->password];
 
         $builder_mock = $this->getMockBuilder(Builder::class)
             ->disableOriginalConstructor()
-            ->onlyMethods(['where', 'first'])
+            ->onlyMethods(['where', 'firstOrFail'])
             ->addMethods(['select'])
             ->getMock();
 
         $builder_mock->expects($this->once())
             ->method('select')
-            ->with('password')
+            ->with('password', 'email')
             ->willReturn($builder_mock);
 
-            $builder_mock->expects($this->once())
+        $builder_mock->expects($this->once())
             ->method('where')
-            ->with('email', $user->email)
+            ->with('email', $user_mock->email)
             ->willReturn($builder_mock);
 
-            $builder_mock->expects($this->once())
-            ->method('first')
-            ->willReturn($user);
+        $builder_mock->expects($this->once())
+            ->method('firstOrFail')
+            ->willReturn($user_mock);
 
         $query_helper_mock = $this->getMockBuilder(GetModelQueryBuilder::class)
             ->onlyMethods(['queryBuilder'])
@@ -76,13 +82,23 @@ class AuthControllerTest extends TestCase
 
         Hash::shouldReceive('check')
             ->once()
-            ->with($req_data['password'], $user->password)
+            ->with($req_data['password'], $user_mock->password)
             ->andReturn(true);
 
-        Crypt::shouldReceive('encrypt')
-            ->once()
-            ->with($req_data)
-            ->andReturn('encrypted');
+        $tokengen_mock = $this->getMockBuilder(CryptTokenGenerator::class)
+            ->onlyMethods(['generate'])
+            ->disableOriginalConstructor()
+            ->getMock();
+
+        $tokengen_mock->expects($this->once())
+            ->method('generate')
+            ->with($user_mock)
+            ->willReturn('encrypted');
+
+        $this->app->instance(
+            TokenGeneratorInterface::class,
+            $tokengen_mock
+        );
 
         $res = $this->withoutMiddleware(ThrottleRequests::class)
             ->post(route('auth.login', $req_data))
@@ -94,20 +110,17 @@ class AuthControllerTest extends TestCase
 
     public function testUserLoginUserNotExists()
     {
-        $user = new \stdClass;
-        $user->password = null;
-
         $req_data = ['email' => 'unexists@ariko.vue', 'password' => 'password'];
 
         $builder_mock = $this->getMockBuilder(Builder::class)
             ->disableOriginalConstructor()
-            ->onlyMethods(['where', 'first'])
+            ->onlyMethods(['where', 'firstOrFail'])
             ->addMethods(['select'])
             ->getMock();
 
         $builder_mock->expects($this->once())
             ->method('select')
-            ->with('password')
+            ->with('password', 'email')
             ->willReturn($builder_mock);
 
         $builder_mock->expects($this->once())
@@ -116,8 +129,8 @@ class AuthControllerTest extends TestCase
             ->willReturn($builder_mock);
 
         $builder_mock->expects($this->once())
-            ->method('first')
-            ->willReturn($user);
+            ->method('firstOrFail')
+            ->willThrowException(new ModelNotFoundException);
 
         $query_helper_mock = $this->getMockBuilder(GetModelQueryBuilder::class)
             ->onlyMethods(['queryBuilder'])
@@ -149,36 +162,39 @@ class AuthControllerTest extends TestCase
 
         $this->withoutMiddleware(ThrottleRequests::class)
             ->post(route('auth.login', $req_data))
-            ->assertUnauthorized();
+            ->assertNotFound();
     }
 
     public function testUserLoginPasswordIncorrect()
     {
-        $user = new \stdClass;
-        $user->email = 'ariko@ariko.vue';
-        $user->password = 'encrypted_pass';
+        $user_mock = $this->getMockBuilder(User::class)
+            ->disableOriginalConstructor()
+            ->getMock();
 
-        $req_data = ['email' => $user->email, 'password' => 'incorrect password'];
+        $user_mock->email = 'ariko@ariko.vue';
+        $user_mock->password = 'encrypted_pass';
+
+        $req_data = ['email' => $user_mock->email, 'password' => 'incorrect password'];
 
         $builder_mock = $this->getMockBuilder(Builder::class)
             ->disableOriginalConstructor()
-            ->onlyMethods(['where', 'first'])
+            ->onlyMethods(['where', 'firstOrFail'])
             ->addMethods(['select'])
             ->getMock();
 
         $builder_mock->expects($this->once())
             ->method('select')
-            ->with('password')
+            ->with('password', 'email')
             ->willReturn($builder_mock);
 
         $builder_mock->expects($this->once())
             ->method('where')
-            ->with('email', $user->email)
+            ->with('email', $user_mock->email)
             ->willReturn($builder_mock);
 
         $builder_mock->expects($this->once())
-            ->method('first')
-            ->willReturn($user);
+            ->method('firstOrFail')
+            ->willReturn($user_mock);
 
         $query_helper_mock = $this->getMockBuilder(GetModelQueryBuilder::class)
             ->onlyMethods(['queryBuilder'])
@@ -210,12 +226,12 @@ class AuthControllerTest extends TestCase
 
         Hash::shouldReceive('check')
             ->once()
-            ->with($req_data['password'], $user->password)
+            ->with($req_data['password'], $user_mock->password)
             ->andReturn(false);
 
         $this->withoutMiddleware(ThrottleRequests::class)
             ->post(route('auth.login', $req_data))
-            ->assertUnauthorized();
+            ->assertNotFound();
     }
 
     public function testCheckAuthSuccess()
