@@ -37,6 +37,7 @@ return new class extends Migration
     {
         Schema::table('images', function (Blueprint $table) {
             $table->dropForeign('fk-images-photo_work_id');
+            $table->dropIndex('fk-images-photo_work_id');
         });
 
         Schema::dropIfExists('images');

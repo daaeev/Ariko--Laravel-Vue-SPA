@@ -39,7 +39,9 @@ return new class extends Migration
     {
         Schema::table('post_tags', function (Blueprint $table) {
             $table->dropForeign('fk-post_tags-post_id');
+            $table->dropIndex('fk-post_tags-post_id');
             $table->dropForeign('fk-post_tags-tag_id');
+            $table->dropIndex('fk-post_tags-tag_id');
         });
 
         Schema::dropIfExists('post_tags');

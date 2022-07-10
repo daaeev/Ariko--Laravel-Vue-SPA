@@ -38,6 +38,7 @@ return new class extends Migration
     {
         Schema::table('comments', function (Blueprint $table) {
             $table->dropForeign('fk-comments-post_id');
+            $table->dropIndex('fk-comments-post_id');
         });
 
         Schema::dropIfExists('comments');
